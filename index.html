@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wesleyskap - Engenharia de Software, Sistemas Distribuídos e Observabilidade de Alta Performance.">
+    <title>Wesleyskap // Systems Engineer</title>
+    
+    <!-- Google Fonts: Outfit (Headings), Inter (Body), Fira Code (Source Code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Vanilla Styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <!-- Integrated Main Header -->
+    <header class="main-portfolio-header">
+        <div class="header-main-info">
+            <h1 class="main-title">WESLEY LIMA<span style="color: var(--dot);">.</span></h1>
+            <span id="main-subtitle" class="main-subtitle">Engenheiro de Software</span>
+        </div>
+        
+        <div class="header-nav-actions">
+            <nav class="main-navigation">
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-item" id="link-about">Sobre</a></li>
+                    <li><a href="#repositories" class="nav-item" id="link-repositories">Repositórios</a></li>
+                    <li><a href="#articles" class="nav-item" id="link-articles">Artigos</a></li>
+                    <li><a href="#contact" class="nav-item" id="link-contact">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="actions-group">
+                <select class="locale-select" id="locale-selector" aria-label="Select Language">
+                    <option value="pt-BR">PT</option>
+                    <option value="en">EN</option>
+                </select>
+
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">
+                    <span class="toggle-icon-dark" id="theme-icon-dark"></span>
+                    <span class="toggle-icon-light" id="theme-icon-light"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Application Container -->
+    <main class="app-main-content" id="app-viewport">
+        <!-- Rendered dynamically by app.js -->
+    </main>
+
+    <!-- Sleek Minimal Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p class="footer-copy">&copy; 2026 Wesley Lima. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://github.com/wesleyskap" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub">
+                    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                    <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core SPA logic -->
+    <script src="app.js?v=1.0.0"></script>
+</body>
+</html>
