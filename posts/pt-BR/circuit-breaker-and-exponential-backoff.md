@@ -4,7 +4,7 @@ excerpt: "Sistemas distribuídos falham. Chamar APIs instáveis sem controle ger
 category: "Resiliência"
 date: "04 de Março, 2026"
 readTime: "5 min de leitura"
-author: "Wesleyskap"
+author: "Wesley Lima"
 series: "orkai-observability-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/orkai-observability"

@@ -4,7 +4,7 @@ excerpt: "Distributed systems fail. Uncontrolled requests to unstable APIs trigg
 category: "Resilience"
 date: "Mar 04, 2026"
 readTime: "5 min read"
-author: "Wesleyskap"
+author: "Wesley Lima"
 series: "orkai-observability-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
