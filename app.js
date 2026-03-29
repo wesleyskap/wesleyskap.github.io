@@ -1,0 +1,919 @@
+/* ==========================================================================
+   WESLEY_SKAP PORTFOLIO - CORE ENGINE & LOCALIZATION
+   ========================================================================== */
+
+const PORTFOLIO_CONTENT = {
+    "pt-BR": {
+        nav: {
+            about: "Sobre",
+            repositories: "Repositórios",
+            articles: "Artigos",
+            contact: "Contato"
+        },
+        about: {
+            title: "Wesley Lima",
+            subtitle: "Engenheiro de Software",
+            desc: "Engenheiro de Software com 20 anos de experiência no desenvolvimento de aplicações backend, frontend, mobile e arquitetura de sistemas distribuídos de alta escala e complexidade. Especialista em construir soluções de alta disponibilidade, telemetria avançada, resiliência sistêmica, TDD e integrações práticas de IA Generativa.",
+            capabilitiesTitle: "Sumário de Capacidades",
+            capabilities: [
+                {
+                    title: "Arquitetura de Sistemas",
+                    desc: "Desenho e evolução de sistemas distribuídos de larga escala, microsserviços, arquitetura orientada a eventos (Event-driven), DDD (Domain-Driven Design), alta disponibilidade, resiliência e plataformas SaaS multi-tenant."
+                },
+                {
+                    title: "Concepção do Desenvolvimento",
+                    desc: "Ciclo de vida completo de desenvolvimento e liderança técnica de times. Sólida experiência em projetos complexos para marcas como Google, Raízen, Folha de S.Paulo, Valor Econômico e Pearson."
+                },
+                {
+                    title: "Qualidade & Testes",
+                    desc: "Adoção sistemática de TDD (Test-Driven Development) como garantia de manutenibilidade, design de código desacoplado (SOLID) e otimização contínua de performance (Performance Tuning)."
+                },
+                {
+                    title: "Aplicações Mobile & Web",
+                    desc: "Desenvolvimento de frontend e aplicações mobile cross-platform integrados de forma segura a APIs resilientes hospedadas em nuvem (Azure, AWS, GCP)."
+                },
+                {
+                    title: "IA Generativa & Agentes",
+                    desc: "Atuação nos últimos 4 anos no desenvolvimento de soluções práticas com LLMs, arquiteturas de RAG (Retrieval-Augmented Generation), automações baseadas em IA e agentes autônomos."
+                }
+            ],
+            timelineTitle: "Trajetória Profissional",
+            timeline: [
+                {
+                    role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
+                    company: "Orangebox Technology / Oramont Businesstech (Remoto)",
+                    period: "Mai 2025 - ",
+                    desc: "Liderança técnica e definição de arquitetura de sistemas distribuídos de alta escala. Desenvolvimento de aplicações fullstack e definição de padrões de observabilidade, qualidade e TDD para ambientes distribuídos. Mentoria técnica e estratégias de engenharia.",
+                    tech: ["Ruby on Rails", "C#", "Golang", "Kotlin (Quarkus)", "PHP", "Python", "Node.js", "Next.js", "React", "Angular"],
+                    refName: "Diego Mondego (CEO)",
+                    refLink: "https://www.linkedin.com/in/diego-mondego/",
+                    refSite: "https://oramont.com/",
+                    refEmail: "diego@oramont.com"
+                },
+                {
+                    role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
+                    company: "Digital Pages (Híbrido)",
+                    period: "Ago 2011 - Abr 2025",
+                    desc: "Liderança de times e evolução de plataformas SaaS multi-tenant. Evolução e modernização de sistemas legados de alto tráfego em cloud (Azure/AWS). Implantação de monitoramento, observabilidade e troubleshooting. Otimização de bancos de dados relacionais e NoSQL.",
+                    tech: ["Ruby on Rails", "C#", "Java (Spring Boot)", "Golang", "Python", "Node.js", "PHP", "React", "Next.js", "Angular", "Vue", "Azure", "AWS", "GCP"],
+                    refName: "Youssef Mourad (CEO)",
+                    refLink: "https://www.linkedin.com/in/youssef-mourad-449346/",
+                    refSite: "https://www.digitalpages.com.br/",
+                    refEmail: "youssef.mourad@digitalpages.com.br"
+                },
+                {
+                    role: "Desenvolvedor Ruby Pleno",
+                    company: "Maya Comunicação & Publi9 (Presencial)",
+                    period: "Ago 2010 - Jul 2011",
+                    desc: "Desenvolvimento e manutenção de aplicações web corporativas e portais utilizando Ruby on Rails e modelagem de dados ágil.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS"]
+                },
+                {
+                    role: "Desenvolvedor Júnior (ASP.NET, PHP & Ruby)",
+                    company: "Grupo Inova, TV Tem (Globo) & Excelência Global",
+                    period: "Fev 2006 - Ago 2010",
+                    desc: "Suporte, manutenção e desenvolvimento de funcionalidades web para portais de notícias de larga escala, integrações e sistemas internos corporativos.",
+                    tech: ["ASP.NET", "C#", "PHP", "Ruby", "MySQL", "SQL Server"]
+                }
+            ]
+        },
+        repositories: {
+            heading: "Projetos & Repositórios",
+            items: [
+                {
+                    title: "orkai-observability",
+                    url: "https://github.com/wesleyskap/orkai-observability",
+                    description: "Biblioteca de observabilidade de ultra-performance desenvolvida em Go. Projetada para fornecer logs JSON livre de reflexão e tracing dinâmico na pilha LIFO com alocação em heap quase zero.",
+                    tech: ["Go", "OpenTelemetry", "Performance Tuning"]
+                },
+                {
+                    title: "onkai-unified-bus",
+                    url: "https://github.com/wesleyskap/onkai-unified-bus",
+                    description: "Barramento unificado de mensageria assíncrona concorrente em Go. Implementa pooling de goroutines (Worker Pool), controle de fluxo por Backpressure e drivers desacoplados para RabbitMQ, NATS e Kafka.",
+                    tech: ["Go", "RabbitMQ", "NATS", "Kafka", "Concurrency"]
+                },
+                {
+                    title: "abacos-ruby",
+                    url: "https://github.com/wesleyskap/abacos-ruby",
+                    description: "Integração oficial em Ruby para o ERP Ábacos. Facilita o mapeamento e troca de mensagens de pedidos, estoque e faturamento para ecossistemas de e-commerce complexos.",
+                    tech: ["Ruby", "ERP Integration", "E-commerce"]
+                },
+                {
+                    title: "b2w-ruby",
+                    url: "https://github.com/wesleyskap/b2w-ruby",
+                    description: "SDK em Ruby para sincronização de catálogo, preço e estoque com a API do marketplace B2W (Americanas, Submarino, Shoptime).",
+                    tech: ["Ruby", "Marketplace API", "Integrations"]
+                },
+                {
+                    title: "orkai-runiq",
+                    url: "https://github.com/wesleyskap/orkai-runiq",
+                    description: "Filtro concorrente de alta performance em Go para remoção de chaves duplicadas em streams massivos de dados.",
+                    tech: ["Go", "Concurrency", "Data Pipelines"]
+                }
+            ]
+        },
+        contact: {
+            title: "Contato Profissional",
+            desc: "Se você tem um desafio técnico de alta complexidade, precisa de consultoria em arquitetura de microsserviços ou está em busca de liderança técnica para o seu time, entre em contato.",
+            name: "Nome Completo / Empresa",
+            email: "E-mail para Contato",
+            msg: "Descreva a sua Necessidade / Projeto",
+            submit: "Enviar Mensagem",
+            directTitle: "Canais de Comunicação Direta"
+        },
+        blog: {
+            heading: "Technical Ledger (Artigos Técnicos)",
+            authorLabel: "Por",
+            readTimeLabel: "de leitura",
+            backLabel: "Voltar",
+            seriesLabel: "Série",
+            relatedTitle: "Outros Artigos da Série",
+            repoTitlePT: "Código-Fonte no GitHub",
+            repoDescPT: "Explore a implementação completa, arquivos de configuração e suíte de testes em Go diretamente no repositório oficial.",
+            repoCtaPT: "Ver Repositório",
+            repoTitleEN: "Source Code on GitHub",
+            repoDescEN: "Explore the complete high-performance implementation, Go tests, and configuration schemas in the official repository.",
+            repoCtaEN: "View Repository",
+            notFoundTitle: "Artigo não encontrado",
+            notFoundDesc: "O tópico de telemetria solicitado não pôde ser localizado."
+        }
+    },
+    "en": {
+        nav: {
+            about: "About",
+            repositories: "Repositories",
+            articles: "Articles",
+            contact: "Contact"
+        },
+        about: {
+            title: "Wesley Lima",
+            subtitle: "Software Engineer | Technical Leader",
+            desc: "Software Engineer with 20 years of experience in backend, frontend, mobile applications, and large-scale distributed systems architecture. Specialist in building high-availability solutions, advanced telemetry, systemic resilience, TDD, and practical Generative AI integrations.",
+            capabilitiesTitle: "Capabilities Summary",
+            capabilities: [
+                {
+                    title: "Systems Architecture",
+                    desc: "Design and evolution of large-scale distributed systems, microservices, event-driven architecture (Kafka/RabbitMQ/NATS), high availability, resilience, and multi-tenant SaaS platforms."
+                },
+                {
+                    title: "Development Conception",
+                    desc: "Full software development lifecycle and technical leadership. Consolidated experience delivering high-scale solutions for brands like Google, Raízen, Folha de S.Paulo, Valor Econômico, and Pearson."
+                },
+                {
+                    title: "Quality & Testing",
+                    desc: "Systematic adoption of TDD (Test-Driven Development) to guarantee code maintainability, decoupled design (SOLID), and continuous performance tuning."
+                },
+                {
+                    title: "Mobile & Web Applications",
+                    desc: "Robust frontend and cross-platform mobile development safely integrated with resilient cloud-hosted APIs (Azure, AWS, GCP)."
+                },
+                {
+                    title: "Generative AI & Agents",
+                    desc: "Active work over the last 4 years designing practical solutions with LLMs, RAG (Retrieval-Augmented Generation) architectures, AI-driven automation, and autonomous agents."
+                }
+            ],
+            timelineTitle: "Professional Timeline",
+            timeline: [
+                {
+                    role: "Technical Leader & Senior Full Stack Developer",
+                    company: "Orangebox Technology / Oramont Businesstech (Remote)",
+                    period: "May 2025 - ",
+                    desc: "Technical leadership and distributed systems architecture design. High-scale fullstack development. Definition of observability, quality, and TDD standards for distributed environments. Technical mentoring.",
+                    tech: ["Ruby on Rails", "Java (Spring Boot)", "Golang", "PHP (Laravel)", "Kotlin (Quarkus)", ".NET Core", "Node.js (NestJS)", "Next.js", "React", "Python"],
+                    refName: "Diego Mondego (CEO)",
+                    refLink: "https://linkedin.com",
+                    refSite: "https://oramont.com/",
+                    refEmail: "contato@orangebox.tech"
+                },
+                {
+                    role: "Technical Leader & Senior Full Stack Developer",
+                    company: "Digital Pages (Hybrid)",
+                    period: "Aug 2011 - Apr 2025",
+                    desc: "Team leadership and evolution of multi-tenant SaaS platforms. Evolution and modernization of legacy high-traffic systems in Azure and AWS. Deployment of monitoring, observability, and database query tuning.",
+                    tech: ["C# (.NET)", "Java (Spring Boot)", "Python", "Ruby on Rails", "Node.js", "PHP (Laravel)", "React", "Next.js", "Angular", "Vue", "Golang", "Azure", "AWS"],
+                    refName: "Youssef Mourad (CEO)",
+                    refLink: "https://linkedin.com",
+                    refSite: "https://www.digitalpages.com.br/",
+                    refEmail: "contato@digitalpages.com.br"
+                },
+                {
+                    role: "Mid-level Ruby Developer",
+                    company: "Maya Comunicação & Publi9 (On-site)",
+                    period: "Aug 2010 - Jul 2011",
+                    desc: "Development and maintenance of corporate web applications and portals using Ruby on Rails and agile data schemas.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS"]
+                },
+                {
+                    role: "Junior Developer (ASP.NET, PHP & Ruby)",
+                    company: "Grupo Inova, TV Tem (Globo Affiliate) & Excelência Global",
+                    period: "Feb 2006 - Aug 2010",
+                    desc: "Support, maintenance, and features development for high-traffic news portals, corporate systems, and integrations.",
+                    tech: ["ASP.NET", "C#", "PHP", "Ruby", "MySQL", "SQL Server"]
+                }
+            ]
+        },
+        repositories: {
+            heading: "Projects & Repositories",
+            items: [
+                {
+                    title: "orkai-observability",
+                    url: "https://github.com/wesleyskap/orkai-observability",
+                    description: "Ultra-performance observability library developed in Go. Designed to provide reflection-free JSON logging and dynamic LIFO tracing with near-zero heap allocations.",
+                    tech: ["Go", "OpenTelemetry", "Performance Tuning"]
+                },
+                {
+                    title: "onkai-unified-bus",
+                    url: "https://github.com/wesleyskap/onkai-unified-bus",
+                    description: "Unified asynchronous concurrent event bus in Go. Implements goroutine pools, flow control via Backpressure, and decoupled drivers for RabbitMQ, NATS, and Kafka.",
+                    tech: ["Go", "RabbitMQ", "NATS", "Kafka", "Concurrency"]
+                },
+                {
+                    title: "abacos-ruby",
+                    url: "https://github.com/wesleyskap/abacos-ruby",
+                    description: "Official Ruby integration for the Ábacos ERP. Facilitates order, inventory, and billing data mapping for complex e-commerce ecosystems.",
+                    tech: ["Ruby", "ERP Integration", "E-commerce"]
+                },
+                {
+                    title: "b2w-ruby",
+                    url: "https://github.com/wesleyskap/b2w-ruby",
+                    description: "Ruby SDK for catalog, price, and inventory synchronization with the B2W marketplace API (Americanas, Submarino, Shoptime).",
+                    tech: ["Ruby", "Marketplace API", "Integrations"]
+                },
+                {
+                    title: "orkai-runiq",
+                    url: "https://github.com/wesleyskap/orkai-runiq",
+                    description: "High-performance concurrent stream filter in Go for duplicate key removal in massive real-time pipelines.",
+                    tech: ["Go", "Concurrency", "Data Pipelines"]
+                }
+            ]
+        },
+        contact: {
+            title: "Professional Contact",
+            desc: "If you have a complex technical challenge, need architecture consulting, or are looking for technical leadership, feel free to get in touch.",
+            name: "Full Name / Organization",
+            email: "Contact Email Address",
+            msg: "Describe your Project / Scenario",
+            submit: "Send Message",
+            directTitle: "Direct Channels"
+        },
+        blog: {
+            heading: "Technical Ledger",
+            authorLabel: "By",
+            readTimeLabel: "read",
+            backLabel: "Back",
+            seriesLabel: "Series",
+            relatedTitle: "Other Articles in the Series",
+            repoTitlePT: "Código-Fonte no GitHub",
+            repoDescPT: "Explore a implementação completa, arquivos de configuração e suíte de testes em Go diretamente no repositório oficial.",
+            repoCtaPT: "Ver Repositório",
+            repoTitleEN: "Source Code on GitHub",
+            repoDescEN: "Explore the complete high-performance implementation, Go tests, and configuration schemas in the official repository.",
+            repoCtaEN: "View Repository",
+            notFoundTitle: "Article Not Found",
+            notFoundDesc: "The requested telemetry topic could not be resolved."
+        }
+    }
+};
+
+const router = {
+    currentRoute: "about",
+    activePostId: null,
+    locale: "pt-BR",
+
+    init() {
+        const localeSelector = document.getElementById("locale-selector");
+        const savedLocale = localStorage.getItem("wesley-locale") || "pt-BR";
+        this.locale = savedLocale;
+        localeSelector.value = savedLocale;
+
+        localeSelector.addEventListener("change", (e) => {
+            this.locale = e.target.value;
+            localStorage.setItem("wesley-locale", this.locale);
+            this.translateNavigation();
+            this.handleRouting();
+        });
+
+        window.addEventListener("hashchange", () => this.handleRouting());
+        this.translateNavigation();
+        this.handleRouting();
+    },
+
+    translateNavigation() {
+        const navTexts = PORTFOLIO_CONTENT[this.locale].nav;
+        document.getElementById("link-about").innerText = navTexts.about;
+        document.getElementById("link-repositories").innerText = navTexts.repositories;
+        document.getElementById("link-articles").innerText = navTexts.articles;
+        document.getElementById("link-contact").innerText = navTexts.contact;
+
+        const subtitleEl = document.getElementById("main-subtitle");
+        if (subtitleEl) {
+            subtitleEl.innerText = this.locale === "pt-BR" ? "Engenheiro de Software" : "Software Engineer";
+        }
+    },
+
+    handleRouting() {
+        const hash = window.location.hash;
+        const viewport = document.getElementById("app-viewport");
+        viewport.style.opacity = "0";
+
+        setTimeout(() => {
+            if (!hash || hash === "" || hash === "#" || hash === "#about") {
+                this.currentRoute = "about";
+                this.activePostId = null;
+                this.loadAbout();
+            } else if (hash === "#repositories") {
+                this.currentRoute = "repositories";
+                this.activePostId = null;
+                this.loadRepositories();
+            } else if (hash === "#articles") {
+                this.currentRoute = "articles";
+                this.activePostId = null;
+                this.loadArticles();
+            } else if (hash === "#contact") {
+                this.currentRoute = "contact";
+                this.activePostId = null;
+                this.loadContact();
+            } else if (hash.startsWith("#post/")) {
+                this.currentRoute = "post-detail";
+                this.activePostId = hash.replace("#post/", "");
+                this.loadPostDetail(this.activePostId);
+            } else {
+                window.location.hash = "#about";
+            }
+            this.syncNavLinks();
+            viewport.style.opacity = "1";
+        }, 150);
+    },
+
+    syncNavLinks() {
+        const links = ["about", "repositories", "articles", "contact"];
+        links.forEach(l => {
+            const el = document.getElementById(`link-${l}`);
+            if (this.currentRoute === l) {
+                el.classList.add("active");
+            } else {
+                el.classList.remove("active");
+            }
+        });
+    },
+
+    async loadAbout() {
+        const viewport = document.getElementById("app-viewport");
+        const data = PORTFOLIO_CONTENT[this.locale].about;
+
+        // Capabilities summary list
+        let capabilitiesHTML = "";
+        data.capabilities.forEach(cap => {
+            capabilitiesHTML += `
+                <div class="capability-item">
+                    <h3 class="capability-title">${cap.title}</h3>
+                    <p class="capability-desc">${cap.desc}</p>
+                </div>
+            `;
+        });
+
+        // Timeline items
+        let timelineHTML = "";
+        data.timeline.forEach(item => {
+            let techHTML = "";
+            if (item.tech) {
+                item.tech.forEach(t => {
+                    techHTML += `<span class="case-tech-tag">${t}</span>`;
+                });
+            }
+            const labelText = this.locale === "pt-BR" ? "Linguagens & Tecnologias" : "Languages & Tech";
+            
+            let refHTML = "";
+            if (item.refLink && item.refEmail) {
+                const label = this.locale === "pt-BR" ? "Indicação" : "Recommendation";
+                const refDisplayName = item.refName ? `${item.refName} - ` : "";
+                const andText = this.locale === "pt-BR" ? " e " : " and ";
+                refHTML = `
+                    <div class="timeline-recommendation" style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);">
+                        <strong style="color: var(--accent); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">${label}:</strong> 
+                        <span>${refDisplayName}</span>
+                        <a href="${item.refLink}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">linkedin</a>${andText}
+                        <a href="mailto:${item.refEmail}" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">email</a>
+                    </div>
+                `;
+            }
+
+            const siteHTML = item.refSite ? `
+                <div class="timeline-company-site" style="margin-top: -8px; margin-bottom: 12px; font-size: 13px;">
+                    <a href="${item.refSite}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-family: var(--font-mono); font-size: 12px;">${item.refSite.replace('https://', '').replace('www.', '').replace(/\/$/, '')} &rarr;</a>
+                </div>
+            ` : "";
+
+            timelineHTML += `
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-role">${item.role}</h3>
+                            <span class="timeline-period">${item.period}</span>
+                        </div>
+                        <div class="timeline-company">${item.company}</div>
+                        ${siteHTML}
+                        <p class="timeline-desc">${item.desc}</p>
+                        ${refHTML}
+                        ${techHTML ? `
+                            <div class="timeline-tech-section" style="margin-top: 16px;">
+                                <div class="timeline-tech-label">${labelText}</div>
+                                <div class="case-tech-deck">${techHTML}</div>
+                            </div>
+                        ` : ""}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Fetch last 3 posts
+        let latestPostsHTML = "";
+        try {
+            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
+            if (response.ok) {
+                const posts = await response.json();
+                const latestThree = posts.slice(0, 3);
+                latestThree.forEach(post => {
+                    latestPostsHTML += `
+                        <div class="latest-post-item" style="margin-bottom: 16px;">
+                            <a href="#post/${post.id}" style="color: var(--text-primary); text-decoration: none; font-size: 15px; font-weight: 600; line-height: 1.4; transition: color 0.2s; display: block;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-primary)'">${post.title}</a>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);">${post.date} &bull; ${post.readTime}</div>
+                        </div>
+                    `;
+                });
+            }
+        } catch (e) {
+            console.error("Failed to load latest posts for homepage", e);
+        }
+
+        viewport.innerHTML = `
+            <section class="profile-section" style="padding-top: 0;">
+                <div class="bio-and-posts-container">
+                    <div class="bio-section-left">
+                        <p class="profile-description">${data.desc}</p>
+
+                        <div class="profile-contact-bar">
+                            <a href="mailto:wesleyskap@gmail.com" class="profile-contact-item">
+                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <span>wesleyskap@gmail.com</span>
+                            </a>
+                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="profile-contact-item whatsapp-item">
+                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                </svg>
+                                <span>(11) 93618-2375</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="posts-section-right">
+                        <h2 class="section-heading">Post</h2>
+                        <div class="latest-posts-list">
+                            ${latestPostsHTML || '<div style="font-size: 14px; color: var(--text-muted);">No posts available.</div>'}
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <a href="#articles" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">${this.locale === 'pt-BR' ? 'todos' : 'all'} &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 48px; font-size: 26px;">${data.capabilitiesTitle}</h2>
+                <div class="capabilities-grid">
+                    ${capabilitiesHTML}
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 64px; font-size: 26px;">${data.timelineTitle}</h2>
+                <div class="timeline">
+                    ${timelineHTML}
+                </div>
+            </section>
+        `;
+    },
+
+    loadRepositories() {
+        const viewport = document.getElementById("app-viewport");
+        const data = PORTFOLIO_CONTENT[this.locale].repositories;
+
+        let itemsHTML = "";
+        data.items.forEach(item => {
+            let techHTML = "";
+            item.tech.forEach(t => {
+                techHTML += `<span class="case-tech-tag">${t}</span>`;
+            });
+
+            itemsHTML += `
+                <div class="case-card">
+                    <div class="case-header">
+                        <h3 class="case-title" style="font-family: var(--font-mono); color: var(--accent); font-size: 20px;">${item.title}</h3>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="meta-cta-btn" style="padding: 6px 14px; font-size: 13px; box-shadow: none;">GitHub &rarr;</a>
+                    </div>
+                    
+                    <div class="case-details" style="margin-top: 12px;">
+                        <p class="case-block-desc" style="font-size: 15px;">${item.description}</p>
+                    </div>
+                    
+                    <div class="case-tech-deck" style="margin-top: 16px;">
+                        ${techHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        viewport.innerHTML = `
+            <section class="cases-section">
+                <h2 class="section-heading">${data.heading}</h2>
+                <div class="cases-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+                    ${itemsHTML}
+                </div>
+            </section>
+        `;
+    },
+
+    async loadArticles() {
+        const viewport = document.getElementById("app-viewport");
+        const blogTexts = PORTFOLIO_CONTENT[this.locale].blog;
+
+        try {
+            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
+            if (!response.ok) throw new Error("Registry fetch failed");
+            const posts = await response.json();
+
+            let articlesHTML = "";
+            posts.forEach(post => {
+                const seriesTitle = post.series === "onkai-unified-bus-series" ? "Onkai Unified Bus" : "Orkai Observability";
+                articlesHTML += `
+                    <article class="article-card" onclick="window.location.hash = '#post/${post.id}'">
+                        <div>
+                            <div class="card-meta">
+                                <span class="card-category">${post.category}</span>
+                                <span>&bull;</span>
+                                <span>${seriesTitle} (${post.seriesIndex})</span>
+                            </div>
+                            <h3 class="card-title">${post.title}</h3>
+                            <p class="card-excerpt">${post.excerpt}</p>
+                        </div>
+                        <div class="card-footer">
+                            <span>${blogTexts.authorLabel} <strong>${post.author}</strong></span>
+                            <span class="card-readtime">${post.readTime}</span>
+                        </div>
+                    </article>
+                `;
+            });
+
+            viewport.innerHTML = `
+                <section class="articles-section">
+                    <h2 class="section-heading">${blogTexts.heading}</h2>
+                    <div class="articles-grid">
+                        ${articlesHTML}
+                    </div>
+                </section>
+            `;
+        } catch (err) {
+            console.error("Failed to load articles:", err);
+            viewport.innerHTML = `
+                <section class="articles-section">
+                    <h2 class="section-heading">${blogTexts.heading}</h2>
+                    <div class="coming-soon-card" style="text-align: center; border: 1px solid var(--border-color); padding: 40px var(--spacing-lg);">
+                        <h3>Failed to load articles index.</h3>
+                    </div>
+                </section>
+            `;
+        }
+    },
+
+    loadContact() {
+        const viewport = document.getElementById("app-viewport");
+        const data = PORTFOLIO_CONTENT[this.locale].contact;
+
+        viewport.innerHTML = `
+            <section class="handshake-section">
+                <div class="handshake-card">
+                    <h2 class="handshake-title">${data.title}</h2>
+                    <p class="handshake-desc" style="margin-bottom: 24px;">${data.desc}</p>
+                    
+                    <div class="contact-channels-container">
+                        <h3 class="channels-heading">${data.directTitle}</h3>
+                        <div class="contact-channels">
+                            <a href="mailto:wesleyskap@gmail.com" class="channel-card">
+                                <div class="channel-icon-wrapper">
+                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-label">E-mail</span>
+                                    <span class="channel-value">wesleyskap@gmail.com</span>
+                                </div>
+                            </a>
+                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="channel-card">
+                                <div class="channel-icon-wrapper whatsapp-theme">
+                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-label">WhatsApp</span>
+                                    <span class="channel-value">(11) 93618-2375</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div style="margin: 24px 0; display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: 13px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 1px;">
+                        <span style="flex-grow: 1; height: 1px; background: var(--border-color);"></span>
+                        <span>${this.locale === 'pt-BR' ? 'Ou envie um briefing' : 'Or send a briefing'}</span>
+                        <span style="flex-grow: 1; height: 1px; background: var(--border-color);"></span>
+                    </div>
+                    
+                    <form class="handshake-form" onsubmit="event.preventDefault(); alert(this.locale === 'pt-BR' ? 'Mensagem enviada com sucesso.' : 'Message sent successfully.');">
+                        <div class="form-group">
+                            <label class="form-label">${data.name}</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${data.email}</label>
+                            <input type="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">${data.msg}</label>
+                            <textarea class="form-textarea" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit-btn">${data.submit}</button>
+                    </form>
+                </div>
+            </section>
+        `;
+    },
+
+    parseFrontMatter(text) {
+        const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+        if (!match) return { metadata: {}, body: text };
+        
+        const yaml = match[1];
+        const body = match[2];
+        const metadata = {};
+        yaml.split('\n').forEach(line => {
+            const index = line.indexOf(':');
+            if (index > -1) {
+                const key = line.substring(0, index).trim();
+                const value = line.substring(index + 1).trim().replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
+                metadata[key] = value;
+            }
+        });
+        return { metadata, body };
+    },
+
+    async loadPostDetail(postId) {
+        try {
+            const response = await fetch(`./posts/${this.locale}/${postId}.md?t=${Date.now()}`);
+            if (!response.ok) throw new Error("Post fetch failed");
+            const rawText = await response.text();
+            const { metadata, body } = this.parseFrontMatter(rawText);
+            
+            const postData = {
+                id: postId,
+                title: metadata.title || "",
+                excerpt: metadata.excerpt || "",
+                category: metadata.category || "",
+                date: metadata.date || "",
+                readTime: metadata.readTime || "",
+                author: metadata.author || "",
+                series: metadata.series || "",
+                seriesIndex: parseInt(metadata.seriesIndex || "0", 10),
+                referenceLink: metadata.referenceLink || null,
+                body: body
+            };
+            this.renderPostDetail(postData);
+        } catch (err) {
+            console.error("Failed to load post detail:", err);
+            this.renderConnectionError(() => this.loadPostDetail(postId));
+        }
+    },
+
+    async renderPostDetail(post) {
+        const viewport = document.getElementById("app-viewport");
+        const blogTexts = PORTFOLIO_CONTENT[this.locale].blog;
+
+        if (!post) {
+            viewport.innerHTML = `
+                <div class="post-detail-section" style="text-align: center;">
+                    <h1 class="post-title">${blogTexts.notFoundTitle}</h1>
+                    <p>${blogTexts.notFoundDesc}</p>
+                    <button class="back-btn" onclick="window.location.hash = '#articles'">${blogTexts.backLabel}</button>
+                </div>
+            `;
+            return;
+        }
+
+        const renderedBody = this.parseMarkdown(post.body);
+        let referenceHTML = "";
+        if (post.referenceLink) {
+            const title = this.locale === "pt-BR" ? blogTexts.repoTitlePT : blogTexts.repoTitleEN;
+            const desc = this.locale === "pt-BR" ? blogTexts.repoDescPT : blogTexts.repoDescEN;
+            const cta = this.locale === "pt-BR" ? blogTexts.repoCtaPT : blogTexts.repoCtaEN;
+            referenceHTML = `
+                <div class="repo-cta-card">
+                    <div class="repo-cta-content">
+                        <h4 class="repo-cta-title">${title}</h4>
+                        <p class="repo-cta-desc">${desc}</p>
+                    </div>
+                    <a href="${post.referenceLink}" target="_blank" rel="noopener noreferrer" class="repo-cta-link">
+                        <svg class="repo-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        ${cta}
+                    </a>
+                </div>
+            `;
+        }
+
+        let registry = [];
+        try {
+            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
+            if (response.ok) registry = await response.json();
+        } catch (e) {
+            console.error("Failed to load registry for related posts:", e);
+        }
+
+        const related = registry.filter(p => p.series === post.series && p.id !== post.id);
+        let relatedHTML = "";
+        related.forEach(rel => {
+            relatedHTML += `
+                <div class="related-card" onclick="window.location.hash = '#post/${rel.id}'">
+                    <div class="card-meta">
+                        <span class="card-category">${this.locale === "pt-BR" ? "Parte" : "Part"} ${rel.seriesIndex}</span>
+                    </div>
+                    <h4 class="related-card-title">${rel.title}</h4>
+                </div>
+            `;
+        });
+
+        const seriesText = post.series === "onkai-unified-bus-series" ? "Onkai Unified Bus" : "Orkai Observability";
+
+        viewport.innerHTML = `
+            <section class="post-detail-section">
+                <div class="back-btn-container">
+                    <button class="back-btn" onclick="window.location.hash = '#articles'">
+                        &larr; ${blogTexts.backLabel}
+                    </button>
+                </div>
+
+                <article class="post-full">
+                    <header class="post-header">
+                        <span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>
+                        <h1 class="post-title">${post.title}</h1>
+                        <div class="post-meta-strip">
+                            <span class="post-meta-item">${this.locale === "pt-BR" ? "Autor" : "Author"}: <strong>${post.author}</strong></span>
+                            <span>&bull;</span>
+                            <span class="post-meta-item">${this.locale === "pt-BR" ? "Publicado em" : "Published on"}: <strong>${post.date}</strong></span>
+                            <span>&bull;</span>
+                            <span class="post-meta-item">${post.readTime}</span>
+                        </div>
+                    </header>
+
+                    <div class="post-body">
+                        ${renderedBody}
+                    </div>
+
+                    ${referenceHTML}
+
+                    ${related.length > 0 ? `
+                        <div class="related-posts-section">
+                            <h3 class="related-title">${blogTexts.relatedTitle}</h3>
+                            <div class="related-grid">
+                                ${relatedHTML}
+                            </div>
+                        </div>
+                    ` : ""}
+                </article>
+            </section>
+        `;
+    },
+
+    parseMarkdown(text) {
+        let html = text;
+
+        html = html.replace("[DIAGRAM_DOUBLE_ROUTING]", `
+            <div class="mermaid-container">
+                <div class="card-meta" style="justify-content: center;">Fluxo de Roteamento Duplo</div>
+                <div style="font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); text-align: left; max-width: 500px; margin: 0 auto; line-height: 1.8;">
+                    <strong>1. Chamada:</strong> observability.RecordLatency("payment", 120ms)<br>
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Rota A:</strong> Grava no engine local na Memória (Scrapable /metrics)<br>
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Rota B:</strong> Converte e envia ao OpenTelemetry Instrument nativo<br>
+                    <strong>2. Destinos:</strong> Prometheus local scrape & Datadog/Grafana OTel Collector
+                </div>
+            </div>
+        `);
+
+        html = html.replace("[DIAGRAM_CIRCUIT_BREAKER]", `
+            <div class="mermaid-container">
+                <div class="card-meta" style="justify-content: center;">Máquina de Estados de Proteção</div>
+                <div style="font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); text-align: left; max-width: 500px; margin: 0 auto; line-height: 1.8;">
+                    <strong>CLOSED (Fechado):</strong> Requisições passam. Monitora erros.<br>
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Se erros &ge; limiar:</strong> Transiciona para OPEN (Falha Rápida)<br>
+                    <strong>OPEN (Aberto):</strong> Bloqueia tudo imediatamente em RAM.<br>
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Se cooldown expira:</strong> Transiciona para HALF-OPEN<br>
+                    <strong>HALF-OPEN:</strong> Roda requisições de testes.<br>
+                    <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Se falha:</strong> Retorna para OPEN. Se sucesso: Retorna para CLOSED.
+                </div>
+            </div>
+        `);
+
+        html = html.replace(/^## (.*$)/gim, "<h2>$1</h2>");
+        html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
+
+        html = html.replace(/\`\`\`go([\s\S]*?)\`\`\`/g, (match, code) => {
+            let highlighted = code
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            
+            const strings = [];
+            const comments = [];
+
+            highlighted = highlighted.replace(/(".*?")/g, (m) => {
+                strings.push(`<span class="code-str">${m}</span>`);
+                return `___STR_PLACEHOLDER_${strings.length - 1}___`;
+            });
+
+            highlighted = highlighted.replace(/(\/\/.*)/g, (m) => {
+                comments.push(`<span class="code-cmt">${m}</span>`);
+                return `___CMT_PLACEHOLDER_${comments.length - 1}___`;
+            });
+
+            highlighted = highlighted.replace(/\b(func|type|struct|interface|package|import|return|defer|go|select|case|const|var|if|else|for|range)\b/g, '<span class="code-key">$1</span>');
+            highlighted = highlighted.replace(/\b(string|int|float64|bool|error|time\.Time|time\.Duration|sync\.Mutex)\b/g, '<span class="code-tp">$1</span>');
+
+            highlighted = highlighted.replace(/___CMT_PLACEHOLDER_(\d+)___/g, (m, index) => comments[parseInt(index, 10)]);
+            highlighted = highlighted.replace(/___STR_PLACEHOLDER_(\d+)___/g, (m, index) => strings[parseInt(index, 10)]);
+
+            return `<div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <span class="code-block-lang">go</span>
+                        </div>
+                        <pre><code>${highlighted.trim()}</code></pre>
+                    </div>`;
+        });
+
+        html = html.replace(/\`([\s\S]*?)\`/g, "<code>$1</code>");
+        html = html.replace(/^\- (.*$)/gim, "<li>$1</li>");
+        html = html.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
+        html = html.replace(/<\/ul>\s*<ul>/g, "");
+        html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
+        html = html.replace(/_([^_]+)_/g, "<em>$1</em>");
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 600;">$1</a>');
+
+        return html;
+    },
+
+    renderConnectionError(retryCallback) {
+        const viewport = document.getElementById("app-viewport");
+        viewport.innerHTML = `
+            <div class="coming-soon-card" style="max-width: 500px; margin: 80px auto; text-align: center; border: 1px solid var(--border-color); padding: 40px var(--spacing-lg);">
+                <div style="font-size: 48px; margin-bottom: var(--spacing-sm);">📡</div>
+                <h3>${this.locale === "pt-BR" ? "Erro de Conexão" : "Connection Error"}</h3>
+                <p style="margin-bottom: 24px;">
+                    ${this.locale === "pt-BR" 
+                        ? "Não foi possível carregar os dados. Verifique o servidor local." 
+                        : "Could not fetch data. Verify your local server."}
+                </p>
+                <button class="back-btn" id="retry-fetch-btn">${this.locale === "pt-BR" ? "Tentar Novamente" : "Retry Connection"}</button>
+            </div>
+        `;
+        document.getElementById("retry-fetch-btn").addEventListener("click", () => {
+            viewport.style.opacity = "0";
+            setTimeout(() => {
+                retryCallback();
+                viewport.style.opacity = "1";
+            }, 200);
+        });
+    }
+};
+
+const themeManager = {
+    init() {
+        const toggleBtn = document.getElementById("theme-toggle");
+        const savedTheme = localStorage.getItem("wesley-theme") || "dark-theme";
+        document.body.className = savedTheme;
+        toggleBtn.addEventListener("click", () => {
+            if (document.body.classList.contains("dark-theme")) {
+                document.body.className = "light-theme";
+                localStorage.setItem("wesley-theme", "light-theme");
+            } else {
+                document.body.className = "dark-theme";
+                localStorage.setItem("wesley-theme", "dark-theme");
+            }
+        });
+    }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    themeManager.init();
+    router.init();
+});

@@ -1,0 +1,112 @@
+[
+    {
+        "id": "onkai-unified-bus-tracing",
+        "title": "Tracing Assíncrono: Propagando Contextos de Telemetria Entre Microsserviços e Eventos",
+        "excerpt": "Como rastrear um fluxo de execução distribuído que atravessa filas assíncronas sem se perder? Aprenda a injetar e extrair contextos de trace em cabeçalhos de mensagens.",
+        "category": "Mensageria",
+        "date": "02 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "onkai-unified-bus-series",
+        "seriesIndex": 5
+    },
+    {
+        "id": "onkai-unified-bus-dlq",
+        "title": "Máquina de Estados de Erros: Desenhando Dead-Letter Queues (DLQ) e Retries com Jitter",
+        "excerpt": "Sistemas distribuídos falham de maneiras imprevisíveis. Aprenda como o onkai-unified-bus implementa políticas seguras de retry com recuo exponencial e isolamento de mensagens corrompidas.",
+        "category": "Mensageria",
+        "date": "02 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "onkai-unified-bus-series",
+        "seriesIndex": 4
+    },
+    {
+        "id": "onkai-unified-bus-drivers",
+        "title": "Drivers Desacoplados: Abstraindo NATS, RabbitMQ e Kafka com Interface Unificada",
+        "excerpt": "Como alternar entre diferentes provedores de mensageria sem alterar uma única linha da sua regra de negócio? Conheça o design de drivers desacoplados do onkai-unified-bus.",
+        "category": "Mensageria",
+        "date": "02 de Junho, 2026",
+        "readTime": "4 min de leitura",
+        "author": "Wesleyskap",
+        "series": "onkai-unified-bus-series",
+        "seriesIndex": 3
+    },
+    {
+        "id": "onkai-unified-bus-backpressure",
+        "title": "Controle de Fluxo e Backpressure: Evitando Saturação de Memória no Consumo de Eventos",
+        "excerpt": "O que fazer quando os consumidores não conseguem acompanhar a velocidade dos produtores? Aprenda a desenhar estratégias de backpressure resilientes usando buffers não-bloqueantes no Go.",
+        "category": "Mensageria",
+        "date": "02 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "onkai-unified-bus-series",
+        "seriesIndex": 2
+    },
+    {
+        "id": "onkai-unified-bus-dispatcher",
+        "title": "Zero-Allocation Dispatcher: Roteando Milhões de Eventos Sem Alocações na Heap em Go",
+        "excerpt": "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa sync.Pool e pooling de goroutines para obter vazão massiva livre de Garbage Collector.",
+        "category": "Mensageria",
+        "date": "02 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "onkai-unified-bus-series",
+        "seriesIndex": 1
+    },
+    {
+        "id": "prometheus-histograms-and-opentelemetry-bridge",
+        "title": "Do Customizado ao Padrão de Mercado: Percentis Histogramas e a Ponte Semântica do OpenTelemetry",
+        "excerpt": "Por que as médias de latência mentem? Descubra a matemática por trás do cálculo de percentis de cauda longa e como criamos uma ponte semântica limpa para suportar o padrão OpenTelemetry com roteamento duplo concorrente.",
+        "category": "Métricas & Tracing",
+        "date": "18 de Maio, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesleyskap",
+        "series": "orkai-observability-series",
+        "seriesIndex": 5
+    },
+    {
+        "id": "circuit-breaker-and-exponential-backoff",
+        "title": "Resiliência em Larga Escala: Construindo um Circuit Breaker Sem Dependências e Retries Exponenciais",
+        "excerpt": "Sistemas distribuídos falham. Chamar APIs instáveis sem controle gera o efeito manada. Mostramos como projetar uma máquina de estados de Circuit Breaker pura e um motor de retry com recuo exponencial em Go.",
+        "category": "Resiliência",
+        "date": "18 de Maio, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "orkai-observability-series",
+        "seriesIndex": 4
+    },
+    {
+        "id": "distributed-context-propagation-and-http-decorators",
+        "title": "Propagação Distribuída e Resiliência de Transporte: W3C, B3 e HTTP Client Decorators",
+        "excerpt": "Como manter o rastreamento ativo em chamadas HTTP remotas? Aprenda a propagar contextos de telemetria utilizando cabeçalhos W3C e B3 decorando o net/http do Go de forma transparente.",
+        "category": "Conectividade",
+        "date": "17 de Maio, 2026",
+        "readTime": "4 min de leitura",
+        "author": "Wesleyskap",
+        "series": "orkai-observability-series",
+        "seriesIndex": 3
+    },
+    {
+        "id": "asynchronous-logging-ring-buffer",
+        "title": "Adeus, I/O Bottlenecks: Construindo um Ring-Buffer de Log Assíncrono com Canais Concorrentes",
+        "excerpt": "Escrever logs de forma síncrona estrangula a latência de sua API. Descubra como criar uma fila de logs assíncrona não-bloqueante de alta performance em Go com tratamento seguro de saturação.",
+        "category": "Alta Performance",
+        "date": "17 de Maio, 2026",
+        "readTime": "4 min de leitura",
+        "author": "Wesleyskap",
+        "series": "orkai-observability-series",
+        "seriesIndex": 2
+    },
+    {
+        "id": "orkai-observability-genesis",
+        "title": "Criando um Logger JSON de Ultra-Performance e um Tracer LIFO do Zero em Go",
+        "excerpt": "Como correlacionar logs estruturados com escopos complexos de execução sem poluir suas regras de negócios? Aprenda a desenhar um Logger livre de reflexão e um rastreador concorrente em Go.",
+        "category": "Concorrência & Arquitetura",
+        "date": "17 de Maio, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesleyskap",
+        "series": "orkai-observability-series",
+        "seriesIndex": 1
+    }
+]
