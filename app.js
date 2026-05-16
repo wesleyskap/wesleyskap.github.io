@@ -433,6 +433,7 @@ const router = {
             const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
             if (response.ok) {
                 const posts = await response.json();
+                posts.sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
                 const latestThree = posts.slice(0, 3);
                 latestThree.forEach(post => {
                     latestPostsHTML += `
@@ -541,6 +542,7 @@ const router = {
             const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
             if (!response.ok) throw new Error("Registry fetch failed");
             const posts = await response.json();
+            posts.sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
 
             let articlesHTML = "";
             posts.forEach(post => {
@@ -650,6 +652,46 @@ const router = {
         `;
     },
 
+    parseDate(dateStr) {
+        if (!dateStr) return new Date(0);
+        const cleanStr = dateStr.toLowerCase()
+            .replace(" de ", " ")
+            .replace(",", "");
+        
+        const months = {
+            "janeiro": "jan", "january": "jan", "jan": "jan",
+            "fevereiro": "feb", "february": "feb", "feb": "feb",
+            "março": "mar", "march": "mar", "mar": "mar",
+            "abril": "apr", "april": "apr", "apr": "apr",
+            "maio": "may", "may": "may",
+            "junho": "jun", "june": "jun", "jun": "jun",
+            "julho": "jul", "july": "jul", "jul": "jul",
+            "agosto": "aug", "august": "aug", "aug": "aug",
+            "setembro": "sep", "september": "sep", "sep": "sep",
+            "outubro": "oct", "october": "oct", "oct": "oct",
+            "novembro": "nov", "november": "nov", "nov": "nov",
+            "dezembro": "dec", "december": "dec", "dec": "dec"
+        };
+        
+        const parts = cleanStr.split(/\s+/);
+        if (parts.length < 3) return new Date(0);
+        
+        let day, monthName, year;
+        
+        if (!isNaN(parts[0])) {
+            day = parseInt(parts[0], 10);
+            monthName = parts[1];
+            year = parseInt(parts[2], 10);
+        } else {
+            monthName = parts[0];
+            day = parseInt(parts[1], 10);
+            year = parseInt(parts[2], 10);
+        }
+        
+        const engMonth = months[monthName] || "jan";
+        return new Date(`${engMonth} ${day}, ${year}`);
+    },
+
     parseFrontMatter(text) {
         const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
         if (!match) return { metadata: {}, body: text };
@@ -740,7 +782,9 @@ const router = {
             console.error("Failed to load registry for related posts:", e);
         }
 
-        const related = registry.filter(p => p.series === post.series && p.id !== post.id);
+        const related = registry
+            .filter(p => p.series === post.series && p.id !== post.id)
+            .sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
         let relatedHTML = "";
         related.forEach(rel => {
             relatedHTML += `
