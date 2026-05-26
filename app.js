@@ -38,12 +38,12 @@ const PORTFOLIO_CONTENT = {
                 }
             ],
             timelineTitle: "Trajetória Profissional",
-            timeline: [
+                   timeline: [
                 {
                     role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
-                    company: "Orangebox Technology / Oramont Businesstech (Remoto)",
+                    company: "Orangebox Technology / Oramont Businesstech",
                     period: "Mai 2025 - ",
-                    desc: "Liderança técnica e definição de arquitetura de sistemas distribuídos de alta escala. Desenvolvimento de aplicações fullstack e definição de padrões de observabilidade, qualidade e TDD para ambientes distribuídos. Mentoria técnica e estratégias de engenharia.",
+                    desc: "Condução de decisões de arquitetura, estruturação técnica e implementação de estratégias de observabilidade (telemetria e rastreabilidade distribuída) para garantir a resiliência dos projetos. Reorganização estrutural de times de engenharia e otimização do fluxo de trabalho, controlando métricas de Lead Time e Cycle Time com uso de Throughput histórico para previsibilidade. Desenvolvimento de soluções de IA Generativa e agentes inteligentes com Python (LangChain/FastAPI), integrando LLMs a aplicações corporativas com Node.js, Kotlin, Go e React.",
                     tech: ["Ruby on Rails", "C#", "Golang", "Kotlin (Quarkus)", "PHP", "Python", "Node.js", "Next.js", "React", "Angular"],
                     refName: "Diego Mondego (CEO)",
                     refLink: "https://www.linkedin.com/in/diego-mondego/",
@@ -52,10 +52,10 @@ const PORTFOLIO_CONTENT = {
                 },
                 {
                     role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
-                    company: "Digital Pages (Híbrido)",
+                    company: "Digital Pages",
                     period: "Ago 2011 - Abr 2025",
-                    desc: "Liderança de times e evolução de plataformas SaaS multi-tenant. Evolução e modernização de sistemas legados de alto tráfego em cloud (Azure/AWS). Implantação de monitoramento, observabilidade e troubleshooting. Otimização de bancos de dados relacionais e NoSQL.",
-                    tech: ["Ruby on Rails", "C#", "Java (Spring Boot)", "Golang", "Python", "Node.js", "PHP", "React", "Next.js", "Angular", "Vue", "Azure", "AWS", "GCP"],
+                    desc: "Transição bem-sucedida de monólitos legados para microsserviços e arquitetura orientada a eventos (Event-Driven) e notificações push, utilizando brokers como Kafka, RabbitMQ, Redis e AWS SQS/SNS para suportar com estabilidade mais de 20.000 usuários simultâneos em portais de CMS e SaaS de clientes como Google, Cogna, Raízen, Folha de S.Paulo, Valor Econômico, Editora Abril e Pearson. Modernização de infraestruturas locais para cloud (AWS/Azure/GCP) usando Terraform (IaC). Liderança técnica de equipes com redução de Lead/Cycle Time em 30% usando Throughput histórico. Mentoria ativa e PDIs. Implementação de observabilidade (OpenTelemetry/Grafana) e TDD.",
+                    tech: ["Ruby on Rails", "C#", "Java (Spring Boot)", "Golang", "Python", "Node.js", "PHP", "React", "Next.js", "Angular", "Vue", "Azure", "AWS", "GCP", "Terraform", "Kafka", "RabbitMQ", "Redis", "OpenTelemetry"],
                     refName: "Youssef Mourad (CEO)",
                     refLink: "https://www.linkedin.com/in/youssef-mourad-449346/",
                     refSite: "https://www.digitalpages.com.br/",
@@ -63,17 +63,38 @@ const PORTFOLIO_CONTENT = {
                 },
                 {
                     role: "Desenvolvedor Ruby Pleno",
-                    company: "Maya Comunicação & Publi9 (Presencial)",
-                    period: "Ago 2010 - Jul 2011",
-                    desc: "Desenvolvimento e manutenção de aplicações web corporativas e portais utilizando Ruby on Rails e modelagem de dados ágil.",
-                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS"]
+                    company: "Maya Comunicação",
+                    period: "Fev 2011 - Jul 2011",
+                    desc: "Desenvolvimento de aplicações web utilizando Ruby on Rails e manutenção evolutiva de sistemas corporativos.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS", "HTML"]
                 },
                 {
-                    role: "Desenvolvedor Júnior (ASP.NET, PHP & Ruby)",
-                    company: "Grupo Inova, TV Tem (Globo) & Excelência Global",
-                    period: "Fev 2006 - Ago 2010",
-                    desc: "Suporte, manutenção e desenvolvimento de funcionalidades web para portais de notícias de larga escala, integrações e sistemas internos corporativos.",
-                    tech: ["ASP.NET", "C#", "PHP", "Ruby", "MySQL", "SQL Server"]
+                    role: "Desenvolvedor Ruby Pleno",
+                    company: "Publi9",
+                    period: "Ago 2010 - Fev 2011",
+                    desc: "Desenvolvimento, criação de novas funcionalidades e manutenção de aplicações baseadas em Ruby on Rails.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS", "HTML"]
+                },
+                {
+                    role: "Desenvolvedor ASP / .NET Júnior",
+                    company: "Grupo Inova",
+                    period: "Jan 2010 - Ago 2010",
+                    desc: "Desenvolvimento de aplicações web utilizando ASP.NET e manutenção de integrações e sistemas internos.",
+                    tech: ["ASP.NET", "C#", "SQL Server", "HTML", "CSS", "JavaScript"]
+                },
+                {
+                    role: "Desenvolvedor PHP e Ruby Júnior",
+                    company: "Temmais.com / TV Tem (Rede Globo)",
+                    period: "Out 2008 - Out 2009",
+                    desc: "Desenvolvimento de funcionalidades web e manutenção de portais de conteúdo de alta volumetria em PHP e Ruby.",
+                    tech: ["PHP", "Ruby", "MySQL", "JavaScript", "HTML", "CSS"]
+                },
+                {
+                    role: "Desenvolvedor",
+                    company: "Excelência Global Ltda",
+                    period: "Fev 2006 - Set 2008",
+                    desc: "Desenvolvimento, suporte técnico e evolução de sistemas corporativos internos.",
+                    tech: ["PHP", "MySQL", "JavaScript", "HTML", "CSS", "SQL Server"]
                 }
             ]
         },
@@ -175,40 +196,61 @@ const PORTFOLIO_CONTENT = {
             timelineTitle: "Professional Timeline",
             timeline: [
                 {
-                    role: "Technical Leader & Senior Full Stack Developer",
-                    company: "Orangebox Technology / Oramont Businesstech (Remote)",
+                    role: "Tech Lead & Senior Full Stack Engineer",
+                    company: "Orangebox Technology / Oramont Businesstech",
                     period: "May 2025 - ",
-                    desc: "Technical leadership and distributed systems architecture design. High-scale fullstack development. Definition of observability, quality, and TDD standards for distributed environments. Technical mentoring.",
-                    tech: ["Ruby on Rails", "Java (Spring Boot)", "Golang", "PHP (Laravel)", "Kotlin (Quarkus)", ".NET Core", "Node.js (NestJS)", "Next.js", "React", "Python"],
+                    desc: "Led architectural decisions, technical design, and implemented observability strategies (telemetry and distributed tracing) to ensure project resilience. Restructured engineering teams and optimized workflows, controlling Lead/Cycle Time metrics using historical Throughput for predictable deliveries. Developed Generative AI solutions and intelligent agents with Python (LangChain/FastAPI), integrating LLMs into corporate applications with Node.js, Kotlin, Go, and React.",
+                    tech: ["Python", "LangChain", "FastAPI", "Node.js", "Kotlin", "Go", "React", "Ruby on Rails", "C#"],
                     refName: "Diego Mondego (CEO)",
-                    refLink: "https://linkedin.com",
+                    refLink: "https://www.linkedin.com/in/diego-mondego/",
                     refSite: "https://oramont.com/",
-                    refEmail: "contato@orangebox.tech"
+                    refEmail: "diego@oramont.com"
                 },
                 {
-                    role: "Technical Leader & Senior Full Stack Developer",
-                    company: "Digital Pages (Hybrid)",
+                    role: "Senior Full Stack Engineer & Tech Lead",
+                    company: "Digital Pages",
                     period: "Aug 2011 - Apr 2025",
-                    desc: "Team leadership and evolution of multi-tenant SaaS platforms. Evolution and modernization of legacy high-traffic systems in Azure and AWS. Deployment of monitoring, observability, and database query tuning.",
-                    tech: ["C# (.NET)", "Java (Spring Boot)", "Python", "Ruby on Rails", "Node.js", "PHP (Laravel)", "React", "Next.js", "Angular", "Vue", "Golang", "Azure", "AWS"],
+                    desc: "Successfully transitioned legacy monoliths to microservices and Event-Driven architecture using brokers like Kafka, RabbitMQ, Redis, and AWS SQS/SNS, supporting 20,000+ concurrent users for clients like Google, Cogna, Raízen, Folha de S.Paulo, Valor Econômico, Editora Abril, and Pearson. Modernized on-premises infrastructures to AWS, Azure, and GCP using Terraform (IaC). Led engineering teams and reduced Lead/Cycle Time by 30% using historical Throughput. Active mentoring and PDIs. Implemented OpenTelemetry, Grafana, and TDD.",
+                    tech: ["Ruby on Rails", "C#", "Java (Spring Boot)", "Golang", "Python", "Node.js", "PHP", "React", "Next.js", "Angular", "Vue", "Azure", "AWS", "GCP", "Terraform", "Kafka", "RabbitMQ", "Redis", "OpenTelemetry"],
                     refName: "Youssef Mourad (CEO)",
-                    refLink: "https://linkedin.com",
+                    refLink: "https://www.linkedin.com/in/youssef-mourad-449346/",
                     refSite: "https://www.digitalpages.com.br/",
-                    refEmail: "contato@digitalpages.com.br"
+                    refEmail: "youssef.mourad@digitalpages.com.br"
                 },
                 {
                     role: "Mid-level Ruby Developer",
-                    company: "Maya Comunicação & Publi9 (On-site)",
-                    period: "Aug 2010 - Jul 2011",
-                    desc: "Development and maintenance of corporate web applications and portals using Ruby on Rails and agile data schemas.",
-                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS"]
+                    company: "Maya Comunicação",
+                    period: "Feb 2011 - Jul 2011",
+                    desc: "Developed web applications using Ruby on Rails and handled evolutionary maintenance of corporate systems.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS", "HTML"]
                 },
                 {
-                    role: "Junior Developer (ASP.NET, PHP & Ruby)",
-                    company: "Grupo Inova, TV Tem (Globo Affiliate) & Excelência Global",
-                    period: "Feb 2006 - Aug 2010",
-                    desc: "Support, maintenance, and features development for high-traffic news portals, corporate systems, and integrations.",
-                    tech: ["ASP.NET", "C#", "PHP", "Ruby", "MySQL", "SQL Server"]
+                    role: "Mid-level Ruby Developer",
+                    company: "Publi9",
+                    period: "Aug 2010 - Feb 2011",
+                    desc: "Developed new features and maintained Ruby on Rails applications.",
+                    tech: ["Ruby on Rails", "MySQL", "JavaScript", "CSS", "HTML"]
+                },
+                {
+                    role: "Junior ASP / .NET Developer",
+                    company: "Grupo Inova",
+                    period: "Jan 2010 - Aug 2010",
+                    desc: "Developed web applications using ASP.NET and maintained integrations and internal corporate systems.",
+                    tech: ["ASP.NET", "C#", "SQL Server", "HTML", "CSS", "JavaScript"]
+                },
+                {
+                    role: "Junior PHP and Ruby Developer",
+                    company: "Temmais.com / TV Tem (Rede Globo Affiliate)",
+                    period: "Oct 2008 - Oct 2009",
+                    desc: "Developed web features and maintained high-traffic content portals in PHP and Ruby.",
+                    tech: ["PHP", "Ruby", "MySQL", "JavaScript", "HTML", "CSS"]
+                },
+                {
+                    role: "Developer",
+                    company: "Excelência Global Ltda",
+                    period: "Feb 2006 - Sep 2008",
+                    desc: "Developed, supported, and evolved internal corporate systems.",
+                    tech: ["PHP", "MySQL", "JavaScript", "HTML", "CSS", "SQL Server"]
                 }
             ]
         },
