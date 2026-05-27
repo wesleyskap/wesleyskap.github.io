@@ -44,6 +44,17 @@
         "seriesIndex": 3
     },
     {
+        "id": "shared-broker-resilience",
+        "title": "Resilience in Ruby Microservices: Exponential Backoff, DLQ, and Thread-Safe Circuit Breaker",
+        "excerpt": "Distributed systems fail. Learn how to design retry policies, Dead Letter Queue (DLQ) routing, and outbound circuit breakers in SharedBroker.",
+        "category": "Resilience",
+        "date": "May 26, 2026",
+        "readTime": "5 min read",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 2
+    },
+    {
         "id": "shared-broker-adapters",
         "title": "Decoupling Messaging in Ruby: Implementing the Adapter Pattern with InMemory, RabbitMQ, Kafka, and Redis",
         "excerpt": "How do you decouple message publishing and subscription from the physical broker in Ruby? Learn how to design and use multiple adapters.",
