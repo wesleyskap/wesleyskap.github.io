@@ -135,11 +135,7 @@ const PORTFOLIO_CONTENT = {
         },
         contact: {
             title: "Contato Profissional",
-            desc: "Se você tem um desafio técnico de alta complexidade, precisa de consultoria em arquitetura de microsserviços ou está em busca de liderança técnica para o seu time, entre em contato.",
-            name: "Nome Completo / Empresa",
-            email: "E-mail para Contato",
-            msg: "Descreva a sua Necessidade / Projeto",
-            submit: "Enviar Mensagem",
+            desc: "Consultoria em arquitetura, microsserviços, observabilidade e telemetria. Desenvolvimento e liderança técnica... entre em contato.",
             directTitle: "Canais de Comunicação Direta"
         },
         blog: {
@@ -291,11 +287,7 @@ const PORTFOLIO_CONTENT = {
         },
         contact: {
             title: "Professional Contact",
-            desc: "If you have a complex technical challenge, need architecture consulting, or are looking for technical leadership, feel free to get in touch.",
-            name: "Full Name / Organization",
-            email: "Contact Email Address",
-            msg: "Describe your Project / Scenario",
-            submit: "Send Message",
+            desc: "Consulting in architecture, microservices, observability, and telemetry. Development and technical leadership... get in touch.",
             directTitle: "Direct Channels"
         },
         blog: {
@@ -667,28 +659,6 @@ const router = {
                             </a>
                         </div>
                     </div>
-
-                    <div style="margin: 24px 0; display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: 13px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 1px;">
-                        <span style="flex-grow: 1; height: 1px; background: var(--border-color);"></span>
-                        <span>${this.locale === 'pt-BR' ? 'Ou envie um briefing' : 'Or send a briefing'}</span>
-                        <span style="flex-grow: 1; height: 1px; background: var(--border-color);"></span>
-                    </div>
-                    
-                    <form class="handshake-form" onsubmit="event.preventDefault(); alert(this.locale === 'pt-BR' ? 'Mensagem enviada com sucesso.' : 'Message sent successfully.');">
-                        <div class="form-group">
-                            <label class="form-label">${data.name}</label>
-                            <input type="text" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${data.email}</label>
-                            <input type="email" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">${data.msg}</label>
-                            <textarea class="form-textarea" required></textarea>
-                        </div>
-                        <button type="submit" class="form-submit-btn">${data.submit}</button>
-                    </form>
                 </div>
             </section>
         `;

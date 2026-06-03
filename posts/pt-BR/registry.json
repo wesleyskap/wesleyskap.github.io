@@ -22,6 +22,17 @@
         "seriesIndex": 2
     },
     {
+        "id": "shared-broker-adapters",
+        "title": "Desacoplamento de Mensageria em Ruby: Implementando o Adapter Pattern com InMemory, RabbitMQ, Kafka e Redis",
+        "excerpt": "Como desacoplar o envio e consumo de mensagens do broker físico em aplicações Ruby? Aprenda a projetar e utilizar múltiplos adaptadores.",
+        "category": "Mensageria",
+        "date": "25 de Maio, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 1
+    },
+    {
         "id": "orkai-observability-pprof",
         "title": "Automação de Diagnósticos: Profiling Sob Demanda com Auto-Triggered pprof em Go",
         "excerpt": "Investigar picos de CPU e memória em produção após o servidor cair é ineficaz. Aprenda a automatizar o profiling sob demanda usando pprof.",
