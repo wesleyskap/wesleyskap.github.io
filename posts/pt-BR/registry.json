@@ -1,5 +1,14 @@
 [
     {
+        "id": "http-query-method",
+        "title": "O Novo Método HTTP QUERY: Superando as Limitações de GET e POST em APIs Modernas",
+        "excerpt": "Conheça o RFC 10008, que define o método HTTP QUERY. Entenda como ele resolve o dilema de enviar buscas complexas com segurança, idempotência e suporte nativo a cache.",
+        "category": "Web",
+        "date": "18 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesley Lima"
+    },
+    {
         "id": "shared-broker-concurrency-routing",
         "title": "Controle de Concorrência, Backpressure Adaptativo e Roteamento Híbrido Multi-Adapter",
         "excerpt": "Como evitar sobrecarga de bancos de dados locais e rotear eventos para múltiplos brokers de forma híbrida em microsserviços Ruby? Veja a solução.",

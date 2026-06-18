@@ -580,14 +580,26 @@ const router = {
 
             let articlesHTML = "";
             posts.forEach(post => {
-                const seriesTitle = post.series === "onkai-unified-bus-series" ? "Onkai Unified Bus" : "Orkai Observability";
+                let seriesMetaHTML = "";
+                if (post.series) {
+                    let seriesTitle = "Orkai Observability";
+                    if (post.series === "onkai-unified-bus-series") {
+                        seriesTitle = "Onkai Unified Bus";
+                    } else if (post.series === "shared-broker-series") {
+                        seriesTitle = "Shared Broker";
+                    }
+                    seriesMetaHTML = `
+                        <span>&bull;</span>
+                        <span>${seriesTitle} (${post.seriesIndex})</span>
+                    `;
+                }
+
                 articlesHTML += `
                     <article class="article-card" onclick="window.location.hash = '#post/${post.id}'">
                         <div>
                             <div class="card-meta">
                                 <span class="card-category">${post.category}</span>
-                                <span>&bull;</span>
-                                <span>${seriesTitle} (${post.seriesIndex})</span>
+                                ${seriesMetaHTML}
                             </div>
                             <h3 class="card-title">${post.title}</h3>
                             <p class="card-excerpt">${post.excerpt}</p>
@@ -794,9 +806,9 @@ const router = {
             console.error("Failed to load registry for related posts:", e);
         }
 
-        const related = registry
+        const related = post.series ? registry
             .filter(p => p.series === post.series && p.id !== post.id)
-            .sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
+            .sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date)) : [];
         let relatedHTML = "";
         related.forEach(rel => {
             relatedHTML += `
@@ -809,7 +821,16 @@ const router = {
             `;
         });
 
-        const seriesText = post.series === "onkai-unified-bus-series" ? "Onkai Unified Bus" : "Orkai Observability";
+        let seriesText = "";
+        if (post.series === "onkai-unified-bus-series") {
+            seriesText = "Onkai Unified Bus";
+        } else if (post.series === "shared-broker-series") {
+            seriesText = "Shared Broker";
+        } else if (post.series === "orkai-observability-series") {
+            seriesText = "Orkai Observability";
+        }
+
+        const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";
 
         viewport.innerHTML = `
             <section class="post-detail-section">
@@ -821,7 +842,7 @@ const router = {
 
                 <article class="post-full">
                     <header class="post-header">
-                        <span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>
+                        ${seriesBadgeHTML}
                         <h1 class="post-title">${post.title}</h1>
                         <div class="post-meta-strip">
                             <span class="post-meta-item">${this.locale === "pt-BR" ? "Autor" : "Author"}: <strong>${post.author}</strong></span>

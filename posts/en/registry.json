@@ -1,5 +1,14 @@
 [
     {
+        "id": "http-query-method",
+        "title": "The New HTTP QUERY Method: Overcoming GET and POST Limitations in Modern APIs",
+        "excerpt": "Discover RFC 10008, defining the HTTP QUERY method. Learn how it solves the dilemma of sending complex queries safely, idempotently, and with native caching support.",
+        "category": "Web",
+        "date": "June 18, 2026",
+        "readTime": "5 min read",
+        "author": "Wesley Lima"
+    },
+    {
         "id": "shared-broker-concurrency-routing",
         "title": "Concurrency Control, Adaptive Backpressure, and Hybrid Multi-Adapter Routing",
         "excerpt": "How do you avoid overloading local databases and route events to multiple brokers in Ruby microservices? Learn about concurrency and routing.",
