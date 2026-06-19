@@ -38,7 +38,7 @@ const PORTFOLIO_CONTENT = {
                 }
             ],
             timelineTitle: "Trajetória Profissional",
-                   timeline: [
+            timeline: [
                 {
                     role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
                     company: "Orangebox Technology / Oramont Businesstech",
@@ -309,374 +309,12 @@ const PORTFOLIO_CONTENT = {
     }
 };
 
-const router = {
-    currentRoute: "about",
-    activePostId: null,
-    locale: "pt-BR",
+/* ==========================================================================
+   SOLID UTILITIES & SERVICES
+   ========================================================================== */
 
-    init() {
-        const localeSelector = document.getElementById("locale-selector");
-        const savedLocale = localStorage.getItem("wesley-locale") || "pt-BR";
-        this.locale = savedLocale;
-        localeSelector.value = savedLocale;
-
-        localeSelector.addEventListener("change", (e) => {
-            this.locale = e.target.value;
-            localStorage.setItem("wesley-locale", this.locale);
-            this.translateNavigation();
-            this.handleRouting();
-        });
-
-        window.addEventListener("hashchange", () => this.handleRouting());
-        this.translateNavigation();
-        this.handleRouting();
-    },
-
-    translateNavigation() {
-        const navTexts = PORTFOLIO_CONTENT[this.locale].nav;
-        document.getElementById("link-about").innerText = navTexts.about;
-        document.getElementById("link-repositories").innerText = navTexts.repositories;
-        document.getElementById("link-articles").innerText = navTexts.articles;
-        document.getElementById("link-contact").innerText = navTexts.contact;
-
-        const subtitleEl = document.getElementById("main-subtitle");
-        if (subtitleEl) {
-            subtitleEl.innerText = this.locale === "pt-BR" ? "Engenheiro de Software" : "Software Engineer";
-        }
-    },
-
-    handleRouting() {
-        const hash = window.location.hash;
-        const viewport = document.getElementById("app-viewport");
-        viewport.style.opacity = "0";
-
-        setTimeout(() => {
-            if (!hash || hash === "" || hash === "#" || hash === "#about") {
-                this.currentRoute = "about";
-                this.activePostId = null;
-                this.loadAbout();
-            } else if (hash === "#repositories") {
-                this.currentRoute = "repositories";
-                this.activePostId = null;
-                this.loadRepositories();
-            } else if (hash === "#articles") {
-                this.currentRoute = "articles";
-                this.activePostId = null;
-                this.loadArticles();
-            } else if (hash === "#contact") {
-                this.currentRoute = "contact";
-                this.activePostId = null;
-                this.loadContact();
-            } else if (hash.startsWith("#post/")) {
-                this.currentRoute = "post-detail";
-                this.activePostId = hash.replace("#post/", "");
-                this.loadPostDetail(this.activePostId);
-            } else {
-                window.location.hash = "#about";
-            }
-            this.syncNavLinks();
-            viewport.style.opacity = "1";
-        }, 150);
-    },
-
-    syncNavLinks() {
-        const links = ["about", "repositories", "articles", "contact"];
-        links.forEach(l => {
-            const el = document.getElementById(`link-${l}`);
-            if (this.currentRoute === l) {
-                el.classList.add("active");
-            } else {
-                el.classList.remove("active");
-            }
-        });
-    },
-
-    async loadAbout() {
-        const viewport = document.getElementById("app-viewport");
-        const data = PORTFOLIO_CONTENT[this.locale].about;
-
-        // Capabilities summary list
-        let capabilitiesHTML = "";
-        data.capabilities.forEach(cap => {
-            capabilitiesHTML += `
-                <div class="capability-item">
-                    <h3 class="capability-title">${cap.title}</h3>
-                    <p class="capability-desc">${cap.desc}</p>
-                </div>
-            `;
-        });
-
-        // Timeline items
-        let timelineHTML = "";
-        data.timeline.forEach(item => {
-            let techHTML = "";
-            if (item.tech) {
-                item.tech.forEach(t => {
-                    techHTML += `<span class="case-tech-tag">${t}</span>`;
-                });
-            }
-            const labelText = this.locale === "pt-BR" ? "Linguagens & Tecnologias" : "Languages & Tech";
-            
-            let refHTML = "";
-            if (item.refLink && item.refEmail) {
-                const label = this.locale === "pt-BR" ? "Indicação" : "Recommendation";
-                const refDisplayName = item.refName ? `${item.refName} - ` : "";
-                const andText = this.locale === "pt-BR" ? " e " : " and ";
-                refHTML = `
-                    <div class="timeline-recommendation" style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);">
-                        <strong style="color: var(--accent); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">${label}:</strong> 
-                        <span>${refDisplayName}</span>
-                        <a href="${item.refLink}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">linkedin</a>${andText}
-                        <a href="mailto:${item.refEmail}" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">email</a>
-                    </div>
-                `;
-            }
-
-            const siteHTML = item.refSite ? `
-                <div class="timeline-company-site" style="margin-top: -8px; margin-bottom: 12px; font-size: 13px;">
-                    <a href="${item.refSite}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-family: var(--font-mono); font-size: 12px;">${item.refSite.replace('https://', '').replace('www.', '').replace(/\/$/, '')} &rarr;</a>
-                </div>
-            ` : "";
-
-            timelineHTML += `
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3 class="timeline-role">${item.role}</h3>
-                            <span class="timeline-period">${item.period}</span>
-                        </div>
-                        <div class="timeline-company">${item.company}</div>
-                        ${siteHTML}
-                        <p class="timeline-desc">${item.desc}</p>
-                        ${refHTML}
-                        ${techHTML ? `
-                            <div class="timeline-tech-section" style="margin-top: 16px;">
-                                <div class="timeline-tech-label">${labelText}</div>
-                                <div class="case-tech-deck">${techHTML}</div>
-                            </div>
-                        ` : ""}
-                    </div>
-                </div>
-            `;
-        });
-
-        // Fetch last 3 posts
-        let latestPostsHTML = "";
-        try {
-            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
-            if (response.ok) {
-                const posts = await response.json();
-                posts.sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
-                const latestThree = posts.slice(0, 3);
-                latestThree.forEach(post => {
-                    latestPostsHTML += `
-                        <div class="latest-post-item" style="margin-bottom: 16px;">
-                            <a href="#post/${post.id}" style="color: var(--text-primary); text-decoration: none; font-size: 15px; font-weight: 600; line-height: 1.4; transition: color 0.2s; display: block;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-primary)'">${post.title}</a>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);">${post.date} &bull; ${post.readTime}</div>
-                        </div>
-                    `;
-                });
-            }
-        } catch (e) {
-            console.error("Failed to load latest posts for homepage", e);
-        }
-
-        viewport.innerHTML = `
-            <section class="profile-section" style="padding-top: 0;">
-                <div class="bio-and-posts-container">
-                    <div class="bio-section-left">
-                        <p class="profile-description">${data.desc}</p>
-
-                        <div class="profile-contact-bar">
-                            <a href="mailto:wesleyskap@gmail.com" class="profile-contact-item">
-                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                                <span>wesleyskap@gmail.com</span>
-                            </a>
-                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="profile-contact-item whatsapp-item">
-                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                                </svg>
-                                <span>(11) 93618-2375</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="posts-section-right">
-                        <h2 class="section-heading">Post</h2>
-                        <div class="latest-posts-list">
-                            ${latestPostsHTML || '<div style="font-size: 14px; color: var(--text-muted);">No posts available.</div>'}
-                        </div>
-                        <div style="margin-top: 12px;">
-                            <a href="#articles" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">${this.locale === 'pt-BR' ? 'todos' : 'all'} &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-
-                <h2 class="section-heading" style="margin-top: 48px; font-size: 26px;">${data.capabilitiesTitle}</h2>
-                <div class="capabilities-grid">
-                    ${capabilitiesHTML}
-                </div>
-
-                <h2 class="section-heading" style="margin-top: 64px; font-size: 26px;">${data.timelineTitle}</h2>
-                <div class="timeline">
-                    ${timelineHTML}
-                </div>
-            </section>
-        `;
-    },
-
-    loadRepositories() {
-        const viewport = document.getElementById("app-viewport");
-        const data = PORTFOLIO_CONTENT[this.locale].repositories;
-
-        let itemsHTML = "";
-        data.items.forEach(item => {
-            let techHTML = "";
-            item.tech.forEach(t => {
-                techHTML += `<span class="case-tech-tag">${t}</span>`;
-            });
-
-            itemsHTML += `
-                <div class="case-card">
-                    <div class="case-header">
-                        <h3 class="case-title" style="font-family: var(--font-mono); color: var(--accent); font-size: 20px;">${item.title}</h3>
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="meta-cta-btn" style="padding: 6px 14px; font-size: 13px; box-shadow: none;">GitHub &rarr;</a>
-                    </div>
-                    
-                    <div class="case-details" style="margin-top: 12px;">
-                        <p class="case-block-desc" style="font-size: 15px;">${item.description}</p>
-                    </div>
-                    
-                    <div class="case-tech-deck" style="margin-top: 16px;">
-                        ${techHTML}
-                    </div>
-                </div>
-            `;
-        });
-
-        viewport.innerHTML = `
-            <section class="cases-section">
-                <h2 class="section-heading">${data.heading}</h2>
-                <div class="cases-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
-                    ${itemsHTML}
-                </div>
-            </section>
-        `;
-    },
-
-    async loadArticles() {
-        const viewport = document.getElementById("app-viewport");
-        const blogTexts = PORTFOLIO_CONTENT[this.locale].blog;
-
-        try {
-            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
-            if (!response.ok) throw new Error("Registry fetch failed");
-            const posts = await response.json();
-            posts.sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date));
-
-            let articlesHTML = "";
-            posts.forEach(post => {
-                let seriesMetaHTML = "";
-                if (post.series) {
-                    let seriesTitle = "Orkai Observability";
-                    if (post.series === "onkai-unified-bus-series") {
-                        seriesTitle = "Onkai Unified Bus";
-                    } else if (post.series === "shared-broker-series") {
-                        seriesTitle = "Shared Broker";
-                    }
-                    seriesMetaHTML = `
-                        <span>&bull;</span>
-                        <span>${seriesTitle} (${post.seriesIndex})</span>
-                    `;
-                }
-
-                articlesHTML += `
-                    <article class="article-card" onclick="window.location.hash = '#post/${post.id}'">
-                        <div>
-                            <div class="card-meta">
-                                <span class="card-category">${post.category}</span>
-                                ${seriesMetaHTML}
-                            </div>
-                            <h3 class="card-title">${post.title}</h3>
-                            <p class="card-excerpt">${post.excerpt}</p>
-                        </div>
-                        <div class="card-footer">
-                            <span>${blogTexts.authorLabel} <strong>${post.author}</strong></span>
-                            <span class="card-readtime">${post.readTime}</span>
-                        </div>
-                    </article>
-                `;
-            });
-
-            viewport.innerHTML = `
-                <section class="articles-section">
-                    <h2 class="section-heading">${blogTexts.heading}</h2>
-                    <div class="articles-grid">
-                        ${articlesHTML}
-                    </div>
-                </section>
-            `;
-        } catch (err) {
-            console.error("Failed to load articles:", err);
-            viewport.innerHTML = `
-                <section class="articles-section">
-                    <h2 class="section-heading">${blogTexts.heading}</h2>
-                    <div class="coming-soon-card" style="text-align: center; border: 1px solid var(--border-color); padding: 40px var(--spacing-lg);">
-                        <h3>Failed to load articles index.</h3>
-                    </div>
-                </section>
-            `;
-        }
-    },
-
-    loadContact() {
-        const viewport = document.getElementById("app-viewport");
-        const data = PORTFOLIO_CONTENT[this.locale].contact;
-
-        viewport.innerHTML = `
-            <section class="handshake-section">
-                <div class="handshake-card">
-                    <h2 class="handshake-title">${data.title}</h2>
-                    <p class="handshake-desc" style="margin-bottom: 24px;">${data.desc}</p>
-                    
-                    <div class="contact-channels-container">
-                        <h3 class="channels-heading">${data.directTitle}</h3>
-                        <div class="contact-channels">
-                            <a href="mailto:wesleyskap@gmail.com" class="channel-card">
-                                <div class="channel-icon-wrapper">
-                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                    </svg>
-                                </div>
-                                <div class="channel-details">
-                                    <span class="channel-label">E-mail</span>
-                                    <span class="channel-value">wesleyskap@gmail.com</span>
-                                </div>
-                            </a>
-                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="channel-card">
-                                <div class="channel-icon-wrapper whatsapp-theme">
-                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                                    </svg>
-                                </div>
-                                <div class="channel-details">
-                                    <span class="channel-label">WhatsApp</span>
-                                    <span class="channel-value">(11) 93618-2375</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        `;
-    },
-
-    parseDate(dateStr) {
+class DateUtils {
+    static parseDate(dateStr) {
         if (!dateStr) return new Date(0);
         const cleanStr = dateStr.toLowerCase()
             .replace(" de ", " ")
@@ -714,9 +352,73 @@ const router = {
         
         const engMonth = months[monthName] || "jan";
         return new Date(`${engMonth} ${day}, ${year}`);
-    },
+    }
+}
 
-    parseFrontMatter(text) {
+class TranslationService {
+    constructor(defaultLocale = "pt-BR") {
+        this.locale = localStorage.getItem("wesley-locale") || defaultLocale;
+    }
+
+    init(onLocaleChangeCallback) {
+        const localeSelector = document.getElementById("locale-selector");
+        if (localeSelector) {
+            localeSelector.value = this.locale;
+            localeSelector.addEventListener("change", (e) => {
+                this.setLocale(e.target.value);
+                if (onLocaleChangeCallback) onLocaleChangeCallback();
+            });
+        }
+        this.translateNavigation();
+    }
+
+    setLocale(locale) {
+        this.locale = locale;
+        localStorage.setItem("wesley-locale", locale);
+        this.translateNavigation();
+    }
+
+    getContent() {
+        return PORTFOLIO_CONTENT[this.locale];
+    }
+
+    translateNavigation() {
+        const navTexts = this.getContent().nav;
+        document.getElementById("link-about").innerText = navTexts.about;
+        document.getElementById("link-repositories").innerText = navTexts.repositories;
+        document.getElementById("link-articles").innerText = navTexts.articles;
+        document.getElementById("link-contact").innerText = navTexts.contact;
+
+        const subtitleEl = document.getElementById("main-subtitle");
+        if (subtitleEl) {
+            subtitleEl.innerText = this.locale === "pt-BR" ? "Engenheiro de Software" : "Software Engineer";
+        }
+    }
+}
+
+class ThemeManager {
+    init() {
+        const toggleBtn = document.getElementById("theme-toggle");
+        const savedTheme = localStorage.getItem("wesley-theme") || "dark-theme";
+        document.body.className = savedTheme;
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => this.toggleTheme());
+        }
+    }
+
+    toggleTheme() {
+        if (document.body.classList.contains("dark-theme")) {
+            document.body.className = "light-theme";
+            localStorage.setItem("wesley-theme", "light-theme");
+        } else {
+            document.body.className = "dark-theme";
+            localStorage.setItem("wesley-theme", "dark-theme");
+        }
+    }
+}
+
+class MarkdownParser {
+    static parseFrontMatter(text) {
         const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
         if (!match) return { metadata: {}, body: text };
         
@@ -732,165 +434,7 @@ const router = {
             }
         });
         return { metadata, body };
-    },
-
-    async loadPostDetail(postId) {
-        try {
-            const response = await fetch(`./posts/${this.locale}/${postId}.md?t=${Date.now()}`);
-            if (!response.ok) throw new Error("Post fetch failed");
-            const rawText = await response.text();
-            const { metadata, body } = this.parseFrontMatter(rawText);
-            
-            const postData = {
-                id: postId,
-                title: metadata.title || "",
-                excerpt: metadata.excerpt || "",
-                category: metadata.category || "",
-                date: metadata.date || "",
-                readTime: metadata.readTime || "",
-                author: metadata.author || "",
-                series: metadata.series || "",
-                seriesIndex: parseInt(metadata.seriesIndex || "0", 10),
-                referenceLink: metadata.referenceLink || null,
-                body: body
-            };
-            this.renderPostDetail(postData);
-        } catch (err) {
-            console.error("Failed to load post detail:", err);
-            this.renderConnectionError(() => this.loadPostDetail(postId));
-        }
-    },
-
-    async renderPostDetail(post) {
-        const viewport = document.getElementById("app-viewport");
-        const blogTexts = PORTFOLIO_CONTENT[this.locale].blog;
-
-        if (!post) {
-            viewport.innerHTML = `
-                <div class="post-detail-section" style="text-align: center;">
-                    <h1 class="post-title">${blogTexts.notFoundTitle}</h1>
-                    <p>${blogTexts.notFoundDesc}</p>
-                    <button class="back-btn" onclick="window.location.hash = '#articles'">${blogTexts.backLabel}</button>
-                </div>
-            `;
-            return;
-        }
-
-        const renderedBody = this.parseMarkdown(post.body);
-        let referenceHTML = "";
-        if (post.referenceLink) {
-            const isGitHub = post.referenceLink.includes("github.com");
-            let title, desc, cta, iconHTML;
-            if (isGitHub) {
-                title = this.locale === "pt-BR" ? blogTexts.repoTitlePT : blogTexts.repoTitleEN;
-                desc = this.locale === "pt-BR" ? blogTexts.repoDescPT : blogTexts.repoDescEN;
-                cta = this.locale === "pt-BR" ? blogTexts.repoCtaPT : blogTexts.repoCtaEN;
-                iconHTML = `
-                    <svg class="repo-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                    </svg>
-                `;
-            } else {
-                title = this.locale === "pt-BR" ? "Referência Oficial" : "Official Reference";
-                desc = this.locale === "pt-BR" 
-                    ? "Consulte a documentação técnica oficial, RFCs ou materiais de referência sobre este tópico." 
-                    : "Access the official technical specifications, RFCs, or reference documentation related to this topic.";
-                cta = this.locale === "pt-BR" ? "Ver Referência" : "View Reference";
-                iconHTML = `
-                    <svg class="repo-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                `;
-            }
-            referenceHTML = `
-                <div class="repo-cta-card">
-                    <div class="repo-cta-content">
-                        <h4 class="repo-cta-title">${title}</h4>
-                        <p class="repo-cta-desc">${desc}</p>
-                    </div>
-                    <a href="${post.referenceLink}" target="_blank" rel="noopener noreferrer" class="repo-cta-link">
-                        ${iconHTML}
-                        ${cta}
-                    </a>
-                </div>
-            `;
-        }
-
-        let registry = [];
-        try {
-            const response = await fetch(`./posts/${this.locale}/registry.json?t=${Date.now()}`);
-            if (response.ok) registry = await response.json();
-        } catch (e) {
-            console.error("Failed to load registry for related posts:", e);
-        }
-
-        const related = post.series ? registry
-            .filter(p => p.series === post.series && p.id !== post.id)
-            .sort((a, b) => this.parseDate(b.date) - this.parseDate(a.date)) : [];
-        let relatedHTML = "";
-        related.forEach(rel => {
-            relatedHTML += `
-                <div class="related-card" onclick="window.location.hash = '#post/${rel.id}'">
-                    <div class="card-meta">
-                        <span class="card-category">${this.locale === "pt-BR" ? "Parte" : "Part"} ${rel.seriesIndex}</span>
-                    </div>
-                    <h4 class="related-card-title">${rel.title}</h4>
-                </div>
-            `;
-        });
-
-        let seriesText = "";
-        if (post.series === "onkai-unified-bus-series") {
-            seriesText = "Onkai Unified Bus";
-        } else if (post.series === "shared-broker-series") {
-            seriesText = "Shared Broker";
-        } else if (post.series === "orkai-observability-series") {
-            seriesText = "Orkai Observability";
-        }
-
-        const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";
-
-        viewport.innerHTML = `
-            <section class="post-detail-section">
-                <div class="back-btn-container">
-                    <button class="back-btn" onclick="window.location.hash = '#articles'">
-                        &larr; ${blogTexts.backLabel}
-                    </button>
-                </div>
-
-                <article class="post-full">
-                    <header class="post-header">
-                        ${seriesBadgeHTML}
-                        <h1 class="post-title">${post.title}</h1>
-                        <div class="post-meta-strip">
-                            <span class="post-meta-item">${this.locale === "pt-BR" ? "Autor" : "Author"}: <strong>${post.author}</strong></span>
-                            <span>&bull;</span>
-                            <span class="post-meta-item">${this.locale === "pt-BR" ? "Publicado em" : "Published on"}: <strong>${post.date}</strong></span>
-                            <span>&bull;</span>
-                            <span class="post-meta-item">${post.readTime}</span>
-                        </div>
-                    </header>
-
-                    <div class="post-body">
-                        ${renderedBody}
-                    </div>
-
-                    ${referenceHTML}
-
-                    ${related.length > 0 ? `
-                        <div class="related-posts-section">
-                            <h3 class="related-title">${blogTexts.relatedTitle}</h3>
-                            <div class="related-grid">
-                                ${relatedHTML}
-                            </div>
-                        </div>
-                    ` : ""}
-                </article>
-            </section>
-        `;
-    },
+    }
 
     parseMarkdown(text) {
         let html = text;
@@ -1053,50 +597,579 @@ const router = {
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 600;">$1</a>');
 
         return html;
-    },
+    }
+}
+
+class ApiClient {
+    constructor(translationService) {
+        this.translationService = translationService;
+    }
+
+    async fetchRegistry() {
+        const response = await fetch(`./posts/${this.translationService.locale}/registry.json?t=${Date.now()}`);
+        if (!response.ok) throw new Error("Registry fetch failed");
+        const posts = await response.json();
+        return posts.sort((a, b) => DateUtils.parseDate(b.date) - DateUtils.parseDate(a.date));
+    }
+
+    async fetchPost(postId) {
+        const response = await fetch(`./posts/${this.translationService.locale}/${postId}.md?t=${Date.now()}`);
+        if (!response.ok) throw new Error("Post fetch failed");
+        const rawText = await response.text();
+        const { metadata, body } = MarkdownParser.parseFrontMatter(rawText);
+        return {
+            id: postId,
+            title: metadata.title || "",
+            excerpt: metadata.excerpt || "",
+            category: metadata.category || "",
+            date: metadata.date || "",
+            readTime: metadata.readTime || "",
+            author: metadata.author || "",
+            series: metadata.series || "",
+            seriesIndex: parseInt(metadata.seriesIndex || "0", 10),
+            referenceLink: metadata.referenceLink || null,
+            body: body
+        };
+    }
+}
+
+class ViewRenderer {
+    constructor(translationService, markdownParser) {
+        this.translationService = translationService;
+        this.markdownParser = markdownParser;
+        this.viewport = document.getElementById("app-viewport");
+    }
+
+    renderAbout(latestPostsHTML = "") {
+        const data = this.translationService.getContent().about;
+
+        let capabilitiesHTML = "";
+        data.capabilities.forEach(cap => {
+            capabilitiesHTML += `
+                <div class="capability-item">
+                    <h3 class="capability-title">${cap.title}</h3>
+                    <p class="capability-desc">${cap.desc}</p>
+                </div>
+            `;
+        });
+
+        let timelineHTML = "";
+        data.timeline.forEach(item => {
+            let techHTML = "";
+            if (item.tech) {
+                item.tech.forEach(t => {
+                    techHTML += `<span class="case-tech-tag">${t}</span>`;
+                });
+            }
+            const labelText = this.translationService.locale === "pt-BR" ? "Linguagens & Tecnologias" : "Languages & Tech";
+            
+            let refHTML = "";
+            if (item.refLink && item.refEmail) {
+                const label = this.translationService.locale === "pt-BR" ? "Indicação" : "Recommendation";
+                const refDisplayName = item.refName ? `${item.refName} - ` : "";
+                const andText = this.translationService.locale === "pt-BR" ? " e " : " and ";
+                refHTML = `
+                    <div class="timeline-recommendation" style="margin-top: 12px; font-size: 13px; color: var(--text-secondary);">
+                        <strong style="color: var(--accent); font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">${label}:</strong> 
+                        <span>${refDisplayName}</span>
+                        <a href="${item.refLink}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">linkedin</a>${andText}
+                        <a href="mailto:${item.refEmail}" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px dotted var(--accent); font-weight: 500;">email</a>
+                    </div>
+                `;
+            }
+
+            const siteHTML = item.refSite ? `
+                <div class="timeline-company-site" style="margin-top: -8px; margin-bottom: 12px; font-size: 13px;">
+                    <a href="${item.refSite}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-family: var(--font-mono); font-size: 12px;">${item.refSite.replace('https://', '').replace('www.', '').replace(/\/$/, '')} &rarr;</a>
+                </div>
+            ` : "";
+
+            timelineHTML += `
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-role">${item.role}</h3>
+                            <span class="timeline-period">${item.period}</span>
+                        </div>
+                        <div class="timeline-company">${item.company}</div>
+                        ${siteHTML}
+                        <p class="timeline-desc">${item.desc}</p>
+                        ${refHTML}
+                        ${techHTML ? `
+                            <div class="timeline-tech-section" style="margin-top: 16px;">
+                                <div class="timeline-tech-label">${labelText}</div>
+                                <div class="case-tech-deck">${techHTML}</div>
+                            </div>
+                        ` : ""}
+                    </div>
+                </div>
+            `;
+        });
+
+        this.viewport.innerHTML = `
+            <section class="profile-section" style="padding-top: 0;">
+                <div class="bio-and-posts-container">
+                    <div class="bio-section-left">
+                        <p class="profile-description">${data.desc}</p>
+
+                        <div class="profile-contact-bar">
+                            <a href="mailto:wesleyskap@gmail.com" class="profile-contact-item">
+                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <span>wesleyskap@gmail.com</span>
+                            </a>
+                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="profile-contact-item whatsapp-item">
+                                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                </svg>
+                                <span>(11) 93618-2375</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="posts-section-right">
+                        <h2 class="section-heading">Post</h2>
+                        <div class="latest-posts-list">
+                            ${latestPostsHTML || `<div style="font-size: 14px; color: var(--text-muted);">${this.translationService.locale === 'pt-BR' ? 'Sem posts disponíveis.' : 'No posts available.'}</div>`}
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <a href="#articles" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">${this.translationService.locale === 'pt-BR' ? 'todos' : 'all'} &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 48px; font-size: 26px;">${data.capabilitiesTitle}</h2>
+                <div class="capabilities-grid">
+                    ${capabilitiesHTML}
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 64px; font-size: 26px;">${data.timelineTitle}</h2>
+                <div class="timeline">
+                    ${timelineHTML}
+                </div>
+            </section>
+        `;
+    }
+
+    renderRepositories() {
+        const data = this.translationService.getContent().repositories;
+
+        let itemsHTML = "";
+        data.items.forEach(item => {
+            let techHTML = "";
+            item.tech.forEach(t => {
+                techHTML += `<span class="case-tech-tag">${t}</span>`;
+            });
+
+            itemsHTML += `
+                <div class="case-card">
+                    <div class="case-header">
+                        <h3 class="case-title" style="font-family: var(--font-mono); color: var(--accent); font-size: 20px;">${item.title}</h3>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="meta-cta-btn" style="padding: 6px 14px; font-size: 13px; box-shadow: none;">GitHub &rarr;</a>
+                    </div>
+                    
+                    <div class="case-details" style="margin-top: 12px;">
+                        <p class="case-block-desc" style="font-size: 15px;">${item.description}</p>
+                    </div>
+                    
+                    <div class="case-tech-deck" style="margin-top: 16px;">
+                        ${techHTML}
+                    </div>
+                </div>
+            `;
+        });
+
+        this.viewport.innerHTML = `
+            <section class="cases-section">
+                <h2 class="section-heading">${data.heading}</h2>
+                <div class="cases-grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+                    ${itemsHTML}
+                </div>
+            </section>
+        `;
+    }
+
+    renderArticles(posts) {
+        const blogTexts = this.translationService.getContent().blog;
+
+        let articlesHTML = "";
+        posts.forEach(post => {
+            let seriesMetaHTML = "";
+            if (post.series) {
+                let seriesTitle = "Orkai Observability";
+                if (post.series === "onkai-unified-bus-series") {
+                    seriesTitle = "Onkai Unified Bus";
+                } else if (post.series === "shared-broker-series") {
+                    seriesTitle = "Shared Broker";
+                }
+                seriesMetaHTML = `
+                    <span>&bull;</span>
+                    <span>${seriesTitle} (${post.seriesIndex})</span>
+                `;
+            }
+
+            articlesHTML += `
+                <article class="article-card" onclick="window.location.hash = '#post/${post.id}'">
+                    <div>
+                        <div class="card-meta">
+                            <span class="card-category">${post.category}</span>
+                            ${seriesMetaHTML}
+                        </div>
+                        <h3 class="card-title">${post.title}</h3>
+                        <p class="card-excerpt">${post.excerpt}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>${blogTexts.authorLabel} <strong>${post.author}</strong></span>
+                        <span class="card-readtime">${post.readTime}</span>
+                    </div>
+                </article>
+            `;
+        });
+
+        this.viewport.innerHTML = `
+            <section class="articles-section">
+                <h2 class="section-heading">${blogTexts.heading}</h2>
+                <div class="articles-grid">
+                    ${articlesHTML}
+                </div>
+            </section>
+        `;
+    }
+
+    renderContact() {
+        const data = this.translationService.getContent().contact;
+
+        this.viewport.innerHTML = `
+            <section class="handshake-section">
+                <div class="handshake-card">
+                    <h2 class="handshake-title">${data.title}</h2>
+                    <p class="handshake-desc" style="margin-bottom: 24px;">${data.desc}</p>
+                    
+                    <div class="contact-channels-container">
+                        <h3 class="channels-heading">${data.directTitle}</h3>
+                        <div class="contact-channels">
+                            <a href="mailto:wesleyskap@gmail.com" class="channel-card">
+                                <div class="channel-icon-wrapper">
+                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-label">E-mail</span>
+                                    <span class="channel-value">wesleyskap@gmail.com</span>
+                                </div>
+                            </a>
+                            <a href="https://wa.me/5511936182375" target="_blank" rel="noopener noreferrer" class="channel-card">
+                                <div class="channel-icon-wrapper whatsapp-theme">
+                                    <svg class="channel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                    </svg>
+                                </div>
+                                <div class="channel-details">
+                                    <span class="channel-label">WhatsApp</span>
+                                    <span class="channel-value">(11) 93618-2375</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+
+    renderPostDetail(post, registry = []) {
+        const blogTexts = this.translationService.getContent().blog;
+
+        if (!post) {
+            this.viewport.innerHTML = `
+                <div class="post-detail-section" style="text-align: center;">
+                    <h1 class="post-title">${blogTexts.notFoundTitle}</h1>
+                    <p>${blogTexts.notFoundDesc}</p>
+                    <button class="back-btn" onclick="window.location.hash = '#articles'">${blogTexts.backLabel}</button>
+                </div>
+            `;
+            return;
+        }
+
+        const renderedBody = this.markdownParser.parseMarkdown(post.body);
+        let referenceHTML = "";
+        if (post.referenceLink) {
+            const isGitHub = post.referenceLink.includes("github.com");
+            let title, desc, cta, iconHTML;
+            if (isGitHub) {
+                title = this.translationService.locale === "pt-BR" ? blogTexts.repoTitlePT : blogTexts.repoTitleEN;
+                desc = this.translationService.locale === "pt-BR" ? blogTexts.repoDescPT : blogTexts.repoDescEN;
+                cta = this.translationService.locale === "pt-BR" ? blogTexts.repoCtaPT : blogTexts.repoCtaEN;
+                iconHTML = `
+                    <svg class="repo-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                `;
+            } else {
+                title = this.translationService.locale === "pt-BR" ? "Referência Oficial" : "Official Reference";
+                desc = this.translationService.locale === "pt-BR" 
+                    ? "Consulte a documentação técnica oficial, RFCs ou materiais de referência sobre este tópico." 
+                    : "Access the official technical specifications, RFCs, or reference documentation related to this topic.";
+                cta = this.translationService.locale === "pt-BR" ? "Ver Referência" : "View Reference";
+                iconHTML = `
+                    <svg class="repo-cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                `;
+            }
+            referenceHTML = `
+                <div class="repo-cta-card">
+                    <div class="repo-cta-content">
+                        <h4 class="repo-cta-title">${title}</h4>
+                        <p class="repo-cta-desc">${desc}</p>
+                    </div>
+                    <a href="${post.referenceLink}" target="_blank" rel="noopener noreferrer" class="repo-cta-link">
+                        ${iconHTML}
+                        ${cta}
+                    </a>
+                </div>
+            `;
+        }
+
+        const related = post.series ? registry
+            .filter(p => p.series === post.series && p.id !== post.id)
+            .sort((a, b) => DateUtils.parseDate(b.date) - DateUtils.parseDate(a.date)) : [];
+        
+        let relatedHTML = "";
+        related.forEach(rel => {
+            relatedHTML += `
+                <div class="related-card" onclick="window.location.hash = '#post/${rel.id}'">
+                    <div class="card-meta">
+                        <span class="card-category">${this.translationService.locale === "pt-BR" ? "Parte" : "Part"} ${rel.seriesIndex}</span>
+                    </div>
+                    <h4 class="related-card-title">${rel.title}</h4>
+                </div>
+            `;
+        });
+
+        let seriesText = "";
+        if (post.series === "onkai-unified-bus-series") {
+            seriesText = "Onkai Unified Bus";
+        } else if (post.series === "shared-broker-series") {
+            seriesText = "Shared Broker";
+        } else if (post.series === "orkai-observability-series") {
+            seriesText = "Orkai Observability";
+        }
+
+        const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";
+
+        this.viewport.innerHTML = `
+            <section class="post-detail-section">
+                <div class="back-btn-container">
+                    <button class="back-btn" onclick="window.location.hash = '#articles'">
+                        &larr; ${blogTexts.backLabel}
+                    </button>
+                </div>
+
+                <article class="post-full">
+                    <header class="post-header">
+                        ${seriesBadgeHTML}
+                        <h1 class="post-title">${post.title}</h1>
+                        <div class="post-meta-strip">
+                            <span class="post-meta-item">${this.translationService.locale === "pt-BR" ? "Autor" : "Author"}: <strong>${post.author}</strong></span>
+                            <span>&bull;</span>
+                            <span class="post-meta-item">${this.translationService.locale === "pt-BR" ? "Publicado em" : "Published on"}: <strong>${post.date}</strong></span>
+                            <span>&bull;</span>
+                            <span class="post-meta-item">${post.readTime}</span>
+                        </div>
+                    </header>
+
+                    <div class="post-body">
+                        ${renderedBody}
+                    </div>
+
+                    ${referenceHTML}
+
+                    ${related.length > 0 ? `
+                        <div class="related-posts-section">
+                            <h3 class="related-title">${blogTexts.relatedTitle}</h3>
+                            <div class="related-grid">
+                                ${relatedHTML}
+                            </div>
+                        </div>
+                    ` : ""}
+                </article>
+            </section>
+        `;
+    }
 
     renderConnectionError(retryCallback) {
-        const viewport = document.getElementById("app-viewport");
-        viewport.innerHTML = `
+        this.viewport.innerHTML = `
             <div class="coming-soon-card" style="max-width: 500px; margin: 80px auto; text-align: center; border: 1px solid var(--border-color); padding: 40px var(--spacing-lg);">
                 <div style="font-size: 48px; margin-bottom: var(--spacing-sm);">📡</div>
-                <h3>${this.locale === "pt-BR" ? "Erro de Conexão" : "Connection Error"}</h3>
+                <h3>${this.translationService.locale === "pt-BR" ? "Erro de Conexão" : "Connection Error"}</h3>
                 <p style="margin-bottom: 24px;">
-                    ${this.locale === "pt-BR" 
+                    ${this.translationService.locale === "pt-BR" 
                         ? "Não foi possível carregar os dados. Verifique o servidor local." 
                         : "Could not fetch data. Verify your local server."}
                 </p>
-                <button class="back-btn" id="retry-fetch-btn">${this.locale === "pt-BR" ? "Tentar Novamente" : "Retry Connection"}</button>
+                <button class="back-btn" id="retry-fetch-btn">${this.translationService.locale === "pt-BR" ? "Tentar Novamente" : "Retry Connection"}</button>
             </div>
         `;
         document.getElementById("retry-fetch-btn").addEventListener("click", () => {
-            viewport.style.opacity = "0";
+            this.viewport.style.opacity = "0";
             setTimeout(() => {
                 retryCallback();
-                viewport.style.opacity = "1";
+                this.viewport.style.opacity = "1";
             }, 200);
         });
     }
-};
+}
 
-const themeManager = {
+class Router {
+    constructor(translationService, apiClient, viewRenderer) {
+        this.translationService = translationService;
+        this.apiClient = apiClient;
+        this.viewRenderer = viewRenderer;
+        this.currentRoute = "about";
+        this.activePostId = null;
+    }
+
     init() {
-        const toggleBtn = document.getElementById("theme-toggle");
-        const savedTheme = localStorage.getItem("wesley-theme") || "dark-theme";
-        document.body.className = savedTheme;
-        toggleBtn.addEventListener("click", () => {
-            if (document.body.classList.contains("dark-theme")) {
-                document.body.className = "light-theme";
-                localStorage.setItem("wesley-theme", "light-theme");
+        window.addEventListener("hashchange", () => this.handleRouting());
+        this.handleRouting();
+    }
+
+    handleRouting() {
+        const hash = window.location.hash;
+        const viewport = document.getElementById("app-viewport");
+        if (viewport) viewport.style.opacity = "0";
+
+        setTimeout(() => {
+            if (!hash || hash === "" || hash === "#" || hash === "#about") {
+                this.currentRoute = "about";
+                this.activePostId = null;
+                this.loadAbout();
+            } else if (hash === "#repositories") {
+                this.currentRoute = "repositories";
+                this.activePostId = null;
+                this.viewRenderer.renderRepositories();
+            } else if (hash === "#articles") {
+                this.currentRoute = "articles";
+                this.activePostId = null;
+                this.loadArticles();
+            } else if (hash === "#contact") {
+                this.currentRoute = "contact";
+                this.activePostId = null;
+                this.viewRenderer.renderContact();
+            } else if (hash.startsWith("#post/")) {
+                this.currentRoute = "post-detail";
+                this.activePostId = hash.replace("#post/", "");
+                this.loadPostDetail(this.activePostId);
             } else {
-                document.body.className = "dark-theme";
-                localStorage.setItem("wesley-theme", "dark-theme");
+                window.location.hash = "#about";
+            }
+            this.syncNavLinks();
+            if (viewport) viewport.style.opacity = "1";
+        }, 150);
+    }
+
+    syncNavLinks() {
+        const links = ["about", "repositories", "articles", "contact"];
+        links.forEach(l => {
+            const el = document.getElementById(`link-${l}`);
+            if (el) {
+                if (this.currentRoute === l) {
+                    el.classList.add("active");
+                } else {
+                    el.classList.remove("active");
+                }
             }
         });
     }
-};
+
+    async loadAbout() {
+        let latestPostsHTML = "";
+        try {
+            const posts = await this.apiClient.fetchRegistry();
+            const latestThree = posts.slice(0, 3);
+            latestThree.forEach(post => {
+                latestPostsHTML += `
+                    <div class="latest-post-item" style="margin-bottom: 16px;">
+                        <a href="#post/${post.id}" style="color: var(--text-primary); text-decoration: none; font-size: 15px; font-weight: 600; line-height: 1.4; transition: color 0.2s; display: block;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-primary)'">${post.title}</a>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: var(--font-mono);">${post.date} &bull; ${post.readTime}</div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            console.error("Failed to load latest posts for homepage", e);
+        }
+        this.viewRenderer.renderAbout(latestPostsHTML);
+    }
+
+    async loadArticles() {
+        try {
+            const posts = await this.apiClient.fetchRegistry();
+            this.viewRenderer.renderArticles(posts);
+        } catch (err) {
+            console.error("Failed to load articles:", err);
+            const blogTexts = this.translationService.getContent().blog;
+            const viewport = document.getElementById("app-viewport");
+            if (viewport) {
+                viewport.innerHTML = `
+                    <section class="articles-section">
+                        <h2 class="section-heading">${blogTexts.heading}</h2>
+                        <div class="coming-soon-card" style="text-align: center; border: 1px solid var(--border-color); padding: 40px var(--spacing-lg);">
+                            <h3>Failed to load articles index.</h3>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+    }
+
+    async loadPostDetail(postId) {
+        try {
+            const postData = await this.apiClient.fetchPost(postId);
+            let registry = [];
+            try {
+                registry = await this.apiClient.fetchRegistry();
+            } catch (e) {
+                console.error("Failed to load registry for related posts:", e);
+            }
+            this.viewRenderer.renderPostDetail(postData, registry);
+        } catch (err) {
+            console.error("Failed to load post detail:", err);
+            this.viewRenderer.renderConnectionError(() => this.loadPostDetail(postId));
+        }
+    }
+}
+
+/* ==========================================================================
+   APPLICATION ENTRYPOINT
+   ========================================================================== */
+
+class App {
+    constructor() {
+        this.translationService = new TranslationService();
+        this.themeManager = new ThemeManager();
+        this.markdownParser = new MarkdownParser();
+        this.apiClient = new ApiClient(this.translationService);
+        this.viewRenderer = new ViewRenderer(this.translationService, this.markdownParser);
+        this.router = new Router(this.translationService, this.apiClient, this.viewRenderer);
+    }
+
+    init() {
+        this.themeManager.init();
+        this.translationService.init(() => {
+            this.router.handleRouting();
+        });
+        this.router.init();
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-    themeManager.init();
-    router.init();
+    const app = new App();
+    app.init();
 });
