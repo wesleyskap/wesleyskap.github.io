@@ -1248,5 +1248,50 @@ body {
     margin-bottom: 8px;
 }
 
+/* Table Styles inside posts */
+.post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+    color: var(--text-secondary);
+}
 
+.post-body th, .post-body td {
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.post-body th {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.post-body tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.light-theme .post-body tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Lists and Horizontal Rules inside posts */
+.post-body ul, .post-body ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: 24px;
+}
+
+.post-body li {
+    margin-bottom: 8px;
+}
+
+.post-body hr {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 32px 0;
+}
 

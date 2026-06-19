@@ -904,43 +904,129 @@ const router = {
         html = html.replace(/^## (.*$)/gim, "<h2>$1</h2>");
         html = html.replace(/^### (.*$)/gim, "<h3>$1</h3>");
 
-        html = html.replace(/\`\`\`go([\s\S]*?)\`\`\`/g, (match, code) => {
+        html = html.replace(/\`\`\`([a-zA-Z0-9\-]+)?\r?\n([\s\S]*?)\`\`\`/g, (match, lang, code) => {
+            const displayLang = lang ? lang.trim().toLowerCase() : 'code';
             let highlighted = code
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;");
             
-            const strings = [];
-            const comments = [];
+            if (displayLang === 'go') {
+                const strings = [];
+                const comments = [];
 
-            highlighted = highlighted.replace(/(".*?")/g, (m) => {
-                strings.push(`<span class="code-str">${m}</span>`);
-                return `___STR_PLACEHOLDER_${strings.length - 1}___`;
-            });
+                highlighted = highlighted.replace(/(".*?")/g, (m) => {
+                    strings.push(`<span class="code-str">${m}</span>`);
+                    return `___STR_PLACEHOLDER_${strings.length - 1}___`;
+                });
 
-            highlighted = highlighted.replace(/(\/\/.*)/g, (m) => {
-                comments.push(`<span class="code-cmt">${m}</span>`);
-                return `___CMT_PLACEHOLDER_${comments.length - 1}___`;
-            });
+                highlighted = highlighted.replace(/(\/\/.*)/g, (m) => {
+                    comments.push(`<span class="code-cmt">${m}</span>`);
+                    return `___CMT_PLACEHOLDER_${comments.length - 1}___`;
+                });
 
-            highlighted = highlighted.replace(/\b(func|type|struct|interface|package|import|return|defer|go|select|case|const|var|if|else|for|range)\b/g, '<span class="code-key">$1</span>');
-            highlighted = highlighted.replace(/\b(string|int|float64|bool|error|time\.Time|time\.Duration|sync\.Mutex)\b/g, '<span class="code-tp">$1</span>');
+                highlighted = highlighted.replace(/\b(func|type|struct|interface|package|import|return|defer|go|select|case|const|var|if|else|for|range)\b/g, '<span class="code-key">$1</span>');
+                highlighted = highlighted.replace(/\b(string|int|float64|bool|error|time\.Time|time\.Duration|sync\.Mutex)\b/g, '<span class="code-tp">$1</span>');
 
-            highlighted = highlighted.replace(/___CMT_PLACEHOLDER_(\d+)___/g, (m, index) => comments[parseInt(index, 10)]);
-            highlighted = highlighted.replace(/___STR_PLACEHOLDER_(\d+)___/g, (m, index) => strings[parseInt(index, 10)]);
+                highlighted = highlighted.replace(/___CMT_PLACEHOLDER_(\d+)___/g, (m, index) => comments[parseInt(index, 10)]);
+                highlighted = highlighted.replace(/___STR_PLACEHOLDER_(\d+)___/g, (m, index) => strings[parseInt(index, 10)]);
+            } else if (displayLang === 'http') {
+                highlighted = highlighted.replace(/\b(QUERY|GET|POST|HTTP\/1\.1|HTTP\/2|Host:|Content-Type:|Accept:|Content-Location:|Location:|Last-Modified:|Date:|ETag:|If-None-Match:|Allow:|Accept-Query:)\b/g, '<span class="code-key">$1</span>');
+            } else if (displayLang === 'ruby') {
+                const strings = [];
+                const comments = [];
+                highlighted = highlighted.replace(/(".*?"|'.*?')/g, (m) => {
+                    strings.push(`<span class="code-str">${m}</span>`);
+                    return `___STR_PLACEHOLDER_${strings.length - 1}___`;
+                });
+                highlighted = highlighted.replace(/(#.*)/g, (m) => {
+                    comments.push(`<span class="code-cmt">${m}</span>`);
+                    return `___CMT_PLACEHOLDER_${comments.length - 1}___`;
+                });
+                highlighted = highlighted.replace(/\b(def|end|class|module|require|include|raise|initialize|if|else|elsif|unless|while|until|for|in|return|yield)\b/g, '<span class="code-key">$1</span>');
+                highlighted = highlighted.replace(/___CMT_PLACEHOLDER_(\d+)___/g, (m, index) => comments[parseInt(index, 10)]);
+                highlighted = highlighted.replace(/___STR_PLACEHOLDER_(\d+)___/g, (m, index) => strings[parseInt(index, 10)]);
+            }
 
             return `<div class="code-block-wrapper">
                         <div class="code-block-header">
-                            <span class="code-block-lang">go</span>
+                            <span class="code-block-lang">${displayLang}</span>
                         </div>
                         <pre><code>${highlighted.trim()}</code></pre>
                     </div>`;
         });
 
+        // Parse markdown tables
+        const lines = html.split('\n');
+        let inTable = false;
+        let tableHeader = [];
+        let tableRows = [];
+        const newLines = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line.startsWith('|') && line.endsWith('|')) {
+                const cells = line.split('|').slice(1, -1).map(c => c.trim());
+                if (!inTable) {
+                    const nextLine = lines[i + 1] ? lines[i + 1].trim() : '';
+                    if (nextLine.startsWith('|') && nextLine.includes('---')) {
+                        inTable = true;
+                        tableHeader = cells;
+                        i++; // skip delimiter line
+                        tableRows = [];
+                    } else {
+                        newLines.push(lines[i]);
+                    }
+                } else {
+                    tableRows.push(cells);
+                }
+            } else {
+                if (inTable) {
+                    let tableHTML = '<table><thead><tr>';
+                    tableHeader.forEach(h => {
+                        tableHTML += `<th>${h}</th>`;
+                    });
+                    tableHTML += '</tr></thead><tbody>';
+                    tableRows.forEach(row => {
+                        tableHTML += '<tr>';
+                        for (let c = 0; c < tableHeader.length; c++) {
+                            tableHTML += `<td>${row[c] || ''}</td>`;
+                        }
+                        tableHTML += '</tr>';
+                    });
+                    tableHTML += '</tbody></table>';
+                    newLines.push(tableHTML);
+                    inTable = false;
+                }
+                newLines.push(lines[i]);
+            }
+        }
+        if (inTable) {
+            let tableHTML = '<table><thead><tr>';
+            tableHeader.forEach(h => {
+                tableHTML += `<th>${h}</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+            tableRows.forEach(row => {
+                tableHTML += '<tr>';
+                for (let c = 0; c < tableHeader.length; c++) {
+                    tableHTML += `<td>${row[c] || ''}</td>`;
+                }
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+            newLines.push(tableHTML);
+        }
+        html = newLines.join('\n');
+
+        html = html.replace(/^---$/gim, "<hr />");
         html = html.replace(/\`([\s\S]*?)\`/g, "<code>$1</code>");
-        html = html.replace(/^\- (.*$)/gim, "<li>$1</li>");
-        html = html.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
-        html = html.replace(/<\/ul>\s*<ul>/g, "");
+        html = html.replace(/^\-\s+(.*$)/gim, '<li class="task-li-u">$1</li>');
+        html = html.replace(/^\d+\.\s+(.*$)/gim, '<li class="task-li-o">$1</li>');
+        html = html.replace(/((?:<li class="task-li-u">.*<\/li>\r?\n?)+)/g, "<ul>$1</ul>");
+        html = html.replace(/<li class="task-li-u">/g, "<li>");
+        html = html.replace(/((?:<li class="task-li-o">.*<\/li>\r?\n?)+)/g, "<ol>$1</ol>");
+        html = html.replace(/<li class="task-li-o">/g, "<li>");
         html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
         html = html.replace(/_([^_]+)_/g, "<em>$1</em>");
