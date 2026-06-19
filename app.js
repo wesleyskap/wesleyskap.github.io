@@ -840,6 +840,8 @@ class ViewRenderer {
                     seriesTitle = "Onkai Unified Bus";
                 } else if (post.series === "shared-broker-series") {
                     seriesTitle = "Shared Broker";
+                } else if (post.series === "http-query-series") {
+                    seriesTitle = "HTTP Query";
                 }
                 seriesMetaHTML = `
                     <span>&bull;</span>
@@ -996,6 +998,8 @@ class ViewRenderer {
             seriesText = "Shared Broker";
         } else if (post.series === "orkai-observability-series") {
             seriesText = "Orkai Observability";
+        } else if (post.series === "http-query-series") {
+            seriesText = "HTTP Query";
         }
 
         const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";

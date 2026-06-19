@@ -1,12 +1,25 @@
 [
     {
+        "id": "http-query-evolution",
+        "title": "O Impacto do HTTP QUERY no Design de APIs REST e a Redefinição do GraphQL",
+        "excerpt": "Como o método QUERY transforma o ecossistema de APIs? Analisamos o impacto nas rotas REST de busca e como ele pode redefinir o transporte de consultas GraphQL de forma nativamente cacheável.",
+        "category": "Web",
+        "date": "19 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 2
+    },
+    {
         "id": "http-query-method",
         "title": "O Novo Método HTTP QUERY: Superando as Limitações de GET e POST em APIs Modernas",
         "excerpt": "Conheça o RFC 10008, que define o método HTTP QUERY. Entenda como ele resolve o dilema de enviar buscas complexas com segurança, idempotência e suporte nativo a cache.",
         "category": "Web",
         "date": "18 de Junho, 2026",
         "readTime": "5 min de leitura",
-        "author": "Wesley Lima"
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 1
     },
     {
         "id": "shared-broker-concurrency-routing",
