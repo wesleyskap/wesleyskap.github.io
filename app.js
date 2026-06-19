@@ -130,6 +130,24 @@ const PORTFOLIO_CONTENT = {
                     url: "https://github.com/wesleyskap/orkai-runiq",
                     description: "Filtro concorrente de alta performance em Go para remoção de chaves duplicadas em streams massivos de dados.",
                     tech: ["Go", "Concurrency", "Data Pipelines"]
+                },
+                {
+                    title: "shared_broker",
+                    url: "https://github.com/wesleyskap/shared_broker",
+                    description: "Gema Ruby para desacoplamento e resiliência de barramentos de mensageria. Implementa o padrão Adapter (InMemory, RabbitMQ, Kafka, Redis), retries com backoff exponencial, DLQ e Circuit Breaker thread-safe.",
+                    tech: ["Ruby", "RabbitMQ", "Kafka", "Resilience"]
+                },
+                {
+                    title: "bseller-ruby",
+                    url: "https://github.com/wesleyskap/bseller_ruby",
+                    description: "Integração em Ruby para o ecossistema BSeller (B2W). Permite sincronização rápida de catálogos de produtos, pedidos, estoques e faturamento para e-commerces.",
+                    tech: ["Ruby", "E-commerce", "Integrations"]
+                },
+                {
+                    title: "extra-ruby",
+                    url: "https://github.com/wesleyskap/extra_ruby",
+                    description: "Biblioteca Ruby para comunicação com a API do marketplace Extra (Via Varejo), automatizando gestão de fretes, precificação e tracking de entregas.",
+                    tech: ["Ruby", "Marketplace API", "Integrations"]
                 }
             ]
         },
@@ -282,6 +300,24 @@ const PORTFOLIO_CONTENT = {
                     url: "https://github.com/wesleyskap/orkai-runiq",
                     description: "High-performance concurrent stream filter in Go for duplicate key removal in massive real-time pipelines.",
                     tech: ["Go", "Concurrency", "Data Pipelines"]
+                },
+                {
+                    title: "shared_broker",
+                    url: "https://github.com/wesleyskap/shared_broker",
+                    description: "Ruby gem for messaging bus decoupling and resilience. Implements the Adapter pattern (InMemory, RabbitMQ, Kafka, Redis), exponential backoff retries, DLQ, and thread-safe Circuit Breakers.",
+                    tech: ["Ruby", "RabbitMQ", "Kafka", "Resilience"]
+                },
+                {
+                    title: "bseller-ruby",
+                    url: "https://github.com/wesleyskap/bseller_ruby",
+                    description: "Ruby integration for the BSeller (B2W) ecosystem. Enables fast synchronization of product catalogs, orders, inventory, and invoicing for e-commerce websites.",
+                    tech: ["Ruby", "E-commerce", "Integrations"]
+                },
+                {
+                    title: "extra-ruby",
+                    url: "https://github.com/wesleyskap/extra_ruby",
+                    description: "Ruby library for communicating with the Extra (Via Varejo) marketplace API, automating freight calculations, pricing management, and delivery tracking.",
+                    tech: ["Ruby", "Marketplace API", "Integrations"]
                 }
             ]
         },
