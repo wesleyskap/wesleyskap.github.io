@@ -1081,12 +1081,23 @@ class Router {
         this.handleRouting();
     }
 
+    trackPageview(hash, title) {
+        if (typeof window.gtag === "function") {
+            const virtualPath = hash ? '/' + hash.replace('#', '') : '/about';
+            window.gtag("config", "G-4Y4TJDMHXK", {
+                page_path: virtualPath,
+                page_title: title
+            });
+        }
+    }
+
     handleRouting() {
         const hash = window.location.hash;
         const viewport = document.getElementById("app-viewport");
         if (viewport) viewport.style.opacity = "0";
 
         setTimeout(() => {
+            let pageTitle = "Wesleyskap // Systems Engineer";
             if (!hash || hash === "" || hash === "#" || hash === "#about") {
                 this.currentRoute = "about";
                 this.activePostId = null;
@@ -1095,20 +1106,29 @@ class Router {
                 this.currentRoute = "repositories";
                 this.activePostId = null;
                 this.viewRenderer.renderRepositories();
+                pageTitle = this.translationService.locale === "pt-BR" ? "Projetos & Repositórios // Wesleyskap" : "Projects & Repositories // Wesleyskap";
             } else if (hash === "#articles") {
                 this.currentRoute = "articles";
                 this.activePostId = null;
                 this.loadArticles();
+                pageTitle = this.translationService.locale === "pt-BR" ? "Artigos Técnicos // Wesleyskap" : "Technical Articles // Wesleyskap";
             } else if (hash === "#contact") {
                 this.currentRoute = "contact";
                 this.activePostId = null;
                 this.viewRenderer.renderContact();
+                pageTitle = this.translationService.locale === "pt-BR" ? "Contato Profissional // Wesleyskap" : "Professional Contact // Wesleyskap";
             } else if (hash.startsWith("#post/")) {
                 this.currentRoute = "post-detail";
                 this.activePostId = hash.replace("#post/", "");
                 this.loadPostDetail(this.activePostId);
+                pageTitle = ""; // Será definido dentro de loadPostDetail assincronamente
             } else {
                 window.location.hash = "#about";
+            }
+            
+            if (pageTitle) {
+                document.title = pageTitle;
+                this.trackPageview(hash || "#about", pageTitle);
             }
             this.syncNavLinks();
             if (viewport) viewport.style.opacity = "1";
@@ -1179,6 +1199,13 @@ class Router {
                 console.error("Failed to load registry for related posts:", e);
             }
             this.viewRenderer.renderPostDetail(postData, registry);
+            
+            const metadata = postData.metadata || {};
+            if (metadata.title) {
+                const pageTitle = `${metadata.title} // Wesleyskap`;
+                document.title = pageTitle;
+                this.trackPageview(window.location.hash, pageTitle);
+            }
         } catch (err) {
             console.error("Failed to load post detail:", err);
             this.viewRenderer.renderConnectionError(() => this.loadPostDetail(postId));
