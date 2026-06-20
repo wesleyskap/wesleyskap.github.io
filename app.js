@@ -582,7 +582,7 @@ class MarkdownParser {
                 }
             } else {
                 if (inTable) {
-                    let tableHTML = '<table><thead><tr>';
+                    let tableHTML = '<div class="table-wrapper"><table><thead><tr>';
                     tableHeader.forEach(h => {
                         tableHTML += `<th>${h}</th>`;
                     });
@@ -594,7 +594,7 @@ class MarkdownParser {
                         }
                         tableHTML += '</tr>';
                     });
-                    tableHTML += '</tbody></table>';
+                    tableHTML += '</tbody></table></div>';
                     newLines.push(tableHTML);
                     inTable = false;
                 }
