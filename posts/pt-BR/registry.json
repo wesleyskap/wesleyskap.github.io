@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-cache-validation",
+        "title": "Negociação de Conteúdo, Requisições Condicionais e Tratamento de Erros Semânticos no HTTP QUERY",
+        "excerpt": "Aprofunde-se no RFC 10008 e aprenda como projetar servidores resilientes tratando erros de formato com status 415/422, controlando cache avançado com ETag e respondendo de forma condicional.",
+        "category": "Web",
+        "date": "20 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 3
+    },
+    {
         "id": "http-query-evolution",
         "title": "O Impacto do HTTP QUERY no Design de APIs REST e a Redefinição do GraphQL",
         "excerpt": "Como o método QUERY transforma o ecossistema de APIs? Analisamos o impacto nas rotas REST de busca e como ele pode redefinir o transporte de consultas GraphQL de forma nativamente cacheável.",
