@@ -178,34 +178,14 @@ class ContactsController < ApplicationController
     { id: 1, name: "Name 1", status: "active", tags: ["go", "ruby", "telemetry"] },
     { id: 2, name: "Name 2", status: "inactive", tags: ["product", "agile"] },
     { id: 3, name: "Name 3", status: "active", tags: ["go", "concurrency"] }
-  ]
+  ].freeze
 
   def index
     if request.method == 'GET'
-      render json: DATABASE and return
+      return render json: DATABASE
     end
 
-    # Processing the QUERY method
-    query_params = params.permit(:status, tags: [])
-    status_filter = query_params[:status]
-    tags_filter = query_params[:tags] || []
-
-    if status_filter.present? && !['active', 'inactive'].include?(status_filter)
-      return render json: { title: "Invalid query value", status: 422 },
-                    status: :unprocessable_entity,
-                    content_type: 'application/problem+json'
-    end
-
-    results = DATABASE.select do |contact|
-      matches_status = status_filter.blank? || contact[:status] == status_filter
-      matches_tags = tags_filter.empty? || (tags_filter - contact[:tags]).empty?
-      matches_status && matches_tags
-    end
-
-    # Native Rails conditional caching (ETag & If-None-Match)
-    if stale?(json: results, public: false, cache_control: 'max-age=3600')
-      render json: results
-    end
+    process_query
   end
 
   private
@@ -216,9 +196,43 @@ class ContactsController < ApplicationController
   end
 
   def validate_query_request
-    if request.media_type != 'application/json'
-      render json: { error: "Unsupported media type. Use application/json" }, status: :unsupported_media_type
+    return if request.media_type == 'application/json'
+
+    render json: { error: "Unsupported media type. Use application/json" },
+           status: :unsupported_media_type
+  end
+
+  def process_query
+    query_params = params.permit(:status, tags: [])
+    status_filter = query_params[:status]
+    tags_filter = query_params[:tags] || []
+
+    if status_filter.present? && !['active', 'inactive'].include?(status_filter)
+      return render_invalid_query
     end
+
+    results = filter_contacts(status_filter, tags_filter)
+    render_cached(results)
+  end
+
+  def filter_contacts(status_filter, tags_filter)
+    DATABASE.select do |contact|
+      matches_status = status_filter.blank? || contact[:status] == status_filter
+      matches_tags = tags_filter.empty? || (tags_filter - contact[:tags]).empty?
+      matches_status && matches_tags
+    end
+  end
+
+  def render_invalid_query
+    render json: { title: "Invalid query value", status: 422 },
+           status: :unprocessable_entity,
+           content_type: 'application/problem+json'
+  end
+
+  def render_cached(results)
+    return unless stale?(json: results, public: false, cache_control: 'max-age=3600')
+
+    render json: results
   end
 end
 ```
