@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-implementation",
+        "title": "Practical Implementation: Building an HTTP QUERY Server from Scratch in Go and Ruby",
+        "excerpt": "Put RFC 10008 into practice. Learn how to implement HTTP QUERY support from scratch in Go (net/http) and Ruby (Rack/Sinatra), handling routing, status 422, and conditional caching.",
+        "category": "Web",
+        "date": "June 21, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 4
+    },
+    {
         "id": "http-query-evolution",
         "title": "The Impact of HTTP QUERY on REST API Design and the Redefinition of GraphQL",
         "excerpt": "How does the QUERY method transform the API ecosystem? We analyze its impact on REST search routes and how it can redefine GraphQL query delivery with native edge caching support.",
