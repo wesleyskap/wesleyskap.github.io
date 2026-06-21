@@ -109,32 +109,29 @@ func contactsHandler(w http.ResponseWriter, r *http.Request) {
 func filterContacts(status string, tags []string) []Contact {
 	var filtered []Contact
 	for _, c := range database {
-		if status != "" && c.Status != status {
-			continue
+		if (status == "" || c.Status == status) && hasTags(c.Tags, tags) {
+			filtered = append(filtered, c)
 		}
-		if len(tags) > 0 {
-			hasAll := true
-			for _, tag := range tags {
-				hasTag := false
-				for _, t := range c.Tags {
-					if t == tag {
-						hasTag = true
-						break
-					}
-				}
-				if !hasTag {
-					hasAll = false
-					break
-				}
-			}
-			if !hasAll {
-				continue
-			}
-		}
-		filtered = append(filtered, c)
 	}
 	return filtered
 }
+
+func hasTags(contactTags, queryTags []string) bool {
+	for _, qTag := range queryTags {
+		found := false
+		for _, cTag := range contactTags {
+			if cTag == qTag {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
 
 func respondJSON(w http.ResponseWriter, data interface{}, ifNoneMatch string) {
 	w.Header().Set("Content-Type", "application/json")
