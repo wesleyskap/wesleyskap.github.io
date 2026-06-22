@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-indirect-responses",
+        "title": "Indirect Responses, Query Snapshots, and Semantic Routing in HTTP QUERY",
+        "excerpt": "Explore the most advanced sections of RFC 10008. Learn how to use indirect responses with status 303, the crucial difference between Content-Location and Location, and how to apply these patterns in microservices architectures.",
+        "category": "Web",
+        "date": "June 23, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 6
+    },
+    {
         "id": "http-query-advanced-caching",
         "title": "Advanced Caching Mechanics, Body Normalization, and Security in HTTP QUERY",
         "excerpt": "Deep dive into Sections 2.7 and 4 of RFC 10008. Understand the challenges of generating stable cache keys for request bodies, payload normalization rules (+json), and crucial security guidelines.",
@@ -53,6 +64,17 @@
         "author": "Wesley Lima",
         "series": "http-query-series",
         "seriesIndex": 1
+    },
+    {
+        "id": "shared-broker-compression-idempotency",
+        "title": "Optimization and Idempotency: Automatic Payload Compression and Deduplication Middleware",
+        "excerpt": "Large payloads and duplicate messages are common challenges in distributed systems. Learn how to compress payloads dynamically and guarantee idempotency in SharedBroker.",
+        "category": "Performance & Concurrency",
+        "date": "June 22, 2026",
+        "readTime": "6 min read",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 5
     },
     {
         "id": "shared-broker-concurrency-routing",

@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-indirect-responses",
+        "title": "Respostas Indiretas, Snapshots de Busca e Roteamento Semântico no HTTP QUERY",
+        "excerpt": "Explore as seções mais avançadas do RFC 10008. Saiba como usar respostas indiretas com status 303, a diferença crucial entre Content-Location e Location, e como aplicar esses padrões em arquiteturas de microsserviços.",
+        "category": "Web",
+        "date": "23 de Junho, 2026",
+        "readTime": "7 min de leitura",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 6
+    },
+    {
         "id": "http-query-advanced-caching",
         "title": "Mecânica Avançada de Cache, Normalização de Corpo e Segurança no HTTP QUERY",
         "excerpt": "Aprofunde-se na Seção 2.7 e 4 do RFC 10008. Entenda os desafios de gerar chaves de cache estáveis para corpos de requisições, as regras de normalização de payloads (+json) e as diretrizes cruciais de segurança contra ataques de negação de serviço.",
@@ -53,6 +64,17 @@
         "author": "Wesley Lima",
         "series": "http-query-series",
         "seriesIndex": 1
+    },
+    {
+        "id": "shared-broker-compression-idempotency",
+        "title": "Otimização e Idempotência: Compressão Automática de Payloads e Middleware de Deduplicação",
+        "excerpt": "Grandes volumes de dados e duplicações de mensagens são desafios comuns em sistemas distribuídos. Aprenda a compactar payloads dinamicamente e garantir a idempotência no SharedBroker.",
+        "category": "Performance & Concorrência",
+        "date": "22 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 5
     },
     {
         "id": "shared-broker-concurrency-routing",
