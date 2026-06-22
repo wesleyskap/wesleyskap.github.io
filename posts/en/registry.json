@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-advanced-caching",
+        "title": "Advanced Caching Mechanics, Body Normalization, and Security in HTTP QUERY",
+        "excerpt": "Deep dive into Sections 2.7 and 4 of RFC 10008. Understand the challenges of generating stable cache keys for request bodies, payload normalization rules (+json), and crucial security guidelines.",
+        "category": "Web",
+        "date": "June 22, 2026",
+        "readTime": "6 min read",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 5
+    },
+    {
         "id": "http-query-implementation",
         "title": "Practical Implementation: Building an HTTP QUERY Server from Scratch in Go and Ruby",
         "excerpt": "Put RFC 10008 into practice. Learn how to implement HTTP QUERY support from scratch in Go (net/http) and Ruby (Rack/Sinatra), handling routing, status 422, and conditional caching.",
@@ -9,6 +20,17 @@
         "author": "Wesley Lima",
         "series": "http-query-series",
         "seriesIndex": 4
+    },
+    {
+        "id": "http-query-cache-validation",
+        "title": "Content Negotiation, Conditional Requests, and Semantic Error Handling in HTTP QUERY",
+        "excerpt": "Deep dive into RFC 10008. Learn how to design resilient servers by handling query syntax errors with status 415/422, managing advanced body-based caching with ETags, and serving conditional responses.",
+        "category": "Web",
+        "date": "June 20, 2026",
+        "readTime": "6 min read",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 3
     },
     {
         "id": "http-query-evolution",

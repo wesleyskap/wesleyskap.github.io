@@ -1,5 +1,16 @@
 [
     {
+        "id": "http-query-advanced-caching",
+        "title": "Mecânica Avançada de Cache, Normalização de Corpo e Segurança no HTTP QUERY",
+        "excerpt": "Aprofunde-se na Seção 2.7 e 4 do RFC 10008. Entenda os desafios de gerar chaves de cache estáveis para corpos de requisições, as regras de normalização de payloads (+json) e as diretrizes cruciais de segurança contra ataques de negação de serviço.",
+        "category": "Web",
+        "date": "22 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "http-query-series",
+        "seriesIndex": 5
+    },
+    {
         "id": "http-query-implementation",
         "title": "Implementação Prática: Construindo um Servidor HTTP QUERY do Zero em Go e Ruby",
         "excerpt": "Coloque a teoria do RFC 10008 em prática. Aprenda a implementar o suporte ao método HTTP QUERY do zero no ecossistema Go (net/http) e em Ruby (Rack/Sinatra), tratando roteamento, status 422 e cache condicional.",
