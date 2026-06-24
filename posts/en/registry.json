@@ -66,6 +66,17 @@
         "seriesIndex": 1
     },
     {
+        "id": "shared-broker-key-rotation-registry",
+        "title": "Data Security: Topic-Specific Key Rotation and HTTP Schema Registry",
+        "excerpt": "Manage contracts of distributed events and isolate cryptographic key access granularly. Learn about secret rotation and JSON Schema validation.",
+        "category": "Security",
+        "date": "June 24, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 6
+    },
+    {
         "id": "shared-broker-compression-idempotency",
         "title": "Optimization and Idempotency: Automatic Payload Compression and Deduplication Middleware",
         "excerpt": "Large payloads and duplicate messages are common challenges in distributed systems. Learn how to compress payloads dynamically and guarantee idempotency in SharedBroker.",
