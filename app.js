@@ -621,7 +621,7 @@ class MarkdownParser {
 
         html = html.replace(/^---$/gim, "<hr />");
         html = html.replace(/\`([\s\S]*?)\`/g, "<code>$1</code>");
-        html = html.replace(/^\-\s+(.*$)/gim, '<li class="task-li-u">$1</li>');
+        html = html.replace(/^[\-\*]\s+(.*$)/gim, '<li class="task-li-u">$1</li>');
         html = html.replace(/^\d+\.\s+(.*$)/gim, '<li class="task-li-o">$1</li>');
         html = html.replace(/((?:<li class="task-li-u">.*<\/li>\r?\n?)+)/g, "<ul>$1</ul>");
         html = html.replace(/<li class="task-li-u">/g, "<li>");
