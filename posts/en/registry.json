@@ -1,5 +1,16 @@
 [
     {
+        "id": "orkai-runiq-genesis",
+        "title": "Runiq Genesis: Designing a Standalone Background Job Engine in Go",
+        "excerpt": "Why build a task processor from scratch when we have RabbitMQ or Kafka? Explore the design decisions, zero-coupling architecture, and core abstractions of Orkai Runiq.",
+        "category": "Mensageria",
+        "date": "June 26, 2026",
+        "readTime": "6 min read",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 1
+    },
+    {
         "id": "http-query-indirect-responses",
         "title": "Indirect Responses, Query Snapshots, and Semantic Routing in HTTP QUERY",
         "excerpt": "Explore the most advanced sections of RFC 10008. Learn how to use indirect responses with status 303, the crucial difference between Content-Location and Location, and how to apply these patterns in microservices architectures.",

@@ -1,5 +1,16 @@
 [
     {
+        "id": "orkai-runiq-genesis",
+        "title": "Gênese do Runiq: Projetando um Motor de Background Jobs Standalone em Go",
+        "excerpt": "Por que construir um processador de tarefas do zero quando temos RabbitMQ ou Kafka? Explore as decisões de design, a arquitetura de acoplamento zero e as abstrações fundamentais do Orkai Runiq.",
+        "category": "Mensageria",
+        "date": "26 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 1
+    },
+    {
         "id": "http-query-indirect-responses",
         "title": "Respostas Indiretas, Snapshots de Busca e Roteamento Semântico no HTTP QUERY",
         "excerpt": "Explore as seções mais avançadas do RFC 10008. Saiba como usar respostas indiretas com status 303, a diferença crucial entre Content-Location e Location, e como aplicar esses padrões em arquiteturas de microsserviços.",
