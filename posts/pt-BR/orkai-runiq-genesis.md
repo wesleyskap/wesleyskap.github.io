@@ -1,5 +1,5 @@
 ---
-title: "Gênese do Runiq: Projetando um Motor de Background Jobs Standalone em Go"
+title: "Runiq: Projetando um Motor de Background Jobs Standalone em Go"
 excerpt: "Por que construir um processador de tarefas do zero quando temos RabbitMQ ou Kafka? Explore as decisões de design, a arquitetura de acoplamento zero e as abstrações fundamentais do Orkai Runiq."
 category: "Mensageria"
 date: "26 de Junho, 2026"
