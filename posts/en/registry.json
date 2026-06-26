@@ -77,6 +77,17 @@
         "seriesIndex": 1
     },
     {
+        "id": "shared-broker-dlq-redrive",
+        "title": "Disaster Recovery: Reprocessing Failed Messages with the DLQ Redriver Utility",
+        "excerpt": "Failed queues (DLQs) isolate bad messages, but how do we reprocess them? Learn how to design and operate an automated Redriver in the SharedBroker gem.",
+        "category": "Operations & Resilience",
+        "date": "June 26, 2026",
+        "readTime": "5 min read",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 7
+    },
+    {
         "id": "shared-broker-key-rotation-registry",
         "title": "Data Security: Topic-Specific Key Rotation and HTTP Schema Registry",
         "excerpt": "Manage contracts of distributed events and isolate cryptographic key access granularly. Learn about secret rotation and JSON Schema validation.",

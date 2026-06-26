@@ -77,6 +77,17 @@
         "seriesIndex": 1
     },
     {
+        "id": "shared-broker-dlq-redrive",
+        "title": "Recuperação de Desastres: Operando Mensagens Falhas com o DLQ Redriver Utility",
+        "excerpt": "Filas de falhas (DLQ) guardam mensagens corrompidas, mas como as reprocessamos? Aprenda a desenhar e operar um Redriver automatizado na gem SharedBroker.",
+        "category": "Operações & Resiliência",
+        "date": "26 de Junho, 2026",
+        "readTime": "5 min de leitura",
+        "author": "Wesley Lima",
+        "series": "shared-broker-series",
+        "seriesIndex": 7
+    },
+    {
         "id": "shared-broker-key-rotation-registry",
         "title": "Segurança de Dados: Rotação de Chaves por Tópico e HTTP Schema Registry",
         "excerpt": "Gerencie contratos de eventos distribuídos e isole o acesso a chaves criptográficas de forma granular. Entenda a rotação de segredos e validação JSON Schema.",

@@ -40,7 +40,7 @@ const PORTFOLIO_CONTENT = {
             timelineTitle: "Trajetória Profissional",
             timeline: [
                 {
-                    role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
+                    role: "Líder Técnico & Desenvolvedor Full Stack Ruby Sênior",
                     company: "Orangebox Technology / Oramont Businesstech",
                     period: "Mai 2025 - ",
                     desc: "Condução de decisões de arquitetura, estruturação técnica e implementação de estratégias de observabilidade (telemetria e rastreabilidade distribuída) para garantir a resiliência dos projetos. Reorganização estrutural de times de engenharia e otimização do fluxo de trabalho, controlando métricas de Lead Time e Cycle Time com uso de Throughput histórico para previsibilidade. Desenvolvimento de soluções de IA Generativa e agentes inteligentes com Python (LangChain/FastAPI), integrando LLMs a aplicações corporativas com Node.js, Kotlin, Go e React.",
@@ -51,7 +51,7 @@ const PORTFOLIO_CONTENT = {
                     refEmail: "diego@oramont.com"
                 },
                 {
-                    role: "Líder Técnico & Desenvolvedor Full Stack Sênior",
+                    role: "Líder Técnico & Desenvolvedor Full Stack Ruby Sênior",
                     company: "Digital Pages",
                     period: "Ago 2011 - Abr 2025",
                     desc: "Transição bem-sucedida de monólitos legados para microsserviços e arquitetura orientada a eventos (Event-Driven) e notificações push, utilizando brokers como Kafka, RabbitMQ, Redis e AWS SQS/SNS para suportar com estabilidade mais de 20.000 usuários simultâneos em portais de CMS e SaaS de clientes como Google, Cogna, Raízen, Folha de S.Paulo, Valor Econômico, Editora Abril e Pearson. Modernização de infraestruturas locais para cloud (AWS/Azure/GCP) usando Terraform (IaC). Liderança técnica de equipes com redução de Lead/Cycle Time em 30% usando Throughput histórico. Mentoria ativa e PDIs. Implementação de observabilidade (OpenTelemetry/Grafana) e TDD.",
