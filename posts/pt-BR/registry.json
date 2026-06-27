@@ -1,5 +1,16 @@
 [
     {
+        "id": "vindi-rails-genesis",
+        "title": "Desacoplamento e Alta Disponibilidade na Recorrência: Introduzindo o SDK vindi-rails",
+        "excerpt": "Conecte sua aplicação Rails à plataforma de cobrança recorrente da Vindi de forma thread-safe, com suporte a multi-tenancy dinâmico, cache embutido e retries inteligentes.",
+        "category": "Fintech & Integrações",
+        "date": "27 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "vindi-rails-series",
+        "seriesIndex": 1
+    },
+    {
         "id": "orkai-runiq-genesis",
         "title": "Runiq: Projetando um Motor de Background Jobs Standalone em Go",
         "excerpt": "Por que construir um processador de tarefas do zero quando temos RabbitMQ ou Kafka? Explore as decisões de design, a arquitetura de acoplamento zero e as abstrações fundamentais do Orkai Runiq.",

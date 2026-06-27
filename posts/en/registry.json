@@ -1,5 +1,16 @@
 [
     {
+        "id": "vindi-rails-genesis",
+        "title": "Decoupled and Resilient Recurring Payments: Introducing the vindi-rails SDK",
+        "excerpt": "Integrate your Rails app with Vindi's recurring billing platform. Support dynamic thread-safe multi-tenancy, built-in caching, and intelligent retries.",
+        "category": "Fintech & Integrations",
+        "date": "June 27, 2026",
+        "readTime": "6 min read",
+        "author": "Wesley Lima",
+        "series": "vindi-rails-series",
+        "seriesIndex": 1
+    },
+    {
         "id": "orkai-runiq-genesis",
         "title": "Runiq Genesis: Designing a Standalone Background Job Engine in Go",
         "excerpt": "Why build a task processor from scratch when we have RabbitMQ or Kafka? Explore the design decisions, zero-coupling architecture, and core abstractions of Orkai Runiq.",
