@@ -1,5 +1,16 @@
 [
     {
+        "id": "vindi-rails-webhooks-outbox",
+        "title": "Guaranteed Event Delivery: Transactional Outbox and Resilient Webhooks in vindi-rails",
+        "excerpt": "Avoid billing inconsistencies caused by network timeouts. Learn how to implement the Transactional Outbox Pattern and secure webhooks in Ruby on Rails.",
+        "category": "Fintech & Resilience",
+        "date": "June 28, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "vindi-rails-series",
+        "seriesIndex": 2
+    },
+    {
         "id": "vindi-rails-genesis",
         "title": "Decoupled and Resilient Recurring Payments: Introducing the vindi-rails SDK",
         "excerpt": "Integrate your Rails app with Vindi's recurring billing platform. Support dynamic thread-safe multi-tenancy, built-in caching, and intelligent retries.",
@@ -9,6 +20,17 @@
         "author": "Wesley Lima",
         "series": "vindi-rails-series",
         "seriesIndex": 1
+    },
+    {
+        "id": "orkai-runiq-storage-concurrency",
+        "title": "Resilient Concurrency: FOR UPDATE SKIP LOCKED in Postgres and SQLite WAL in Runiq",
+        "excerpt": "How do you ensure multiple distributed workers do not consume the same task without causing locking bottlenecks? Explore SKIP LOCKED and the secret of concurrent SQLite in Go.",
+        "category": "Performance & Concorrência",
+        "date": "June 28, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 2
     },
     {
         "id": "orkai-runiq-genesis",
