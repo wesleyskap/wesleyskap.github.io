@@ -1,5 +1,16 @@
 [
     {
+        "id": "vindi-rails-activerecord-sync",
+        "title": "Seamless State Sync: ActiveRecord Model Sync with vindi-rails-integrations",
+        "excerpt": "Learn how to synchronize ActiveRecord models with Vindi transparently, handling soft deletes, bulk updates, and reconciliation audits.",
+        "category": "Fintech & Integrations",
+        "date": "June 29, 2026",
+        "readTime": "7 min read",
+        "author": "Wesley Lima",
+        "series": "vindi-rails-series",
+        "seriesIndex": 3
+    },
+    {
         "id": "vindi-rails-webhooks-outbox",
         "title": "Guaranteed Event Delivery: Transactional Outbox and Resilient Webhooks in vindi-rails",
         "excerpt": "Avoid billing inconsistencies caused by network timeouts. Learn how to implement the Transactional Outbox Pattern and secure webhooks in Ruby on Rails.",

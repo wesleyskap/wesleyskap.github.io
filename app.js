@@ -842,6 +842,8 @@ class ViewRenderer {
                     seriesTitle = "Shared Broker";
                 } else if (post.series === "http-query-series") {
                     seriesTitle = "HTTP Query";
+                } else if (post.series === "vindi-rails-series") {
+                    seriesTitle = "Vindi Rails";
                 }
                 seriesMetaHTML = `
                     <span>&bull;</span>
@@ -1000,6 +1002,8 @@ class ViewRenderer {
             seriesText = "Orkai Observability";
         } else if (post.series === "http-query-series") {
             seriesText = "HTTP Query";
+        } else if (post.series === "vindi-rails-series") {
+            seriesText = "Vindi Rails";
         }
 
         const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";
