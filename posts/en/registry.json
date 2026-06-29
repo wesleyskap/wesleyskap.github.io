@@ -1,7 +1,7 @@
 [
     {
         "id": "vindi-rails-activerecord-sync",
-        "title": "Seamless State Sync: ActiveRecord Model Sync with vindi-rails-integrations",
+        "title": "Seamless state sync: ActiveRecord model sync with vindi-rails-integrations",
         "excerpt": "Learn how to synchronize ActiveRecord models with Vindi transparently, handling soft deletes, bulk updates, and reconciliation audits.",
         "category": "Fintech & Integrations",
         "date": "June 29, 2026",
@@ -12,7 +12,7 @@
     },
     {
         "id": "vindi-rails-webhooks-outbox",
-        "title": "Guaranteed Event Delivery: Transactional Outbox and Resilient Webhooks in vindi-rails",
+        "title": "Guaranteed event delivery: Transactional outbox and resilient webhooks in vindi-rails",
         "excerpt": "Avoid billing inconsistencies caused by network timeouts. Learn how to implement the Transactional Outbox Pattern and secure webhooks in Ruby on Rails.",
         "category": "Fintech & Resilience",
         "date": "June 28, 2026",
@@ -23,7 +23,7 @@
     },
     {
         "id": "vindi-rails-genesis",
-        "title": "Decoupled and Resilient Recurring Payments: Introducing the vindi-rails SDK",
+        "title": "Decoupled and resilient recurring payments: Introducing the vindi-rails SDK",
         "excerpt": "Integrate your Rails app with Vindi's recurring billing platform. Support dynamic thread-safe multi-tenancy, built-in caching, and intelligent retries.",
         "category": "Fintech & Integrations",
         "date": "June 27, 2026",
@@ -34,7 +34,7 @@
     },
     {
         "id": "orkai-runiq-scheduling-crons",
-        "title": "Distributed Scheduling & Crons: Solving the Double-Execution Problem",
+        "title": "Distributed scheduling and crons: Solving the double-execution problem",
         "excerpt": "How do you guarantee a Cron task runs exactly once per minute across a cluster of servers without a coordinator like ZooKeeper? Learn the mechanics behind Orkai Runiq.",
         "category": "Sistemas Distribuídos",
         "date": "June 29, 2026",
@@ -45,7 +45,7 @@
     },
     {
         "id": "orkai-runiq-storage-concurrency",
-        "title": "Resilient Concurrency: FOR UPDATE SKIP LOCKED in Postgres and SQLite WAL in Runiq",
+        "title": "Resilient concurrency: FOR UPDATE SKIP LOCKED in Postgres and SQLite WAL in Runiq",
         "excerpt": "How do you ensure multiple distributed workers do not consume the same task without causing locking bottlenecks? Explore SKIP LOCKED and the secret of concurrent SQLite in Go.",
         "category": "Performance & Concorrência",
         "date": "June 28, 2026",
@@ -56,7 +56,7 @@
     },
     {
         "id": "orkai-runiq-genesis",
-        "title": "Runiq Genesis: Designing a Standalone Background Job Engine in Go",
+        "title": "Runiq genesis: Designing a standalone background job engine in Go",
         "excerpt": "Why build a task processor from scratch when we have RabbitMQ or Kafka? Explore the design decisions, zero-coupling architecture, and core abstractions of Orkai Runiq.",
         "category": "Mensageria",
         "date": "June 26, 2026",
@@ -67,7 +67,7 @@
     },
     {
         "id": "http-query-indirect-responses",
-        "title": "Indirect Responses, Query Snapshots, and Semantic Routing in HTTP QUERY",
+        "title": "Indirect responses, query snapshots, and semantic routing in HTTP QUERY",
         "excerpt": "Explore the most advanced sections of RFC 10008. Learn how to use indirect responses with status 303, the crucial difference between Content-Location and Location, and how to apply these patterns in microservices architectures.",
         "category": "Web",
         "date": "June 23, 2026",
@@ -78,7 +78,7 @@
     },
     {
         "id": "http-query-advanced-caching",
-        "title": "Advanced Caching Mechanics, Body Normalization, and Security in HTTP QUERY",
+        "title": "Advanced caching mechanics, body normalization, and security in HTTP QUERY",
         "excerpt": "Deep dive into Sections 2.7 and 4 of RFC 10008. Understand the challenges of generating stable cache keys for request bodies, payload normalization rules (+json), and crucial security guidelines.",
         "category": "Web",
         "date": "June 22, 2026",
@@ -89,7 +89,7 @@
     },
     {
         "id": "http-query-implementation",
-        "title": "Practical Implementation: Building an HTTP QUERY Server from Scratch in Go and Ruby",
+        "title": "Practical implementation: Building an HTTP QUERY server from scratch in Go and Ruby",
         "excerpt": "Put RFC 10008 into practice. Learn how to implement HTTP QUERY support from scratch in Go (net/http) and Ruby (Rack/Sinatra), handling routing, status 422, and conditional caching.",
         "category": "Web",
         "date": "June 21, 2026",
@@ -100,7 +100,7 @@
     },
     {
         "id": "http-query-cache-validation",
-        "title": "Content Negotiation, Conditional Requests, and Semantic Error Handling in HTTP QUERY",
+        "title": "Content negotiation, conditional requests, and semantic error handling in HTTP QUERY",
         "excerpt": "Deep dive into RFC 10008. Learn how to design resilient servers by handling query syntax errors with status 415/422, managing advanced body-based caching with ETags, and serving conditional responses.",
         "category": "Web",
         "date": "June 20, 2026",
@@ -111,7 +111,7 @@
     },
     {
         "id": "http-query-evolution",
-        "title": "The Impact of HTTP QUERY on REST API Design and the Redefinition of GraphQL",
+        "title": "The impact of HTTP QUERY on REST API design and the redefinition of GraphQL",
         "excerpt": "How does the QUERY method transform the API ecosystem? We analyze its impact on REST search routes and how it can redefine GraphQL query delivery with native edge caching support.",
         "category": "Web",
         "date": "June 19, 2026",
@@ -122,7 +122,7 @@
     },
     {
         "id": "http-query-method",
-        "title": "The New HTTP QUERY Method: Overcoming GET and POST Limitations in Modern APIs",
+        "title": "The new HTTP QUERY method: Overcoming GET and POST limitations in modern APIs",
         "excerpt": "Discover RFC 10008, defining the HTTP QUERY method. Learn how it solves the dilemma of sending complex queries safely, idempotently, and with native caching support.",
         "category": "Web",
         "date": "June 18, 2026",
@@ -133,7 +133,7 @@
     },
     {
         "id": "shared-broker-dlq-redrive",
-        "title": "Disaster Recovery: Reprocessing Failed Messages with the DLQ Redriver Utility",
+        "title": "Disaster recovery: Reprocessing failed messages with the DLQ Redriver utility",
         "excerpt": "Failed queues (DLQs) isolate bad messages, but how do we reprocess them? Learn how to design and operate an automated Redriver in the SharedBroker gem.",
         "category": "Operations & Resilience",
         "date": "June 26, 2026",
@@ -144,7 +144,7 @@
     },
     {
         "id": "shared-broker-key-rotation-registry",
-        "title": "Data Security: Topic-Specific Key Rotation and HTTP Schema Registry",
+        "title": "Data security: Topic-specific key rotation and HTTP schema registry",
         "excerpt": "Manage contracts of distributed events and isolate cryptographic key access granularly. Learn about secret rotation and JSON Schema validation.",
         "category": "Security",
         "date": "June 24, 2026",
@@ -155,7 +155,7 @@
     },
     {
         "id": "shared-broker-compression-idempotency",
-        "title": "Optimization and Idempotency: Automatic Payload Compression and Deduplication Middleware",
+        "title": "Optimization and idempotency: Automatic payload compression and deduplication middleware",
         "excerpt": "Large payloads and duplicate messages are common challenges in distributed systems. Learn how to compress payloads dynamically and guarantee idempotency in SharedBroker.",
         "category": "Performance & Concurrency",
         "date": "June 22, 2026",
@@ -166,7 +166,7 @@
     },
     {
         "id": "shared-broker-concurrency-routing",
-        "title": "Concurrency Control, Adaptive Backpressure, and Hybrid Multi-Adapter Routing",
+        "title": "Concurrency control, adaptive backpressure, and hybrid multi-adapter routing",
         "excerpt": "How do you avoid overloading local databases and route events to multiple brokers in Ruby microservices? Learn about concurrency and routing.",
         "category": "Performance",
         "date": "June 03, 2026",
@@ -177,7 +177,7 @@
     },
     {
         "id": "onkai-unified-bus-dispatcher",
-        "title": "Zero-Allocation Dispatcher: Routing Millions of Events Without Heap Allocations in Go",
+        "title": "Zero-allocation dispatcher: Routing millions of events without heap allocations in Go",
         "excerpt": "How do you design a high-performance in-memory event dispatcher? Learn how onkai-unified-bus uses sync.Pool and goroutine worker pools to bypass garbage collector cycles.",
         "category": "Messaging",
         "date": "Mar 17, 2026",
@@ -188,7 +188,7 @@
     },
     {
         "id": "onkai-unified-bus-backpressure",
-        "title": "Flow Control and Backpressure: Preventing Memory Saturation in Event Intake Loops",
+        "title": "Flow control and backpressure: Preventing memory saturation in event intake loops",
         "excerpt": "What do you do when consumers cannot catch up with producers? Learn how to design resilient backpressure strategies using non-blocking buffers in Go.",
         "category": "Messaging",
         "date": "Mar 21, 2026",
@@ -199,7 +199,7 @@
     },
     {
         "id": "shared-broker-security",
-        "title": "Secure Boundaries: Payload Validation (dry-schema and HTTP Registry), AES-256-GCM Encryption, and Key Rotation",
+        "title": "Secure boundaries: Payload validation (dry-schema and HTTP registry), AES-256-GCM encryption, and key rotation",
         "excerpt": "How do you guarantee contract integrity and security for sensitive data? Learn about payload validation and encryption with rotating keys.",
         "category": "Security",
         "date": "June 02, 2026",
@@ -210,7 +210,7 @@
     },
     {
         "id": "shared-broker-resilience",
-        "title": "Resilience in Ruby Microservices: Exponential Backoff, DLQ, and Thread-Safe Circuit Breaker",
+        "title": "Resilience in Ruby microservices: Exponential backoff, DLQ, and thread-safe circuit breaker",
         "excerpt": "Distributed systems fail. Learn how to design retry policies, Dead Letter Queue (DLQ) routing, and outbound circuit breakers in SharedBroker.",
         "category": "Resilience",
         "date": "May 26, 2026",
@@ -221,7 +221,7 @@
     },
     {
         "id": "shared-broker-adapters",
-        "title": "Decoupling Messaging in Ruby: Implementing the Adapter Pattern with InMemory, RabbitMQ, Kafka, and Redis",
+        "title": "Decoupling messaging in Ruby: Implementing the adapter pattern with InMemory, RabbitMQ, Kafka, and Redis",
         "excerpt": "How do you decouple message publishing and subscription from the physical broker in Ruby? Learn how to design and use multiple adapters.",
         "category": "Messaging",
         "date": "May 25, 2026",
@@ -232,7 +232,7 @@
     },
     {
         "id": "orkai-observability-pprof",
-        "title": "Automated Diagnostics: On-Demand Profiling with Auto-Triggered pprof",
+        "title": "Automated diagnostics: On-demand profiling with auto-triggered pprof",
         "excerpt": "Investigating CPU and memory spikes after a server crash is ineffective. Learn how to automate profiling on-demand using pprof in Go.",
         "category": "Performance",
         "date": "May 24, 2026",
@@ -243,7 +243,7 @@
     },
     {
         "id": "prometheus-histograms-and-opentelemetry-bridge",
-        "title": "From Custom Engine to Industry Standard: Latency Percentiles and OpenTelemetry's Semantic Bridge",
+        "title": "From custom engine to industry standard: Latency percentiles and OpenTelemetry's semantic bridge",
         "excerpt": "Why do average latency metrics lie? Discover the math behind tail-latency percentiles and how we created a semantic bridge to support OpenTelemetry with concurrent dual routing.",
         "category": "Metrics & Tracing",
         "date": "May 18, 2026",
@@ -254,8 +254,8 @@
     },
     {
         "id": "circuit-breaker-and-exponential-backoff",
-        "title": "Resilience at Scale: Building a Dependency-Free Circuit Breaker and Exponential Backoff Retries",
-        "excerpt": "Distributed systems fail. Calling unstable APIs blindly causes cascading outages. We show how to design a pure state machine Circuit Breaker and exponential backoff retry runner in Go.",
+        "title": "Resilience at scale: Building a dependency-free circuit breaker and exponential backoff retries",
+        "excerpt": "Distributed systems fail. Calling unstable APIs blindly causes cascading outages. We show how to design a pure state machine circuit breaker and exponential backoff retry runner in Go.",
         "category": "Resilience",
         "date": "May 18, 2026",
         "readTime": "5 min read",
@@ -265,7 +265,7 @@
     },
     {
         "id": "distributed-context-propagation-and-http-decorators",
-        "title": "Distributed Context Propagation: W3C, B3, and Go HTTP Client Decorators",
+        "title": "Distributed context propagation: W3C, B3, and Go HTTP client decorators",
         "excerpt": "How do you trace transactions across network boundaries? Learn how to propagate correlation identifiers using W3C and B3 headers, decorating Go's net/http client transparently.",
         "category": "Connectivity",
         "date": "May 17, 2026",
@@ -276,7 +276,7 @@
     },
     {
         "id": "asynchronous-logging-ring-buffer",
-        "title": "Say Goodbye to I/O Bottlenecks: Building a High-Performance Concurrent Log Ring-Buffer",
+        "title": "Say goodbye to I/O bottlenecks: Building a high-performance concurrent log ring-buffer",
         "excerpt": "Writing logs synchronously throttle your APIs. Discover how to build a non-blocking asynchronous log buffer with safe fallback under high saturation.",
         "category": "Performance",
         "date": "May 17, 2026",
@@ -287,7 +287,7 @@
     },
     {
         "id": "orkai-observability-genesis",
-        "title": "Building a Reflection-Free structured JSON Logger and a LIFO Tracer from Scratch in Go",
+        "title": "Building a reflection-free structured JSON logger and a LIFO tracer from scratch in Go",
         "excerpt": "How do you correlate structured logs with deep execution trees without polluting your business logic? Learn how to design a reflection-free logger and a concurrent tracer.",
         "category": "Concurrency & Architecture",
         "date": "May 17, 2026",
@@ -298,7 +298,7 @@
     },
     {
         "id": "orkai-observability-otlp-exporter",
-        "title": "OTel Protocol Integration: Building a Native OTLP HTTP/JSON Exporter Without External SDKs",
+        "title": "OTEL Protocol integration: Building a native OTLP HTTP/JSON exporter without external SDKs",
         "excerpt": "Leverage OpenTelemetry standards without bringing in heavy SDK packages. Learn how to export spans and logs natively in Go.",
         "category": "Metrics & Tracing",
         "date": "May 16, 2026",
@@ -309,7 +309,7 @@
     },
     {
         "id": "orkai-observability-console-formatting",
-        "title": "Local vs. Production Viewing: Colored ANSI Formatters and Self-Monitoring Metrics",
+        "title": "Local vs. production viewing: Colored ANSI formatters and self-monitoring metrics",
         "excerpt": "Structured JSON logs are perfect for indexers but hard to read in local terminals. Learn how to implement color console logs in Go.",
         "category": "Performance",
         "date": "May 15, 2026",
@@ -320,7 +320,7 @@
     },
     {
         "id": "orkai-observability-payload-logging",
-        "title": "HTTP Payload Logging: Implementing Smart Sampling to Prevent Storage Saturation",
+        "title": "HTTP payload logging: Implementing smart sampling to prevent storage saturation",
         "excerpt": "Logging entire HTTP request and response payloads consumes massive storage and hurts performance. Learn how to apply payload sampling in Go.",
         "category": "Performance",
         "date": "May 13, 2026",
@@ -331,7 +331,7 @@
     },
     {
         "id": "orkai-observability-pii-masking",
-        "title": "Data Safety: Implementing Regex-Based PII Masking and Sanitization",
+        "title": "Data safety: Implementing regex-based PII masking and sanitization",
         "excerpt": "Leaking PII into log files violates regulations like GDPR and LGPD. Learn how to mask PII dynamically using Regex in Go.",
         "category": "Performance",
         "date": "May 07, 2026",
@@ -342,7 +342,7 @@
     },
     {
         "id": "orkai-observability-slow-query",
-        "title": "Real-Time Alerts: Detecting Slow Queries and Protecting Databases from Degradation",
+        "title": "Real-time alerts: Detecting slow queries and protecting databases from degradation",
         "excerpt": "Slow database queries cause silent bottlenecks and exhaust connection pools. Learn how to design an automated slow query alert system.",
         "category": "Resilience",
         "date": "May 05, 2026",
@@ -353,7 +353,7 @@
     },
     {
         "id": "orkai-observability-baggage",
-        "title": "Baggage Propagation: Sharing Business Metadata Across Microservices via W3C Standard",
+        "title": "Baggage propagation: Sharing business metadata across microservices via W3C standard",
         "excerpt": "Telemetry traces only link function calls. Learn how to use W3C Baggage to propagate business metadata across your entire microservices mesh.",
         "category": "Connectivity",
         "date": "May 03, 2026",
@@ -364,7 +364,7 @@
     },
     {
         "id": "orkai-observability-sql-tracing",
-        "title": "Database Visibility: Building a TraceSQL Context Wrapper to Measure Query Latencies",
+        "title": "Database visibility: Building a TraceSQL context wrapper to measure query latencies",
         "excerpt": "Database queries are often the primary source of API latency. Learn how to automate SQL query tracing natively in Go.",
         "category": "Metrics & Tracing",
         "date": "April 30, 2026",
@@ -375,7 +375,7 @@
     },
     {
         "id": "orkai-observability-resource-telemetry",
-        "title": "Runtime Telemetry: Building a System Resource Collector for the Go Runtime",
+        "title": "Runtime telemetry: Building a system resource collector for the Go runtime",
         "excerpt": "How do you monitor actual memory consumption, Garbage Collector pauses, and active goroutines in Go? Create a background resource collector.",
         "category": "Metrics & Tracing",
         "date": "April 27, 2026",
@@ -386,7 +386,7 @@
     },
     {
         "id": "orkai-observability-panic-recovery",
-        "title": "HTTP Resilience: Designing a Panic Recovery Middleware to Capture Crashes",
+        "title": "HTTP resilience: Designing a panic recovery middleware to capture crashes",
         "excerpt": "Unexpected runtime failures shouldn't take down your web server. Learn how to intercept panics and return structured JSON errors in Go.",
         "category": "Resilience",
         "date": "April 26, 2026",
@@ -397,7 +397,7 @@
     },
     {
         "id": "orkai-observability-log-rotation",
-        "title": "Efficient Disk Writing: Building a Log File Rotation Writer Without Dependencies",
+        "title": "Efficient disk writing: Building a log file rotation writer without dependencies",
         "excerpt": "Writing logs to files indefinitely eventually saturates server disk storage. Learn how to design a thread-safe, concurrent log rotation writer in Go.",
         "category": "Performance",
         "date": "April 25, 2026",
@@ -408,7 +408,7 @@
     },
     {
         "id": "onkai-unified-bus-sagas",
-        "title": "Distributed Transactions with Sagas: Orchestrating Steps and Compensations",
+        "title": "Distributed transactions with Sagas: Orchestrating steps and compensations",
         "excerpt": "Distributed microservices lack unified database transactions. Learn how to use the Saga pattern to coordinate complex operations and compensation steps.",
         "category": "Messaging",
         "date": "Apr 18, 2026",
@@ -419,7 +419,7 @@
     },
     {
         "id": "onkai-unified-bus-aot-dispatcher",
-        "title": "Reflection-Free Dispatcher: Optimizing Performance and Supporting Native AOT",
+        "title": "Reflection-free dispatcher: Optimizing performance and supporting native AOT",
         "excerpt": "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in Go.",
         "category": "Messaging",
         "date": "Apr 16, 2026",
@@ -430,7 +430,7 @@
     },
     {
         "id": "onkai-unified-bus-inbox",
-        "title": "Avoiding Duplicate Processing: The Inbox Pattern and Idempotent Consumers",
+        "title": "Avoiding duplicate processing: The Inbox Pattern and idempotent consumers",
         "excerpt": "Duplicate messages are inevitable in distributed systems. Learn how to implement the Inbox Pattern to guarantee idempotent event consumption.",
         "category": "Messaging",
         "date": "Apr 15, 2026",
@@ -441,7 +441,7 @@
     },
     {
         "id": "onkai-unified-bus-delayed-messages",
-        "title": "Scheduled and Delayed Messages: Routing with TTL and Dead-Letter Exchange in RabbitMQ",
+        "title": "Scheduled and delayed messages: Routing with TTL and dead-letter exchange in RabbitMQ",
         "excerpt": "Need to delay message delivery by a few minutes without using additional plugins in RabbitMQ? Learn how to use TTL and Dead-Letter Exchanges.",
         "category": "Messaging",
         "date": "Apr 14, 2026",
@@ -452,7 +452,7 @@
     },
     {
         "id": "onkai-unified-bus-outbox",
-        "title": "Reliable Messaging: Guaranteeing At-Least-Once with Transactional Outbox Pattern",
+        "title": "Reliable messaging: Guaranteeing at-least-once with Transactional Outbox pattern",
         "excerpt": "How do you guarantee that an event is sent to the message broker only if the database transaction succeeds? Learn about the Transactional Outbox pattern.",
         "category": "Messaging",
         "date": "Apr 12, 2026",
@@ -463,7 +463,7 @@
     },
     {
         "id": "onkai-unified-bus-background-consumption",
-        "title": "Background Message Consumption: Designing a Resilient Hosted Service",
+        "title": "Background message consumption: Designing a resilient hosted service",
         "excerpt": "How do you run continuous and asynchronous message consumption without blocking the application's main thread? Design a resilient background worker.",
         "category": "Messaging",
         "date": "Apr 08, 2026",
@@ -474,7 +474,7 @@
     },
     {
         "id": "onkai-unified-bus-tracing",
-        "title": "Asynchronous Tracing: Propagating Telemetry Context Across Event Boundaries",
+        "title": "Asynchronous tracing: Propagating telemetry context across event boundaries",
         "excerpt": "How do you track distributed execution flows through asynchronous queues without losing correlation? Learn how to inject and extract trace contexts in message headers.",
         "category": "Messaging",
         "date": "Mar 28, 2026",
@@ -485,7 +485,7 @@
     },
     {
         "id": "onkai-unified-bus-dlq",
-        "title": "Error State Machines: Designing Dead-Letter Queues (DLQ) and Jittered Retries",
+        "title": "Error state machines: Designing dead-letter queues (DLQ) and jittered retries",
         "excerpt": "Distributed systems fail in unpredictable ways. Learn how onkai-unified-bus implements safe exponential backoff retries and poison pill isolation.",
         "category": "Messaging",
         "date": "Mar 27, 2026",
@@ -496,7 +496,7 @@
     },
     {
         "id": "onkai-unified-bus-drivers",
-        "title": "Decoupled Drivers: Abstracting NATS, RabbitMQ, and Kafka with a Unified Interface",
+        "title": "Decoupled drivers: Abstracting NATS, RabbitMQ, and Kafka with a unified interface",
         "excerpt": "How can you switch between different messaging providers without changing a single line of business logic? Learn about onkai-unified-bus's decoupled driver design.",
         "category": "Messaging",
         "date": "Mar 22, 2026",

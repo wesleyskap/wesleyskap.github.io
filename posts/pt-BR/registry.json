@@ -1,7 +1,18 @@
 [
     {
+        "id": "vindi-rails-engines-checkout",
+        "title": "Criptografia na borda e checkout transparente: Segurança com vindi-rails-engines",
+        "excerpt": "Como capturar dados de cartão de crédito de forma segura em conformidade com PCI DSS? Conheça os componentes front-end, criptografia na borda e Stimulus controllers da vindi-rails-engines.",
+        "category": "Fintech & Segurança",
+        "date": "26 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "vindi-rails-series",
+        "seriesIndex": 4
+    },
+    {
         "id": "vindi-rails-activerecord-sync",
-        "title": "Sincronização de Estado Sem Costura: ActiveRecord Model Sync com vindi-rails-integrations",
+        "title": "Sincronização de estado sem costura: ActiveRecord model sync com vindi-rails-integrations",
         "excerpt": "Descubra como sincronizar modelos do ActiveRecord de forma transparente com a Vindi, tratando deleção lógica, atualizações em lote e auditorias de conciliação.",
         "category": "Fintech & Integrações",
         "date": "29 de Junho, 2026",
@@ -12,7 +23,7 @@
     },
     {
         "id": "vindi-rails-webhooks-outbox",
-        "title": "Garantia de Entrega e Eventos Resilientes: Outbox Transacional e Webhooks no vindi-rails",
+        "title": "Garantia de entrega e eventos resilientes: Outbox transacional e webhooks no vindi-rails",
         "excerpt": "Como evitar inconsistências de pagamento causadas por timeouts de rede? Veja como implementar o Transactional Outbox Pattern e recebimento de Webhooks assíncronos no Rails.",
         "category": "Fintech & Resiliência",
         "date": "28 de Junho, 2026",
@@ -23,7 +34,7 @@
     },
     {
         "id": "vindi-rails-genesis",
-        "title": "Desacoplamento e Alta Disponibilidade na Recorrência: Introduzindo o SDK vindi-rails",
+        "title": "Desacoplamento e alta disponibilidade na recorrência: Introduzindo o SDK vindi-rails",
         "excerpt": "Conecte sua aplicação Rails à plataforma de cobrança recorrente da Vindi de forma thread-safe, com suporte a multi-tenancy dinâmico, cache embutido e retries inteligentes.",
         "category": "Fintech & Integrações",
         "date": "27 de Junho, 2026",
@@ -33,8 +44,30 @@
         "seriesIndex": 1
     },
     {
+        "id": "orkai-runiq-resilience-dashboard",
+        "title": "Resiliência extrema: Backoff com jitter, circuit breaker de storage e dashboard SPA",
+        "excerpt": "Falhas de rede e sobrecarga de banco de dados acontecem. Saiba como o Runiq protege sua infraestrutura usando Jitter, Circuit Breakers locais e monitoramento em tempo real.",
+        "category": "Operações & Resiliência",
+        "date": "24 de Junho, 2026",
+        "readTime": "7 min de leitura",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 5
+    },
+    {
+        "id": "orkai-runiq-orchestration-dags",
+        "title": "Orquestração de fluxos complexos: DAGs e batches relacionais no Runiq",
+        "excerpt": "Como rodar grafos de tarefas com dependências ou lotes paralelos usando apenas SQL puro e garantias transacionais? Veja o design interno de DAGs e Batches no Runiq.",
+        "category": "Sistemas Distribuídos",
+        "date": "24 de Junho, 2026",
+        "readTime": "7 min de leitura",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 4
+    },
+    {
         "id": "orkai-runiq-scheduling-crons",
-        "title": "Agendamento e Crons Distribuídos: Resolvendo o Problema da Execução Duplicada",
+        "title": "Agendamento e crons distribuídos: Resolvendo o problema da execução duplicada",
         "excerpt": "Como garantir que um agendamento Cron rode exatamente uma vez por minuto em um cluster de servidores sem um coordenador como o ZooKeeper? Entenda a mecânica por trás do Orkai Runiq.",
         "category": "Sistemas Distribuídos",
         "date": "29 de Junho, 2026",
@@ -45,7 +78,7 @@
     },
     {
         "id": "orkai-runiq-storage-concurrency",
-        "title": "Concorrência Segura: FOR UPDATE SKIP LOCKED no Postgres e SQLite com WAL no Runiq",
+        "title": "Concorrência segura: FOR UPDATE SKIP LOCKED no Postgres e SQLite com WAL no Runiq",
         "excerpt": "Como garantir que múltiplos workers distribuídos não consumam a mesma tarefa sem gerar gargalos de travamento? Descubra o funcionamento do SKIP LOCKED e o segredo do SQLite concorrente em Go.",
         "category": "Performance & Concorrência",
         "date": "28 de Junho, 2026",
@@ -56,7 +89,7 @@
     },
     {
         "id": "orkai-runiq-genesis",
-        "title": "Runiq: Projetando um Motor de Background Jobs Standalone em Go",
+        "title": "Runiq: Projetando um motor de background jobs standalone em Go",
         "excerpt": "Por que construir um processador de tarefas do zero quando temos RabbitMQ ou Kafka? Explore as decisões de design, a arquitetura de acoplamento zero e as abstrações fundamentais do Orkai Runiq.",
         "category": "Mensageria",
         "date": "26 de Junho, 2026",
@@ -67,7 +100,7 @@
     },
     {
         "id": "http-query-indirect-responses",
-        "title": "Respostas Indiretas, Snapshots de Busca e Roteamento Semântico no HTTP QUERY",
+        "title": "Respostas indiretas, snapshots de busca e roteamento smântico no HTTP QUERY",
         "excerpt": "Explore as seções mais avançadas do RFC 10008. Saiba como usar respostas indiretas com status 303, a diferença crucial entre Content-Location e Location, e como aplicar esses padrões em arquiteturas de microsserviços.",
         "category": "Web",
         "date": "23 de Junho, 2026",
@@ -78,7 +111,7 @@
     },
     {
         "id": "http-query-advanced-caching",
-        "title": "Mecânica Avançada de Cache, Normalização de Corpo e Segurança no HTTP QUERY",
+        "title": "Mecânica avançada de cache, normalização de corpo e segurança no HTTP QUERY",
         "excerpt": "Aprofunde-se na Seção 2.7 e 4 do RFC 10008. Entenda os desafios de gerar chaves de cache estáveis para corpos de requisições, as regras de normalização de payloads (+json) e as diretrizes cruciais de segurança contra ataques de negação de serviço.",
         "category": "Web",
         "date": "22 de Junho, 2026",
@@ -89,7 +122,7 @@
     },
     {
         "id": "http-query-implementation",
-        "title": "Implementação Prática: Construindo um Servidor HTTP QUERY do Zero em Go e Ruby",
+        "title": "Implementação prática: Construindo um Servidor HTTP QUERY do Zero em Go e Ruby",
         "excerpt": "Coloque a teoria do RFC 10008 em prática. Aprenda a implementar o suporte ao método HTTP QUERY do zero no ecossistema Go (net/http) e em Ruby (Rack/Sinatra), tratando roteamento, status 422 e cache condicional.",
         "category": "Web",
         "date": "21 de Junho, 2026",
@@ -100,7 +133,7 @@
     },
     {
         "id": "http-query-cache-validation",
-        "title": "Negociação de Conteúdo, Requisições Condicionais e Tratamento de Erros Semânticos no HTTP QUERY",
+        "title": "Negociação de conteúdo, requisições condicionais e tratamento de erros semânticos no HTTP QUERY",
         "excerpt": "Aprofunde-se no RFC 10008 e aprenda como projetar servidores resilientes tratando erros de formato com status 415/422, controlando cache avançado com ETag e respondendo de forma condicional.",
         "category": "Web",
         "date": "20 de Junho, 2026",
@@ -111,7 +144,7 @@
     },
     {
         "id": "http-query-evolution",
-        "title": "O Impacto do HTTP QUERY no Design de APIs REST e a Redefinição do GraphQL",
+        "title": "O impacto do HTTP QUERY no design de APIs REST e a redefinição do GraphQL",
         "excerpt": "Como o método QUERY transforma o ecossistema de APIs? Analisamos o impacto nas rotas REST de busca e como ele pode redefinir o transporte de consultas GraphQL de forma nativamente cacheável.",
         "category": "Web",
         "date": "19 de Junho, 2026",
@@ -122,7 +155,7 @@
     },
     {
         "id": "http-query-method",
-        "title": "O Novo Método HTTP QUERY: Superando as Limitações de GET e POST em APIs Modernas",
+        "title": "O novo método HTTP QUERY: Superando as limitações de GET e POST em APIs modernas",
         "excerpt": "Conheça o RFC 10008, que define o método HTTP QUERY. Entenda como ele resolve o dilema de enviar buscas complexas com segurança, idempotência e suporte nativo a cache.",
         "category": "Web",
         "date": "18 de Junho, 2026",
@@ -144,7 +177,7 @@
     },
     {
         "id": "shared-broker-key-rotation-registry",
-        "title": "Segurança de Dados: Rotação de Chaves por Tópico e HTTP Schema Registry",
+        "title": "Segurança de dados: Rotação de chaves por tópico e HTTP Schema Registry",
         "excerpt": "Gerencie contratos de eventos distribuídos e isole o acesso a chaves criptográficas de forma granular. Entenda a rotação de segredos e validação JSON Schema.",
         "category": "Segurança",
         "date": "24 de Junho, 2026",
@@ -155,7 +188,7 @@
     },
     {
         "id": "shared-broker-compression-idempotency",
-        "title": "Otimização e Idempotência: Compressão Automática de Payloads e Middleware de Deduplicação",
+        "title": "Otimização e idempotência: Compressão Automática de Payloads e Middleware de Deduplicação",
         "excerpt": "Grandes volumes de dados e duplicações de mensagens são desafios comuns em sistemas distribuídos. Aprenda a compactar payloads dinamicamente e garantir a idempotência no SharedBroker.",
         "category": "Performance & Concorrência",
         "date": "22 de Junho, 2026",
@@ -166,7 +199,7 @@
     },
     {
         "id": "shared-broker-concurrency-routing",
-        "title": "Controle de Concorrência, Backpressure Adaptativo e Roteamento Híbrido Multi-Adapter",
+        "title": "Controle de concorrência, backpressure adaptativo e roteamento híbrido multi-adapter",
         "excerpt": "Como evitar sobrecarga de bancos de dados locais e rotear eventos para múltiplos brokers de forma híbrida em microsserviços Ruby? Veja a solução.",
         "category": "Alta Performance",
         "date": "03 de Junho, 2026",
@@ -177,7 +210,7 @@
     },
     {
         "id": "onkai-unified-bus-dispatcher",
-        "title": "Zero-Allocation Dispatcher: Roteando Milhões de Eventos Sem Alocações na Heap em Go",
+        "title": "Zero-allocation dispatcher: Roteando milhões de eventos sem alocações na heap em Go",
         "excerpt": "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa sync.Pool e pooling de goroutines para obter vazão massiva livre de Garbage Collector.",
         "category": "Mensageria",
         "date": "17 de Março, 2026",
@@ -188,7 +221,7 @@
     },
     {
         "id": "onkai-unified-bus-backpressure",
-        "title": "Controle de Fluxo e Backpressure: Evitando Saturação de Memória no Consumo de Eventos",
+        "title": "Controle de fluxo e backpressure: Evitando saturação de memória no consumo de eventos",
         "excerpt": "O que fazer quando os consumidores não conseguem acompanhar a velocidade dos produtores? Aprenda a desenhar estratégias de backpressure resilientes usando buffers não-bloqueantes no Go.",
         "category": "Mensageria",
         "date": "21 de Março, 2026",
@@ -199,7 +232,7 @@
     },
     {
         "id": "shared-broker-security",
-        "title": "Fronteiras Seguras: Validação de Payload (dry-schema e HTTP Registry), Criptografia AES-256-GCM e Rotação de Chaves",
+        "title": "Fronteiras seguras: Validação de payload (dry-schema e HTTP Registry), criptografia AES-256-GCM e rotação de chaves",
         "excerpt": "Como garantir a integridade dos contratos e a segurança de dados sensíveis na rede? Veja validação de payloads e criptografia com chaves rotativas.",
         "category": "Segurança",
         "date": "02 de Junho, 2026",
@@ -210,7 +243,7 @@
     },
     {
         "id": "shared-broker-resilience",
-        "title": "Resiliência em Microsserviços Ruby: Retries com Backoff Exponencial, DLQ e Circuit Breaker Thread-Safe",
+        "title": "Resiliência em microsserviços Ruby: Retries com backoff exponencial, DLQ e Circuit Breaker thread-safe",
         "excerpt": "Sistemas falham. Aprenda a desenhar políticas automáticas de retry, desvios para Dead Letter Queue (DLQ) e Circuit Breaker na gem SharedBroker.",
         "category": "Resiliência",
         "date": "26 de Maio, 2026",
@@ -221,7 +254,7 @@
     },
     {
         "id": "shared-broker-adapters",
-        "title": "Desacoplamento de Mensageria em Ruby: Implementando o Adapter Pattern com InMemory, RabbitMQ, Kafka e Redis",
+        "title": "Desacoplamento de mensageria em Ruby: Implementando o Adapter Pattern com InMemory, RabbitMQ, Kafka e Redis",
         "excerpt": "Como desacoplar o envio e consumo de mensagens do broker físico em aplicações Ruby? Aprenda a projetar e utilizar múltiplos adaptadores.",
         "category": "Mensageria",
         "date": "25 de Maio, 2026",
@@ -232,7 +265,7 @@
     },
     {
         "id": "orkai-observability-pprof",
-        "title": "Automação de Diagnósticos: Profiling Sob Demanda com Auto-Triggered pprof em Go",
+        "title": "Automação de diagnósticos: Profiling sob demanda com auto-triggered pprof em Go",
         "excerpt": "Investigar picos de CPU e memória em produção após o servidor cair é ineficaz. Aprenda a automatizar o profiling sob demanda usando pprof.",
         "category": "Alta Performance",
         "date": "24 de Maio, 2026",
@@ -243,7 +276,7 @@
     },
     {
         "id": "prometheus-histograms-and-opentelemetry-bridge",
-        "title": "Do Customizado ao Padrão de Mercado: Percentis Histogramas e a Ponte Semântica do OpenTelemetry",
+        "title": "Do customizado ao padrão de mercado: Percentis histogramas e a ponte semântica do OpenTelemetry",
         "excerpt": "Por que as médias de latência mentem? Descubra a matemática por trás do cálculo de percentis de cauda longa e como criamos uma ponte semântica limpa para suportar o padrão OpenTelemetry com roteamento duplo concorrente.",
         "category": "Métricas & Tracing",
         "date": "18 de Maio, 2026",
@@ -254,7 +287,7 @@
     },
     {
         "id": "circuit-breaker-and-exponential-backoff",
-        "title": "Resiliência em Larga Escala: Construindo um Circuit Breaker Sem Dependências e Retries Exponenciais",
+        "title": "Resiliência em larga escala: Construindo um circuit breaker sem dependências e retries exponenciais",
         "excerpt": "Sistemas distribuídos falham. Chamar APIs instáveis sem controle gera o efeito manada. Mostramos como projetar uma máquina de estados de Circuit Breaker pura e um motor de retry com recuo exponencial em Go.",
         "category": "Resiliência",
         "date": "18 de Maio, 2026",
@@ -265,7 +298,7 @@
     },
     {
         "id": "distributed-context-propagation-and-http-decorators",
-        "title": "Propagação Distribuída e Resiliência de Transporte: W3C, B3 e HTTP Client Decorators",
+        "title": "Propagação distribuída e resiliência de transporte: W3C, B3 e HTTP Client Decorators",
         "excerpt": "Como manter o rastreamento ativo em chamadas HTTP remotas? Aprenda a propagar contextos de telemetria utilizando cabeçalhos W3C e B3 decorando o net/http do Go de forma transparente.",
         "category": "Conectividade",
         "date": "17 de Maio, 2026",
@@ -276,7 +309,7 @@
     },
     {
         "id": "asynchronous-logging-ring-buffer",
-        "title": "Adeus, I/O Bottlenecks: Construindo um Ring-Buffer de Log Assíncrono com Canais Concorrentes",
+        "title": "Adeus, I/O bottlenecks: Construindo um ring-buffer de log assíncrono com canais concorrentes",
         "excerpt": "Escrever logs de forma síncrona estrangula a latência de sua API. Descubra como criar uma fila de logs assíncrona não-bloqueante de alta performance em Go com tratamento seguro de saturação.",
         "category": "Alta Performance",
         "date": "17 de Maio, 2026",
@@ -287,7 +320,7 @@
     },
     {
         "id": "orkai-observability-genesis",
-        "title": "Criando um Logger JSON de Ultra-Performance e um Tracer LIFO do Zero em Go",
+        "title": "Criando um logger JSON de ultra-performance e um tracer LIFO do zero em Go",
         "excerpt": "Como correlacionar logs estruturados com escopos complexos de execução sem poluir suas regras de negócios? Aprenda a desenhar um Logger livre de reflexão e um rastreador concorrente em Go.",
         "category": "Concorrência & Arquitetura",
         "date": "17 de Maio, 2026",
@@ -298,7 +331,7 @@
     },
     {
         "id": "orkai-observability-otlp-exporter",
-        "title": "Integração Padrão OTel: Construindo um Exportador OTLP HTTP/JSON Nativo Sem Dependências",
+        "title": "Integração padrão OTel: Construindo um exportador OTLP HTTP/JSON nativo sem dependências",
         "excerpt": "Aproveite a padronização do OpenTelemetry sem carregar pacotes externos pesados. Veja como exportar spans e logs nativamente em Go.",
         "category": "Métricas & Tracing",
         "date": "16 de Maio, 2026",
@@ -309,7 +342,7 @@
     },
     {
         "id": "orkai-observability-console-formatting",
-        "title": "Visualização Local vs. Produção: Formatadores ANSI Coloridos e Auto-Monitoramento de Logs",
+        "title": "Visualização local vs. produção: Formatadores ANSI coloridos e auto-monitoramento de logs",
         "excerpt": "Logs JSON são excelentes para máquinas, mas horríveis de ler no terminal em desenvolvimento. Veja como implementar formatação ANSI colorida em Go.",
         "category": "Alta Performance",
         "date": "15 de Maio, 2026",
@@ -320,7 +353,7 @@
     },
     {
         "id": "orkai-observability-payload-logging",
-        "title": "Log de Payloads HTTP: Implementando Amostragem Inteligente Para Evitar Saturação",
+        "title": "Log de payloads HTTP: Implementando amostragem inteligente para evitar saturação",
         "excerpt": "Logar requisições e respostas HTTP inteiras consome espaço massivo e degrada performance. Aprenda a aplicar amostragem de payloads em Go.",
         "category": "Alta Performance",
         "date": "13 de Maio, 2026",
@@ -331,7 +364,7 @@
     },
     {
         "id": "orkai-observability-pii-masking",
-        "title": "Segurança de Dados: Implementando Máscaras de PII Baseadas em Expressões Regulares (Regex)",
+        "title": "Segurança de dados: Implementando máscaras de PII baseadas em expressões regulares (Regex)",
         "excerpt": "Vazar dados pessoais em arquivos de logs quebra regulamentações de dados como LGPD e GDPR. Aprenda a mascarar PII usando Regex de forma dinâmica.",
         "category": "Alta Performance",
         "date": "07 de Maio, 2026",
@@ -342,7 +375,7 @@
     },
     {
         "id": "orkai-observability-slow-query",
-        "title": "Alertas em Tempo Real: Detectando Slow Queries e Protegendo Bancos de Dados de Degradação",
+        "title": "Alertas em tempo real: Detectando slow queries e protegendo bancos de dados de degradação",
         "excerpt": "Consultas de banco lentas causam gargalos silenciosos e exaustão de conexões. Aprenda a desenhar um sistema autônomo de alerta de Slow Queries.",
         "category": "Resiliência",
         "date": "05 de Maio, 2026",
@@ -353,7 +386,7 @@
     },
     {
         "id": "orkai-observability-baggage",
-        "title": "Propagação de Baggage: Compartilhando Metadados de Negócio Entre Microsserviços com Padrão W3C",
+        "title": "Propagação de baggage: Compartilhando metadados de negócio entre microsserviços com padrão W3C",
         "excerpt": "Traces de telemetria apenas correlacionam chamadas. Saiba como usar o padrão W3C Baggage para propagar dados de negócio através de toda a malha de serviços.",
         "category": "Conectividade",
         "date": "03 de Maio, 2026",
@@ -364,7 +397,7 @@
     },
     {
         "id": "orkai-observability-sql-tracing",
-        "title": "Visibilidade de Banco de Dados: Criando um TraceSQL Context Wrapper para Medir Latência de Queries",
+        "title": "Visibilidade de banco de dados: Criando um TraceSQL Context Wrapper para medir latência de queries",
         "excerpt": "As consultas de banco de dados costumam ser os maiores gargalos de latência de uma API. Aprenda como automatizar o tracing de SQL nativamente em Go.",
         "category": "Métricas & Tracing",
         "date": "30 de Abril, 2026",
@@ -375,7 +408,7 @@
     },
     {
         "id": "orkai-observability-resource-telemetry",
-        "title": "Métricas de Máquina: Desenvolvendo um Coletor de Recursos de Sistema e Memória do Go Runtime",
+        "title": "Métricas de máquina: Desenvolvendo um coletor de recursos de sistema e memória do Go Runtime",
         "excerpt": "Como monitorar o consumo real de memória, ciclos de Garbage Collector e contagem de goroutines ativas em Go? Crie um coletor em background.",
         "category": "Métricas & Tracing",
         "date": "27 de Abril, 2026",
@@ -386,7 +419,7 @@
     },
     {
         "id": "orkai-observability-panic-recovery",
-        "title": "Resiliência HTTP: Desenhando um Middleware de Panic Recovery para Interceptar Quedas de Servidor",
+        "title": "Resiliência HTTP: Desenhando um middleware de panic recovery para interceptar quedas de servidor",
         "excerpt": "Falhas de runtime inesperadas não podem derrubar seu servidor web. Aprenda como interceptar panics e retornar respostas de erro elegantes e estruturadas em Go.",
         "category": "Resiliência",
         "date": "26 de Abril, 2026",
@@ -397,7 +430,7 @@
     },
     {
         "id": "orkai-observability-log-rotation",
-        "title": "Escrita Eficiente em Disco: Criando um Log File Rotation Writer Sem Bibliotecas Externas",
+        "title": "Escrita eficiente em disco: Criando um log file rotation writer sem bibliotecas externas",
         "excerpt": "Gravar logs em arquivos de forma infinita satura o armazenamento em disco de servidores. Aprenda a projetar um rotacionador de arquivos de log concorrente e seguro em Go.",
         "category": "Alta Performance",
         "date": "25 de Abril, 2026",
@@ -408,7 +441,7 @@
     },
     {
         "id": "onkai-unified-bus-sagas",
-        "title": "Transações Distribuídas com Sagas: Orquestrando Processos e Compensações com Sucesso",
+        "title": "Transações distribuídas com Sagas: Orquestrando processos e compensações com sucesso",
         "excerpt": "Sistemas distribuídos não possuem transações de banco de dados unificadas. Aprenda a usar o padrão Saga para coordenar transações complexas e ações de compensação.",
         "category": "Mensageria",
         "date": "18 de Abril, 2026",
@@ -419,7 +452,7 @@
     },
     {
         "id": "onkai-unified-bus-aot-dispatcher",
-        "title": "Dispatcher Sem Reflexão: Otimizando Performance e Suportando Compilação Native AOT",
+        "title": "Dispatcher sem reflexão: Otimizando performance e suportando compilação Native AOT",
         "excerpt": "A reflexão dinâmica degrada a performance do Garbage Collector e quebra compilações nativas AOT. Veja como projetamos um roteador livre de reflexão em Go.",
         "category": "Mensageria",
         "date": "16 de Abril, 2026",
@@ -430,7 +463,7 @@
     },
     {
         "id": "onkai-unified-bus-inbox",
-        "title": "Evitando Processamento Duplicado: O Inbox Pattern e a Idempotência de Consumo",
+        "title": "Evitando processamento duplicado: O Inbox Pattern e a idempotência de consumo",
         "excerpt": "Mensagens duplicadas são inevitáveis em sistemas distribuídos. Aprenda a implementar o Inbox Pattern para garantir a idempotência no consumo de eventos.",
         "category": "Mensageria",
         "date": "15 de Abril, 2026",
@@ -441,7 +474,7 @@
     },
     {
         "id": "onkai-unified-bus-delayed-messages",
-        "title": "Mensagens Agendadas e Atrasadas: Roteamento com TTL e Dead-Letter Exchange no RabbitMQ",
+        "title": "Mensagens agendadas e atrasadas: Roteamento com TTL e Dead-Letter Exchange no RabbitMQ",
         "excerpt": "Precisa atrasar a entrega de uma mensagem em alguns minutos sem usar plugins adicionais no RabbitMQ? Aprenda como usar TTL e Dead-Letter Exchange.",
         "category": "Mensageria",
         "date": "14 de Abril, 2026",
@@ -452,7 +485,7 @@
     },
     {
         "id": "onkai-unified-bus-outbox",
-        "title": "Mensageria Confiável: Garantindo At-Least-Once com Transactional Outbox Pattern",
+        "title": "Mensageria confiável: Garantindo At-Least-Once com Transactional Outbox Pattern",
         "excerpt": "Como garantir que um evento seja enviado ao broker de mensageria apenas se a transação do banco de dados for bem-sucedida? Conheça o padrão Transactional Outbox.",
         "category": "Mensageria",
         "date": "12 de Abril, 2026",
@@ -463,7 +496,7 @@
     },
     {
         "id": "onkai-unified-bus-background-consumption",
-        "title": "Consumo de Mensagens em Segundo Plano: Projetando um Hosted Service Resiliente",
+        "title": "Consumo de mensagens em segundo plano: Projetando um hosted service resiliente",
         "excerpt": "Como executar o consumo contínuo e assíncrono de eventos sem bloquear a thread principal de uma aplicação? Desenhe um worker de background resiliente.",
         "category": "Mensageria",
         "date": "08 de Abril, 2026",
@@ -474,7 +507,7 @@
     },
     {
         "id": "onkai-unified-bus-tracing",
-        "title": "Tracing Assíncrono: Propagando Contextos de Telemetria Entre Microsserviços e Eventos",
+        "title": "Tracing assíncrono: Propagando contextos de telemetria entre microsserviços e eventos",
         "excerpt": "Como rastrear um fluxo de execução distribuído que atravessa filas assíncronas sem se perder? Aprenda a injetar e extrair contextos de trace em cabeçalhos de mensagens.",
         "category": "Mensageria",
         "date": "28 de Março, 2026",
@@ -485,7 +518,7 @@
     },
     {
         "id": "onkai-unified-bus-dlq",
-        "title": "Máquina de Estados de Erros: Desenhando Dead-Letter Queues (DLQ) e Retries com Jitter",
+        "title": "Máquina de estados de erros: Desenhando Dead-Letter Queues (DLQ) e retries com Jitter",
         "excerpt": "Sistemas distribuídos falham de maneiras imprevisíveis. Aprenda como o onkai-unified-bus implementa políticas seguras de retry com recuo exponencial e isolamento de mensagens corrompidas.",
         "category": "Mensageria",
         "date": "27 de Março, 2026",
@@ -496,7 +529,7 @@
     },
     {
         "id": "onkai-unified-bus-drivers",
-        "title": "Drivers Desacoplados: Abstraindo NATS, RabbitMQ e Kafka com Interface Unificada",
+        "title": "Drivers desacoplados: Abstraindo NATS, RabbitMQ e Kafka com interface unificada",
         "excerpt": "Como alternar entre diferentes provedores de mensageria sem alterar uma única linha da sua regra de negócio? Conheça o design de drivers desacoplados do onkai-unified-bus.",
         "category": "Mensageria",
         "date": "22 de Março, 2026",
