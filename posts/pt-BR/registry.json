@@ -33,6 +33,17 @@
         "seriesIndex": 1
     },
     {
+        "id": "orkai-runiq-scheduling-crons",
+        "title": "Agendamento e Crons Distribuídos: Resolvendo o Problema da Execução Duplicada",
+        "excerpt": "Como garantir que um agendamento Cron rode exatamente uma vez por minuto em um cluster de servidores sem um coordenador como o ZooKeeper? Entenda a mecânica por trás do Orkai Runiq.",
+        "category": "Sistemas Distribuídos",
+        "date": "29 de Junho, 2026",
+        "readTime": "6 min de leitura",
+        "author": "Wesley Lima",
+        "series": "orkai-runiq-series",
+        "seriesIndex": 3
+    },
+    {
         "id": "orkai-runiq-storage-concurrency",
         "title": "Concorrência Segura: FOR UPDATE SKIP LOCKED no Postgres e SQLite com WAL no Runiq",
         "excerpt": "Como garantir que múltiplos workers distribuídos não consumam a mesma tarefa sem gerar gargalos de travamento? Descubra o funcionamento do SKIP LOCKED e o segredo do SQLite concorrente em Go.",
