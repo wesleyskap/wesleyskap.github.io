@@ -1,5 +1,5 @@
 ---
-title: "Efficient disk writing:Building a log file rotation writer without dependencies"
+title: "Efficient disk writing: Building a log file rotation writer without dependencies"
 excerpt: "Writing logs to files indefinitely eventually saturates server disk storage. Learn how to design a thread-safe, concurrent log rotation writer in Go."
 category: "Performance"
 date: "Apr 25, 2026"

@@ -1,5 +1,5 @@
 ---
-title: "Transações distribuídas com sagas:Orquestrando processos e compensações com sucesso"
+title: "Transações distribuídas com sagas:Orchestrando processos e compensações com sucesso"
 excerpt: "Sistemas distribuídos não possuem transações de banco de dados unificadas. Aprenda a usar o padrão Saga para coordenar transações complexas e ações de compensação."
 category: "Mensageria"
 date: "18 de Abril, 2026"
@@ -19,90 +19,79 @@ Para manter a consistência de processos complexos que cruzam múltiplos limites
 
 ## O padrão saga e compensações
 
-Uma Saga é uma sequência de transações locais executadas por microsserviços individuais. Se uma transação local falhar, o orquestrador assume a responsabilidade de executar transações de **Compensação** em ordem inversa para desfazer os efeitos colaterais anteriores:
+Uma Saga é uma sequência de transações locais executadas por microsserviços individuais. Se uma transação local falhar, o orquestrador assume a responsabilidade de executar transações de **Compensação** em ordem inversa para desfazer os efeitos colaterais anteriores. Veja como o `SagaOrchestrator<TState>` é modelado no `onkai-unified-bus`:
 
-```go
-package main
+```csharp
+using System.Collections.Concurrent;
+using Onkai.EventBus.Abstractions;
 
-import (
-	"context"
-	"fmt"
-	"log"
-)
+namespace Onkai.EventBus.Core.Sagas;
 
-type SagaState struct {
-	SagaID        string
-	CurrentStep   string
-	StockReserved bool
-	PaymentDone   bool
-}
+public sealed class SagaOrchestrator<TState>
+    where TState : class, new()
+{
+    private readonly ISagaStateStore<TState> _store;
+    private readonly ConcurrentDictionary<string, Func<SagaContext<TState>, CancellationToken, Task>> _compensations = new();
 
-type SagaOrchestrator struct {
-	compensations map[string]func(ctx context.Context, state *SagaState) error
-}
+    public SagaOrchestrator(ISagaStateStore<TState> store)
+    {
+        _store = store;
+    }
 
-func NewSagaOrchestrator() *SagaOrchestrator {
-	return &SagaOrchestrator{
-		compensations: make(map[string]func(ctx context.Context, state *SagaState) error),
-	}
-}
-
-// RegisterCompensation mapeia a ação de reversão para cada etapa concluída
-func (o *SagaOrchestrator) RegisterCompensation(step string, comp func(ctx context.Context, state *SagaState) error) {
-	o.compensations[step] = comp
-}
-
-// Rollback executa as ações de compensação registradas em caso de erro
-func (o *SagaOrchestrator) Rollback(ctx context.Context, state *SagaState) {
-	log.Printf("[Saga] Iniciando Rollback para a Saga: %s", state.SagaID)
-	
-	// Executa compensações para ações já finalizadas
-	if state.PaymentDone {
-		if comp, exists := o.compensations["Payment"]; exists {
-			_ = comp(ctx, state)
-		}
-	}
-	if state.StockReserved {
-		if comp, exists := o.compensations["Stock"]; exists {
-			_ = comp(ctx, state)
-		}
-	}
+    // Registra a função de compensação para uma etapa específica
+    public void RegisterCompensation(string stepName, Func<SagaContext<TState>, CancellationToken, Task> compensation)
+    {
+        _compensations[stepName] = compensation;
+    }
 }
 ```
 
 ## Executando etapas de forma segura
 
-Durante o processamento das etapas de negócio, o orquestrador atualiza o estado persistentemente. Se a etapa de Faturamento falhar, o orquestrador dispara o fluxo de `Rollback` garantindo que os estoques reservados sejam liberados graciosamente:
+Durante o processamento das etapas de negócio, o orquestrador atualiza o estado persistentemente. Se uma etapa falhar, o fluxo de reversão é acionado, desfazendo as operações com sucesso na ordem inversa da execução:
 
-```go
-func (o *SagaOrchestrator) ExecuteSaga(ctx context.Context, state *SagaState) error {
-	// Passo 1: Reservar Estoque
-	err := o.reserveStock(ctx, state)
-	if err != nil {
-		o.Rollback(ctx, state)
-		return err
-	}
-	state.StockReserved = true
+```csharp
+public async Task ExecuteStepAsync<TEvent>(
+    string sagaId,
+    TEvent @event,
+    Func<SagaContext<TState>, TEvent, CancellationToken, Task> stepAction,
+    CancellationToken cancellationToken)
+    where TEvent : IEvent
+{
+    var context = await _store.GetAsync(sagaId, cancellationToken) ?? new SagaContext<TState> { SagaId = sagaId };
 
-	// Passo 2: Processar Pagamento
-	err = o.processPayment(ctx, state)
-	if err != nil {
-		o.Rollback(ctx, state)
-		return fmt.Errorf("falha no pagamento: %w", err)
-	}
-	state.PaymentDone = true
+    if (context.Status is "Failed" or "Compensated")
+    {
+        return;
+    }
 
-	return nil
+    try
+    {
+        await stepAction(context, @event, cancellationToken);
+        context.CompletedSteps.Add(typeof(TEvent).Name);
+        await _store.SaveAsync(context, cancellationToken);
+    }
+    catch
+    {
+        await RollbackSagaAsync(context, typeof(TEvent).Name, cancellationToken);
+    }
 }
 
-func (o *SagaOrchestrator) reserveStock(ctx context.Context, state *SagaState) error {
-	log.Println("[Saga] Estoque reservado com sucesso.")
-	return nil
-}
+private async Task RollbackSagaAsync(SagaContext<TState> context, string failingStep, CancellationToken cancellationToken)
+{
+    context.Status = "Failed";
+    await _store.SaveAsync(context, cancellationToken);
 
-func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState) error {
-	// Simula uma falha inesperada no pagamento
-	return fmt.Errorf("saldo insuficiente")
+    // Compensa a etapa com falha e todas as etapas concluídas anteriormente
+    await CompensateStepAsync(context, failingStep, cancellationToken);
+    for (var i = context.CompletedSteps.Count - 1; i >= 0; i--)
+    {
+        var completedStep = context.CompletedSteps[i];
+        await CompensateStepAsync(context, completedStep, cancellationToken);
+    }
+
+    context.Status = "Compensated";
+    await _store.SaveAsync(context, cancellationToken);
 }
 ```
 
@@ -110,3 +99,4 @@ func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState)
 - **Saga Pattern:** Padrão de design para coordenar transações locais distribuídas que utilizam compensações estruturadas para restaurar a consistência do sistema.
 - **Compensação:** Uma transação lógica que desfaz as alterações criadas por uma operação bem-sucedida executada anteriormente.
 - **Saga State Store:** Banco de dados estruturado ou em memória responsável por guardar as etapas atuais e variáveis contextuais de execuções de Sagas ativas.
+

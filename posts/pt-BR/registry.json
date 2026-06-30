@@ -364,7 +364,7 @@
   },
   {
     "id": "onkai-unified-bus-sagas",
-    "title": "Transações distribuídas com sagas:Orquestrando processos e compensações com sucesso",
+    "title": "Transações distribuídas com sagas:Orchestrando processos e compensações com sucesso",
     "excerpt": "Sistemas distribuídos não possuem transações de banco de dados unificadas. Aprenda a usar o padrão Saga para coordenar transações complexas e ações de compensação.",
     "category": "Mensageria",
     "date": "18 de Abril, 2026",
@@ -376,7 +376,7 @@
   {
     "id": "onkai-unified-bus-aot-dispatcher",
     "title": "Dispatcher sem reflexão:Otimizando performance e suportando compilação native AOT",
-    "excerpt": "A reflexão dinâmica degrada a performance do Garbage Collector e quebra compilações nativas AOT. Veja como projetamos um roteador livre de reflexão em Go.",
+    "excerpt": "A reflexão dinâmica degrada a performance do Garbage Collector e quebra compilações nativas AOT. Veja como projetamos um roteador livre de reflexão em C#.",
     "category": "Mensageria",
     "date": "16 de Abril, 2026",
     "readTime": "5 min de leitura",
@@ -474,8 +474,8 @@
   },
   {
     "id": "onkai-unified-bus-dispatcher",
-    "title": "Zero-allocation dispatcher:Roteando milhões de eventos sem alocações na heap em Go",
-    "excerpt": "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa sync.Pool e pooling de goroutines para obter vazão massiva livre de Garbage Collector.",
+    "title": "Zero-allocation dispatcher: Roteando milhões de eventos sem alocações na heap em C#",
+    "excerpt": "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa ObjectPool e System.Threading.Channels para obter vazão massiva livre de Garbage Collector.",
     "category": "Mensageria",
     "date": "17 de Março, 2026",
     "readTime": "5 min de leitura",

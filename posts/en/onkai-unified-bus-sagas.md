@@ -19,89 +19,79 @@ To maintain consistency across multiple microservice boundaries without slow dis
 
 ## The saga pattern and compensations
 
-A Saga is a sequence of local transactions executed by individual microservices. If a local transaction fails, the orchestrator triggers **Compensation** transactions in reverse order to undo the side effects of previous steps:
+A Saga is a sequence of local transactions executed by individual microservices. If a local transaction fails, the orchestrator triggers **Compensation** transactions in reverse order to undo the side effects of previous steps. Here is how `SagaOrchestrator<TState>` is built in `onkai-unified-bus`:
 
-```go
-package main
+```csharp
+using System.Collections.Concurrent;
+using Onkai.EventBus.Abstractions;
 
-import (
-	"context"
-	"fmt"
-	"log"
-)
+namespace Onkai.EventBus.Core.Sagas;
 
-type SagaState struct {
-	SagaID        string
-	CurrentStep   string
-	StockReserved bool
-	PaymentDone   bool
-}
+public sealed class SagaOrchestrator<TState>
+    where TState : class, new()
+{
+    private readonly ISagaStateStore<TState> _store;
+    private readonly ConcurrentDictionary<string, Func<SagaContext<TState>, CancellationToken, Task>> _compensations = new();
 
-type SagaOrchestrator struct {
-	compensations map[string]func(ctx context.Context, state *SagaState) error
-}
+    public SagaOrchestrator(ISagaStateStore<TState> store)
+    {
+        _store = store;
+    }
 
-func NewSagaOrchestrator() *SagaOrchestrator {
-	return &SagaOrchestrator{
-		compensations: make(map[string]func(ctx context.Context, state *SagaState) error),
-	}
-}
-
-// RegisterCompensation registers a fallback function for a completed step
-func (o *SagaOrchestrator) RegisterCompensation(step string, comp func(ctx context.Context, state *SagaState) error) {
-	o.compensations[step] = comp
-}
-
-// Rollback executes registered compensations in reverse order upon failure
-func (o *SagaOrchestrator) Rollback(ctx context.Context, state *SagaState) {
-	log.Printf("[Saga] Starting Rollback for Saga: %s", state.SagaID)
-	
-	if state.PaymentDone {
-		if comp, exists := o.compensations["Payment"]; exists {
-			_ = comp(ctx, state)
-		}
-	}
-	if state.StockReserved {
-		if comp, exists := o.compensations["Stock"]; exists {
-			_ = comp(ctx, state)
-		}
-	}
+    // Registers a compensation callback for a given step name
+    public void RegisterCompensation(string stepName, Func<SagaContext<TState>, CancellationToken, Task> compensation)
+    {
+        _compensations[stepName] = compensation;
+    }
 }
 ```
 
 ## Running saga steps safely
 
-As business steps execute, the orchestrator updates the saga state persistently. If the Billing step fails, the orchestrator triggers the rollback flow, releasing reserved stock:
+As business steps execute, the orchestrator updates the saga state persistently. If a step fails, the orchestrator automatically triggers the rollback flow, invoking registered compensations in reverse chronological order:
 
-```go
-func (o *SagaOrchestrator) ExecuteSaga(ctx context.Context, state *SagaState) error {
-	// Step 1: Reserve Stock
-	err := o.reserveStock(ctx, state)
-	if err != nil {
-		o.Rollback(ctx, state)
-		return err
-	}
-	state.StockReserved = true
+```csharp
+public async Task ExecuteStepAsync<TEvent>(
+    string sagaId,
+    TEvent @event,
+    Func<SagaContext<TState>, TEvent, CancellationToken, Task> stepAction,
+    CancellationToken cancellationToken)
+    where TEvent : IEvent
+{
+    var context = await _store.GetAsync(sagaId, cancellationToken) ?? new SagaContext<TState> { SagaId = sagaId };
 
-	// Step 2: Process Payment
-	err = o.processPayment(ctx, state)
-	if err != nil {
-		o.Rollback(ctx, state)
-		return fmt.Errorf("payment failed: %w", err)
-	}
-	state.PaymentDone = true
+    if (context.Status is "Failed" or "Compensated")
+    {
+        return;
+    }
 
-	return nil
+    try
+    {
+        await stepAction(context, @event, cancellationToken);
+        context.CompletedSteps.Add(typeof(TEvent).Name);
+        await _store.SaveAsync(context, cancellationToken);
+    }
+    catch
+    {
+        await RollbackSagaAsync(context, typeof(TEvent).Name, cancellationToken);
+    }
 }
 
-func (o *SagaOrchestrator) reserveStock(ctx context.Context, state *SagaState) error {
-	log.Println("[Saga] Stock reserved successfully.")
-	return nil
-}
+private async Task RollbackSagaAsync(SagaContext<TState> context, string failingStep, CancellationToken cancellationToken)
+{
+    context.Status = "Failed";
+    await _store.SaveAsync(context, cancellationToken);
 
-func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState) error {
-	// Simulates payment failure
-	return fmt.Errorf("insufficient funds")
+    // Compensate the failing step and all previously completed steps
+    await CompensateStepAsync(context, failingStep, cancellationToken);
+    for (var i = context.CompletedSteps.Count - 1; i >= 0; i--)
+    {
+        var completedStep = context.CompletedSteps[i];
+        await CompensateStepAsync(context, completedStep, cancellationToken);
+    }
+
+    context.Status = "Compensated";
+    await _store.SaveAsync(context, cancellationToken);
 }
 ```
 
@@ -109,3 +99,4 @@ func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState)
 - **Saga Pattern:** A design pattern to coordinate distributed local transactions using structured compensations to restore consistency.
 - **Compensation:** A logical transaction that rolls back or undoes the changes made by a previously successful operation.
 - **Saga State Store:** A persistent or in-memory database that tracks the active steps and context of ongoing sagas.
+

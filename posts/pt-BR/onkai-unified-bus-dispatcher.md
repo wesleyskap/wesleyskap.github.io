@@ -1,6 +1,6 @@
 ---
-title: "Zero-allocation dispatcher:Roteando milhões de eventos sem alocações na heap em Go"
-excerpt: "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa sync.Pool e pooling de goroutines para obter vazão massiva livre de Garbage Collector."
+title: "Zero-allocation dispatcher: Roteando milhões de eventos sem alocações na heap em C#"
+excerpt: "Como projetar um despachante de eventos concorrente de alta performance na memória? Descubra como o onkai-unified-bus usa ObjectPool e System.Threading.Channels para obter vazão massiva livre de Garbage Collector."
 category: "Mensageria"
 date: "17 de Março, 2026"
 readTime: "5 min de leitura"
@@ -11,51 +11,60 @@ referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
 ## O gargalo das alocações dinâmicas em barramentos de alta vazão
 
-Em arquiteturas orientadas a eventos de alta performance, cada microssegundo conta. Quando implementamos um barramento de eventos (Event Bus) local em Go, o padrão mais comum é criar goroutines dinâmicas e alocar fatias de dados (slices) para cada mensagem publicada. Embora simples, essa abordagem gera um grande volume de objetos de curta duração na memória dinâmica *heap*. Como consequência, o coletor de lixo (Garbage Collector - GC) é ativado de forma agressiva, causando pausas indesejadas (stop-the-world) que degradam o rendimento global do sistema.
+Em arquiteturas orientadas a eventos de alta performance, cada microssegundo conta. Quando implementamos um barramento de eventos (Event Bus) local em .NET, o padrão mais comum é alocar novos recipientes de mensagens e encapsular delegates de forma dinâmica. Embora simples, essa abordagem gera um grande volume de objetos de curta duração na memória dinâmica *heap*. Como consequência, o coletor de lixo (Garbage Collector - GC) é ativado de forma agressiva, causando pausas de coleta de geração 0/1 que degradam o rendimento global do sistema.
 
-Para resolver isso de forma elegante, o **onkai-unified-bus** adota uma estratégia de alocação de memória virtualmente nula (zero-allocation). Em vez de alocar novas estruturas de dados a cada evento despachado, nós reutilizamos as estruturas existentes e mantemos um conjunto fixo de operários concorrentes (Worker Pool).
+Para resolver isso de forma elegante, o **onkai-unified-bus** adota uma estratégia de alocação de memória virtualmente nula (zero-allocation). Ao utilizar um motor de despacho estruturado de alto rendimento, ele processa eventos através de envelopes de mensagens internamente mantidos em pools e canais concorrentes, oferecendo aos desenvolvedores .NET a máxima vazão com o menor consumo de memória possível.
 
-## Reaproveitando recursos com sync.pool
+## Configurando o barramento de eventos
 
-O segredo para evitar alocações na heap em Go é a reciclagem de objetos por meio do pacote `sync.Pool`. Nós criamos uma piscina de objetos reutilizáveis para envelopar as mensagens do barramento. Após o processamento completo de um evento pelos consumidores, limpamos os dados do envelope e o devolvemos à piscina.
+A biblioteca expõe uma API de registro fluente integrada com o sistema de injeção de dependências nativo do .NET. Por baixo dos panos, isso configura automaticamente os canais de transporte, recursos em pools e workers de segundo plano:
 
-```go
-type EventEnvelope struct {
-	Topic   string
-	Payload []byte
-	Headers map[string]string
-}
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Onkai.EventBus.Core.Extensions;
+using Onkai.EventBus.RabbitMQ.Extensions;
 
-var envelopePool = sync.Pool{
-	New: func() interface{} {
-		return &EventEnvelope{
-			Headers: make(map[string]string),
-		}
-	},
-}
+var builder = WebApplication.CreateBuilder(args);
 
-func AcquireEnvelope(topic string, payload []byte) *EventEnvelope {
-	env := envelopePool.Get().(*EventEnvelope)
-	env.Topic = topic
-	env.Payload = payload
-	return env
-}
+// Registra o motor básico do barramento e o provedor RabbitMQ
+builder.Services.AddEventBus()
+                .UseRabbitMq(config =>
+                {
+                    config.HostName = "localhost";
+                    config.UserName = "guest";
+                    config.Password = "guest";
+                });
+```
 
-func ReleaseEnvelope(env *EventEnvelope) {
-	env.Topic = ""
-	env.Payload = nil
-	for k := range env.Headers {
-		delete(env.Headers, k)
-	}
-	envelopePool.Put(env)
+## Publicação de eventos de alta velocidade
+
+Após a configuração, basta injetar a interface thread-safe `IEventPublisher` nos seus serviços para disparar eventos. O framework se encarrega de obter um envelope reaproveitado do pool, serializar o payload do evento e agendar a entrega nas estruturas de canais otimizadas:
+
+```csharp
+using Onkai.EventBus.Abstractions;
+
+public sealed class OrderService
+{
+    private readonly IEventPublisher _publisher;
+
+    public OrderService(IEventPublisher publisher)
+    {
+        _publisher = publisher;
+    }
+
+    public async Task CheckoutAsync(Guid orderId, CancellationToken cancellationToken)
+    {
+        var orderEvent = new OrderCreatedEvent(orderId, 199.99m, "customer@example.com");
+
+        // Dispara o evento utilizando o motor de alta velocidade da biblioteca
+        await _publisher.PublishAsync(orderEvent, cancellationToken: cancellationToken);
+    }
 }
 ```
 
-## Pooling de workers concorrentes
-
-Em vez de iniciar uma nova goroutine para cada mensagem (uma prática que consome recursos de CPU e agenda desnecessária), o `onkai-unified-bus` inicializa um conjunto estático de workers concorrentes durante a inicialização. Cada worker ouve um canal interno do dispatcher e processa as mensagens de forma sequencial e extremamente rápida, garantindo que o consumo de memória do barramento permaneça plano, independente da taxa de transferência de eventos de entrada.
-
 ### Termos técnicos desmistificados
 - **Heap:** A área de memória do sistema onde os dados com ciclo de vida dinâmico são alocados em tempo de execução. O acesso e gerenciamento dela são mais custosos do que a pilha (Stack).
-- **sync.Pool:** Uma estrutura de sincronização nativa de Go que armazena objetos temporários para reutilização futura, reduzindo a pressão sobre o coletor de lixo.
-- **Worker Pool:** Um padrão de design concorrente onde um grupo predefinido de processos ou threads aguarda tarefas em uma fila compartilhada.
+- **ObjectPool:** Um padrão de design e uma classe em .NET que armazena objetos temporários para reutilização futura, reduzindo alocações.
+- **System.Threading.Channels:** APIs em .NET que fornecem uma fila produtor-consumidor concorrente de alto desempenho e alocação quase nula para arquiteturas assíncronas.
+
+

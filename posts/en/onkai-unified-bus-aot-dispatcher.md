@@ -1,6 +1,6 @@
 ---
-title: "Reflection-free dispatcher:Optimizing performance and supporting native AOT"
-excerpt: "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in Go."
+title: "Reflection-free dispatcher: Optimizing performance and supporting native AOT"
+excerpt: "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in C#."
 category: "Messaging"
 date: "Apr 16, 2026"
 readTime: "5 min read"
@@ -15,7 +15,7 @@ In traditional messaging frameworks, when a new event arrives, the router must d
 
 While simple and flexible, reflection introduces severe issues:
 1. **Performance Overhead:** Dynamic inspections and method invocations allocate metadata on the *heap*, adding load to the garbage collector.
-2. **Incompatibility with Native AOT (Ahead-of-Time):** AOT compilers prune unused code and metadata during build time to produce tiny binaries. Invoking code via dynamic reflection often fails or crashes in production.
+2. **Incompatibility with Native AOT (Ahead-of-Time):** AOT compilers prune unused code and metadata during build time to produce tiny binaries. Invoking code via dynamic reflection often fails or crashes in production because the compiler cannot predict what will be dynamically inspected.
 
 The **onkai-unified-bus** solves this by replacing dynamic invocations with a statically-typed dispatcher using a concurrent cache of typed executors.
 
@@ -23,60 +23,57 @@ The **onkai-unified-bus** solves this by replacing dynamic invocations with a st
 
 Instead of using reflection to find and invoke the consumer method on every message, the framework registers generic executor objects during startup. The dispatcher delegates execution through static interfaces:
 
-```go
-package main
+```csharp
+using Onkai.EventBus.Abstractions;
 
-import (
-	"context"
-	"fmt"
-	"sync"
-)
+namespace Onkai.EventBus.Core.Subscription;
 
-// Consumer defines the contract for handling incoming events
-type Consumer[T any] interface {
-	Consume(ctx context.Context, event T) error
+// Defines a contract to dispatch events to untyped consumer instances without using reflection invocation.
+internal interface IEventConsumerExecutor
+{
+    Task ExecuteAsync(object consumer, IEvent @event, ConsumeContext context, CancellationToken cancellationToken);
 }
 
-// ConsumerExecutor encapsulates statically-typed invocation to avoid reflection
-type ConsumerExecutor interface {
-	Execute(ctx context.Context, payload []byte) error
-}
+// A generic helper that casts untyped inputs and executes the strongly-typed ConsumeAsync method directly.
+internal sealed class EventConsumerExecutor<TEvent> : IEventConsumerExecutor
+    where TEvent : IEvent
+{
+    public Task ExecuteAsync(object consumer, IEvent @event, ConsumeContext context, CancellationToken cancellationToken)
+    {
+        if (consumer == null) throw new ArgumentNullException(nameof(consumer));
+        if (@event == null) throw new ArgumentNullException(nameof(@event));
 
-type TypedConsumerExecutor[T any] struct {
-	consumer Consumer[T]
-	decoder  func(data []byte) (T, error)
-}
+        var typedConsumer = (IEventConsumer<TEvent>)consumer;
+        var typedEvent = (TEvent)@event;
 
-func (e *TypedConsumerExecutor[T]) Execute(ctx context.Context, payload []byte) error {
-	event, err := e.decoder(payload)
-	if err != nil {
-		return err
-	}
-	return e.consumer.Consume(ctx, event)
+        return typedConsumer.ConsumeAsync(typedEvent, context, cancellationToken);
+    }
 }
 ```
 
 ## The reflection-free dispatch engine
 
-Upon receiving a message, the dispatcher loads the matching executor from a thread-safe map (`sync.Map`) indexed by the event name, executing the interface call directly in nanoseconds:
+Upon receiving a message, the dispatcher loads the matching executor from a thread-safe map (`ConcurrentDictionary`) cached by event type, executing the interface call directly in nanoseconds:
 
-```go
-type EventDispatcher struct {
-	executors sync.Map // Maps event names to ConsumerExecutors
-}
+```csharp
+using System.Collections.Concurrent;
+using Onkai.EventBus.Abstractions;
 
-func (d *EventDispatcher) RegisterConsumer(eventName string, executor ConsumerExecutor) {
-	d.executors.Store(eventName, executor)
-}
+public sealed class RabbitMqConsumer
+{
+    private readonly ConcurrentDictionary<Type, IEventConsumerExecutor> _executors = new();
 
-func (d *EventDispatcher) Dispatch(ctx context.Context, eventName string, payload []byte) error {
-	execVal, exists := d.executors.Load(eventName)
-	if !exists {
-		return fmt.Errorf("no consumer registered for event: %s", eventName)
-	}
-	
-	executor := execVal.(ConsumerExecutor)
-	return executor.Execute(ctx, payload) // Direct static execution
+    private async Task ExecuteConsumerAsync(Type eventType, object consumerInstance, IEvent eventData, ConsumeContext context, CancellationToken token)
+    {
+        // Get or add the cached compiled executor statically without reflection lookup
+        var executor = _executors.GetOrAdd(eventType, t =>
+        {
+            var executorType = typeof(EventConsumerExecutor<>).MakeGenericType(t);
+            return (IEventConsumerExecutor)Activator.CreateInstance(executorType)!;
+        });
+
+        await executor.ExecuteAsync(consumerInstance, eventData, context, token);
+    }
 }
 ```
 
@@ -84,3 +81,4 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, eventName string, payloa
 - **Native AOT (Ahead-of-Time):** A compilation technology that compiles source code directly to native machine code at build time, bypassing JIT compilers or runtime interpreters.
 - **Reflection-Free Dispatcher:** A routing pattern that uses static interfaces or pre-compiled delegates to invoke handlers without inspecting objects at runtime.
 - **Type Casting:** Explicitly converting a generic interface or variable to its concrete structural type.
+

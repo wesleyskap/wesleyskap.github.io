@@ -375,8 +375,8 @@
   },
   {
     "id": "onkai-unified-bus-aot-dispatcher",
-    "title": "Reflection-free dispatcher:Optimizing performance and supporting native AOT",
-    "excerpt": "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in Go.",
+    "title": "Reflection-free dispatcher: Optimizing performance and supporting native AOT",
+    "excerpt": "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in C#.",
     "category": "Messaging",
     "date": "Apr 16, 2026",
     "readTime": "5 min read",
@@ -474,8 +474,8 @@
   },
   {
     "id": "onkai-unified-bus-dispatcher",
-    "title": "Zero-allocation dispatcher:Routing millions of events without heap allocations in Go",
-    "excerpt": "How do you design a high-performance concurrent event dispatcher in memory? Discover how onkai-unified-bus leverages sync.Pool and worker pooling for GC-free throughput.",
+    "title": "Zero-allocation dispatcher: Routing millions of events without heap allocations in C#",
+    "excerpt": "How do you design a high-performance concurrent event dispatcher in memory? Discover how onkai-unified-bus leverages ObjectPool and System.Threading.Channels for GC-free throughput.",
     "category": "Messaging",
     "date": "Mar 17, 2026",
     "readTime": "5 min read",

@@ -19,82 +19,97 @@ The **Transactional Outbox** pattern resolves this data consistency dilemma, ens
 
 ## Outbox pattern design
 
-Instead of publishing the event directly to the broker, we save the message in a special table called `outbox` within the same database, using the **same database transaction** that writes the business data:
+Instead of publishing the event directly to the broker, we save the message in a special table called `outbox` within the same database, using the **same database transaction** that writes the business data. In .NET, this is naturally achieved using Entity Framework Core's `DbContext` within a transaction scope:
 
-```go
-package main
+```csharp
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Onkai.EventBus.Abstractions;
 
-import (
-	"context"
-	"database/sql"
-	"encoding/json"
-	"time"
-)
+public sealed class OrderService
+{
+    private readonly DbContext _dbContext;
+    private readonly IOutboxStore _outboxStore;
 
-type OutboxMessage struct {
-	ID        string
-	Topic     string
-	Payload   []byte
-	CreatedAt time.Time
-	Processed bool
-}
+    public OrderService(DbContext dbContext, IOutboxStore outboxStore)
+    {
+        _dbContext = dbContext;
+        _outboxStore = outboxStore;
+    }
 
-type OrderService struct {
-	db *sql.DB
-}
+    public async Task CreateOrderAsync(Guid orderId, decimal amount, CancellationToken token)
+    {
+        // Execute both business write and outbox write inside the same atomic database transaction
+        using var transaction = await _dbContext.Database.BeginTransactionAsync(token);
+        try
+        {
+            // 1. Writes business data
+            var order = new Order { Id = orderId, Amount = amount };
+            _dbContext.Add(order);
+            await _dbContext.SaveChangesAsync(token);
 
-// CreateOrder creates the order and the outbox message transactionally
-func (s *OrderService) CreateOrder(ctx context.Context, orderID string, amount float64) error {
-	tx, err := s.db.BeginTx(ctx, nil)
-	if err != nil {
-		return err
-	}
-	defer tx.Rollback()
+            // 2. Serializes and registers event in the outbox table via the outbox store within the transaction
+            var orderEvent = new OrderCreatedEvent(orderId, amount);
+            await _outboxStore.SaveMessageAsync(orderEvent, token);
 
-	// 1. Writes business data to the orders table
-	_, err = tx.ExecContext(ctx, "INSERT INTO orders (id, amount) VALUES (?, ?)", orderID, amount)
-	if err != nil {
-		return err
-	}
-
-	// 2. Serializes the business event
-	eventPayload, _ := json.Marshal(map[string]interface{}{"order_id": orderID, "amount": amount})
-
-	// 3. Writes the event to the outbox table within the same transaction
-	_, err = tx.ExecContext(ctx, 
-		"INSERT INTO outbox (id, topic, payload, created_at, processed) VALUES (?, ?, ?, ?, ?)",
-		orderID, "orders.created", eventPayload, time.Now(), false,
-	)
-	if err != nil {
-		return err
-	}
-
-	// Commits the atomic transaction. If it fails, everything is rolled back.
-	return tx.Commit()
+            // Commits the transaction. If it fails, everything is rolled back.
+            await transaction.CommitAsync(token);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(token);
+            throw;
+        }
+    }
 }
 ```
 
 ## The outbox processor (relay)
 
-A background goroutine (Outbox Processor) periodically polls unprocessed messages from the `outbox` table, attempts to publish them to the broker, and marks them as processed upon receiving publisher confirmations (ACKs):
+A background hosted service (`OutboxProcessor`) periodically polls unpublished messages from the outbox store, attempts to publish them to the broker transport, and marks them as published upon receiving confirmations (ACKs):
 
-```go
-func (s *OutboxProcessor) ProcessPendingMessages(ctx context.Context) {
-	// Fetches pending messages from the local database
-	messages := s.fetchPendingFromOutbox(ctx)
+```csharp
+using Microsoft.Extensions.Hosting;
+using Onkai.EventBus.Core.Transport;
 
-	for _, msg := range messages {
-		// Publishes to the broker
-		err := s.driver.Publish(ctx, msg.Topic, Message{
-			ID:      msg.ID,
-			Payload: msg.Payload,
-		})
+public sealed class OutboxProcessor : BackgroundService
+{
+    private readonly IServiceProvider _serviceProvider;
 
-		if err == nil {
-			// Updates the state in the local database
-			s.markAsProcessed(ctx, msg.ID)
-		}
-	}
+    public OutboxProcessor(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var store = scope.ServiceProvider.GetRequiredService<IOutboxStore>();
+            var transport = scope.ServiceProvider.GetRequiredService<IMessageTransport>();
+
+            var pendingMessages = await store.GetUnpublishedMessagesAsync(stoppingToken);
+            foreach (var message in pendingMessages)
+            {
+                var envelope = new TransportEnvelope
+                {
+                    EventId = message.EventId,
+                    EventName = message.EventName,
+                    Body = message.Body,
+                    CorrelationId = message.CorrelationId
+                };
+
+                // Publishes the envelope to the broker
+                await transport.SendAsync(envelope, stoppingToken);
+
+                // Updates status in the outbox table
+                await store.MarkAsPublishedAsync(message.Id, stoppingToken);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+        }
+    }
 }
 ```
 
@@ -102,3 +117,4 @@ func (s *OutboxProcessor) ProcessPendingMessages(ctx context.Context) {
 - **At-Least-Once Delivery:** A guarantee that all messages will be delivered to their destination at least once, accepting the possibility of duplicates.
 - **Database Transaction:** A set of operations executed as a single, atomic logical unit of work (all or nothing).
 - **Outbox Relay:** The component responsible for reading the database outbox table and reliably publishing the records to the network.
+

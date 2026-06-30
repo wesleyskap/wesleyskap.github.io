@@ -19,82 +19,97 @@ O padrão **Transactional Outbox** resolve este dilema de consistência de dados
 
 ## O design do outbox pattern
 
-Em vez de publicar o evento diretamente para o broker, salvamos a mensagem em uma tabela especial chamada `outbox` no próprio banco de dados, utilizando a **mesma transação de banco de dados** que grava os dados de negócio:
+Em vez de publicar o evento diretamente para o broker, salvamos a mensagem em uma tabela especial chamada `outbox` no próprio banco de dados, utilizando a **mesma transação de banco de dados** que grava os dados de negócio. No ecossistema .NET, isso é resolvido usando o `DbContext` do Entity Framework Core dentro de uma transação atômica:
 
-```go
-package main
+```csharp
+using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using Onkai.EventBus.Abstractions;
 
-import (
-	"context"
-	"database/sql"
-	"encoding/json"
-	"time"
-)
+public sealed class OrderService
+{
+    private readonly DbContext _dbContext;
+    private readonly IOutboxStore _outboxStore;
 
-type OutboxMessage struct {
-	ID        string
-	Topic     string
-	Payload   []byte
-	CreatedAt time.Time
-	Processed bool
-}
+    public OrderService(DbContext dbContext, IOutboxStore outboxStore)
+    {
+        _dbContext = dbContext;
+        _outboxStore = outboxStore;
+    }
 
-type OrderService struct {
-	db *sql.DB
-}
+    public async Task CreateOrderAsync(Guid orderId, decimal amount, CancellationToken token)
+    {
+        // Executa tanto a gravação de negócio quanto a do outbox na mesma transação atômica
+        using var transaction = await _dbContext.Database.BeginTransactionAsync(token);
+        try
+        {
+            // 1. Grava os dados de negócio
+            var order = new Order { Id = orderId, Amount = amount };
+            _dbContext.Add(order);
+            await _dbContext.SaveChangesAsync(token);
 
-// CreateOrder cria o pedido e a mensagem de outbox de forma transacional
-func (s *OrderService) CreateOrder(ctx context.Context, orderID string, amount float64) error {
-	tx, err := s.db.BeginTx(ctx, nil)
-	if err != nil {
-		return err
-	}
-	defer tx.Rollback()
+            // 2. Serializa e insere na tabela outbox usando a mesma transação via IOutboxStore
+            var orderEvent = new OrderCreatedEvent(orderId, amount);
+            await _outboxStore.SaveMessageAsync(orderEvent, token);
 
-	// 1. Grava os dados de negócio na tabela de pedidos
-	_, err = tx.ExecContext(ctx, "INSERT INTO orders (id, amount) VALUES (?, ?)", orderID, amount)
-	if err != nil {
-		return err
-	}
-
-	// 2. Serializa o evento de negócio
-	eventPayload, _ := json.Marshal(map[string]interface{}{"order_id": orderID, "amount": amount})
-
-	// 3. Grava o evento na tabela de outbox usando a mesma transação
-	_, err = tx.ExecContext(ctx, 
-		"INSERT INTO outbox (id, topic, payload, created_at, processed) VALUES (?, ?, ?, ?, ?)",
-		orderID, "orders.created", eventPayload, time.Now(), false,
-	)
-	if err != nil {
-		return err
-	}
-
-	// Finaliza a transação atômica. Se falhar, reverte tudo.
-	return tx.Commit()
+            // Confirma a transação. Se falhar, reverte tudo.
+            await transaction.CommitAsync(token);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(token);
+            throw;
+        }
+    }
 }
 ```
 
 ## O processador do outbox (relay)
 
-Uma goroutine em segundo plano (Outbox Processor) busca periodicamente as mensagens não processadas da tabela `outbox`, tenta enviá-las ao broker e as marca como processadas após receber a confirmação de recebimento (ACK):
+Um serviço em segundo plano (`OutboxProcessor`) busca periodicamente as mensagens não publicadas do banco de dados, tenta enviá-las ao broker através do `IMessageTransport` e as marca como publicadas após receber a confirmação:
 
-```go
-func (s *OutboxProcessor) ProcessPendingMessages(ctx context.Context) {
-	// Busca mensagens pendentes no banco
-	messages := s.fetchPendingFromOutbox(ctx)
+```csharp
+using Microsoft.Extensions.Hosting;
+using Onkai.EventBus.Core.Transport;
 
-	for _, msg := range messages {
-		// Publica no broker
-		err := s.driver.Publish(ctx, msg.Topic, Message{
-			ID:      msg.ID,
-			Payload: msg.Payload,
-		})
+public sealed class OutboxProcessor : BackgroundService
+{
+    private readonly IServiceProvider _serviceProvider;
 
-		if err == nil {
-			// Atualiza no banco de dados local
-			s.markAsProcessed(ctx, msg.ID)
-		}
-	}
+    public OutboxProcessor(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            using var scope = _serviceProvider.CreateScope();
+            var store = scope.ServiceProvider.GetRequiredService<IOutboxStore>();
+            var transport = scope.ServiceProvider.GetRequiredService<IMessageTransport>();
+
+            var pendingMessages = await store.GetUnpublishedMessagesAsync(stoppingToken);
+            foreach (var message in pendingMessages)
+            {
+                var envelope = new TransportEnvelope
+                {
+                    EventId = message.EventId,
+                    EventName = message.EventName,
+                    Body = message.Body,
+                    CorrelationId = message.CorrelationId
+                };
+
+                // Publica no broker
+                await transport.SendAsync(envelope, stoppingToken);
+
+                // Atualiza o estado da mensagem no banco local
+                await store.MarkAsPublishedAsync(message.Id, stoppingToken);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+        }
+    }
 }
 ```
 
@@ -102,3 +117,4 @@ func (s *OutboxProcessor) ProcessPendingMessages(ctx context.Context) {
 - **At-Least-Once Delivery:** Garantia de que todas as mensagens serão entregues ao seu destino pelo menos uma vez, aceitando a possibilidade de duplicidades.
 - **Transação de Banco de Dados:** Conjunto de operações executadas como uma única unidade lógica e atômica de trabalho (tudo ou nada).
 - **Outbox Relay:** O componente responsável por ler a tabela do banco de dados e repassar a informação de forma confiável para a rede.
+
