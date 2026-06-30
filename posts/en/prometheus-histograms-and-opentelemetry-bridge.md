@@ -1,5 +1,5 @@
 ---
-title: "From Custom to Industry Standard: Histogram Percentiles and the OpenTelemetry Semantic Bridge"
+title: "From custom to industry standard:Histogram percentiles and the opentelemetry semantic bridge"
 excerpt: "Why do latency averages lie? Discover the mathematics behind computing long-tail percentiles and how we engineered a clean semantic bridge to support OpenTelemetry with concurrent double routing."
 category: "Metrics & Tracing"
 date: "Mar 14, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Statistical Illusion of the Mean and the Mathematics of Percentiles
+## The statistical illusion of the mean and the mathematics of percentiles
 
 Metrics calculated solely on the arithmetic mean lie heavily to reliability engineers. A web server can display an excellent average latency of 15ms, masking that 1% of its users face catastrophic delays of 5 seconds due to Garbage Collector pauses. To map long-tail quality of service, we must compute precise statistical percentiles (p50, p90, p99).
 
@@ -42,7 +41,7 @@ func (r *latencyReservoir) extractPercentile(p float64) float64 {
 }
 ```
 
-## Semantic Bridges and Double Routing in OpenTelemetry
+## Semantic bridges and double routing in opentelemetry
 
 Most modern companies have standardized their observability stacks using the CNCF's **OpenTelemetry (OTel)** specification. However, refactoring every single legacy application to interface with the verbose OTel APIs is economically and technically unviable.
 
@@ -73,7 +72,7 @@ func (o *otelMetrics) RecordLatency(name string, val float64, labels map[string]
 }
 ```
 
-### Technical Terms Explained
+### Technical terms explained
 - **Outliers:** Experimental measurements or telemetry records that deviate drastically from the typical operational envelope (e.g. a 10s database query in a cluster of 2ms requests).
 - **Percentile:** A statistical measure representing the threshold below which a given percentage of data falls. For instance, a p95 latency of 200ms means 95% of requests completed under 200ms.
 - **Double Routing:** The technique of multiplexing a single stream of telemetry data to multiple independent endpoints concurrently without blocking the main execution path.

@@ -1,5 +1,5 @@
 ---
-title: "Adeus, I/O Bottlenecks: Construindo um Ring-Buffer de Log Assíncrono com Canais Concorrentes"
+title: "Adeus, i/o bottlenecks:Construindo um ring-buffer de log assíncrono com canais concorrentes"
 excerpt: "Escrever logs de forma síncrona estrangula a latência de sua API. Descubra como criar uma fila de logs assíncrona não-bloqueante de alta performance em Go com tratamento seguro de saturação."
 category: "Alta Performance"
 date: "22 de Fevereiro, 2026"
@@ -9,14 +9,13 @@ series: "orkai-observability-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## Threads Físicas (OS) vs. Goroutines (O Go Scheduler)
+## Threads físicas (os) vs. goroutines (o Go scheduler)
 
 Linguagens de programação tradicionais delegam tarefas concorrentes mapeando threads do sistema operacional de forma direta (modelo 1:1). Cada thread do sistema consome cerca de 1 MB de memória física e exige chaveamentos custosos de contexto gerenciados pelo hardware da CPU. 
 
 O Go resolve esse gargalo através do modelo de agendamento cooperativo **GMP**, executando Goroutines leves na pilha de execução del runtime. Elas iniciam consumindo apenas 2 KB de memória *stack* e compartilham dinamicamente threads físicas gerenciadas cooperativamente por processadores lógicos, maximizando o aproveitamento do hardware.
 
-## Canais Bufferizados como Barreiras de Concorrência Seguras
+## Canais bufferizados como barreiras de concorrência seguras
 
 Escrever logs diretamente no console ou em arquivos de forma síncrona dentro da thread principal de requisições de uma API é um erro grave de performance. Sob carga pesada, sua aplicação passará mais tempo esperando o disco físico ou o terminal de saída responder do que processando regras de negócios.
 
@@ -40,7 +39,7 @@ func (l *JSONLogger) asyncWorker() {
 }
 ```
 
-## Estratégia de Fallback por Transbordo (Zero Loss Saturation Fallback)
+## Estratégia de fallback por transbordo (zero loss saturation fallback)
 
 O que acontece se a aplicação sofrer um surto massivo de acessos e começar a gerar logs mais rápido do que o trabalhador em segundo plano consegue gravá-los? Em canais bufferizados comuns, tentar escrever em uma fila cheia bloqueia a execução da thread remetente de forma imediata.
 
@@ -64,7 +63,7 @@ func (l *JSONLogger) deliverLog(jsonStr string) {
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Canais (Channels):** Estruturas nativas do Go que permitem o tráfego seguro de dados entre Goroutines concorrentes sem necessidade de travas de memória manuais.
 - **Graceful Shutdown (Encerramento Elegante):** Processo que garante que uma aplicação finalize todas as operações pendentes em andamento antes de desligar, evitando corrupção de arquivos ou perda de transações.
 - **Select Não-Bloqueante:** Uso do operador `select` do Go com a instrução `default` para tomar decisões instantâneas caso uma operação concorrente não possa ser concluída de imediato.

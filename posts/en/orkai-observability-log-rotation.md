@@ -1,5 +1,5 @@
 ---
-title: "Efficient Disk Writing: Building a Log File Rotation Writer Without Dependencies"
+title: "Efficient disk writing:Building a log file rotation writer without dependencies"
 excerpt: "Writing logs to files indefinitely eventually saturates server disk storage. Learn how to design a thread-safe, concurrent log rotation writer in Go."
 category: "Performance"
 date: "Apr 25, 2026"
@@ -9,16 +9,15 @@ series: "orkai-observability-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Hidden Risk of Infinite Log Files
+## The hidden risk of infinite log files
 
 Writing application logs to local files is a classic pattern in operations. However, if your API handles thousands of requests per minute, the log file grows rapidly. Within weeks, it can consume tens of gigabytes, exhausting your server's disk space and causing catastrophic application failures (such as the inability to write new data).
 
-To prevent this, production applications use **Log Rotation**, dividing writes into multiple files of limited size and discarding or archiving the oldest ones automatically.
+To prevent this, production applications use **log rotation**, dividing writes into multiple files of limited size and discarding or archiving the oldest ones automatically.
 
 The **orkai-observability** package implements a thread-safe, concurrent, and lightweight rotating file writer in Go without external dependencies.
 
-## Designing the RotatingFileWriter
+## Designing the rotatingfilewriter
 
 The `RotatingFileWriter` manages the active log file under exclusive locks (`sync.Mutex`), tracking bytes written to trigger file rotation when the configured size limit is crossed:
 
@@ -66,7 +65,7 @@ func (w *RotatingFileWriter) openNew() error {
 }
 ```
 
-## The Concurrent Rotation Logic
+## The concurrent rotation logic
 
 When we write bytes and the `currentSize` exceeds `maxSize`, we close the active file, rename it by appending a timestamp to its name, and open a new clean file:
 
@@ -100,8 +99,7 @@ func (w *RotatingFileWriter) rotate() error {
 }
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Log Rotation:** The practice of renaming and archiving old logs once they cross size or age limits.
 - **Mutex (Mutual Exclusion):** A synchronization mechanism that ensures only one thread or goroutine accesses a shared resource at a time.
 - **Timestamp:** A numeric or text representation of the exact date and time an event or file change occurred.
----

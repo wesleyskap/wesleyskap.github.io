@@ -1,5 +1,5 @@
 ---
-title: "Garantia de Entrega e Eventos Resilientes: Outbox Transacional e Webhooks no vindi-rails"
+title: "Garantia de entrega e eventos resilientes:Outbox transacional e webhooks no vindi-rails"
 excerpt: "Como evitar inconsistências de pagamento causadas por timeouts de rede? Veja como implementar o Transactional Outbox Pattern e recebimento de Webhooks assíncronos no Rails."
 category: "Fintech & Resiliência"
 date: "28 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "vindi-rails-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/vindi-rails-integrations"
 ---
-
-## O Risco das Chamadas HTTP Síncronas em Transações de Banco
+## O risco das chamadas HTTP síncronas em transações de banco
 
 Considere o seguinte cenário clássico em uma aplicação Ruby on Rails:
 
@@ -30,8 +29,7 @@ Este código carrega uma falha grave de design arquitetural. Se a rede oscilar o
 Para desacoplar as operações de banco de dados locais das comunicações externas de rede, a gem de extensões [`vindi-rails-integrations`](https://github.com/wesleyskap/vindi-rails-integrations) introduz suporte nativo a dois padrões arquiteturais de resiliência: o **Transactional Outbox** e o processamento assíncrono de **Webhooks**.
 
 ---
-
-## O Padrão Transactional Outbox com ActiveRecord
+## O padrão transactional outbox com ActiveRecord
 
 O padrão **Transactional Outbox** resolve a inconsistência entre banco de dados e APIs externas gravando a intenção de envio de dados em uma tabela auxiliar do mesmo banco de dados local, dentro da mesma transação atômica. 
 
@@ -55,8 +53,7 @@ end
 Um worker assíncrono em background (executado via Sidekiq, Solid Queue ou GoodJob) lê periodicamente a tabela de outbox, efetua a chamada HTTP para a API da Vindi e, em caso de sucesso, marca o evento como processado. Se a chamada falhar, o worker tenta novamente seguindo regras de backoff exponencial, garantindo a entrega *At-Least-Once* de forma completamente assíncrona.
 
 ---
-
-## Webhooks Seguros e Despacho Assíncrono
+## Webhooks seguros e despacho assíncrono
 
 Webhooks são essenciais para sincronizar eventos que ocorrem diretamente na plataforma da Vindi (como faturas pagas, cartões rejeitados ou assinaturas canceladas) de volta para a sua aplicação Rails. Porém, receber webhooks de forma síncrona no controller principal adiciona riscos de segurança (como spoofing) e gargalos de processamento.
 
@@ -70,7 +67,7 @@ Esse gerador cria um controller especializado que:
 1.  **Valida a Assinatura (Signature Verification):** Verifica se o payload recebido foi realmente enviado pela Vindi comparando o hash HMAC do cabeçalho com a chave secreta configurada.
 2.  **Enfileira o Processamento:** Salva o evento e delega a execução da lógica de negócios para um job de segundo plano (`Vindi::WebhookJob`), respondendo imediatamente status `200 OK` para o servidor da Vindi.
 
-### Handlers Regidos por Convenção
+### Handlers regidos por convenção
 
 Para tratar os eventos de webhook de forma modular e limpa, você pode gerar classes de serviço focadas:
 
@@ -81,7 +78,7 @@ $ rails generate vindi:webhook_handler subscription_canceled
 O comando cria uma classe estruturada para lidar especificamente com cancelamentos de assinatura:
 
 ```ruby
-# app/services/vindi_webhook_handlers/subscription_canceled_handler.rb
+# App/services/vindi_webhook_handlers/subscription_canceled_handler.rb
 module VindiWebhookHandlers
   class SubscriptionCanceledHandler
     def call(event_payload)
@@ -96,8 +93,7 @@ end
 O `WebhookJob` principal identifica o tipo de evento recebido do webhook e despacha automaticamente a execução para o handler correspondente seguindo a convenção de nomes, mantendo seus controllers limpos e focados.
 
 ---
-
-## Termos Técnicos Desmistificados
+## Termos técnicos desmistificados
 
 *   **Transactional Outbox Pattern:** Padrão que garante que alterações de estado no modelo de dados local e o disparo de eventos de integração externa aconteçam de forma atômica no banco de dados, evitando perdas de sincronia caso a comunicação de rede falhe.
 *   **At-Least-Once Delivery (Entrega ao Menos Uma Vez):** Garantia de que um evento ou mensagem será entregue ao seu destino pelo menos uma vez, mesmo que isso exija múltiplas retentativas caso ocorram falhas temporárias.

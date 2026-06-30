@@ -1,5 +1,5 @@
 ---
-title: "Agendamento e Crons Distribuídos: Resolvendo o Problema da Execução Duplicada"
+title: "Agendamento e crons distribuídos:Resolvendo o problema da execução duplicada"
 excerpt: "Como garantir que um agendamento Cron rode exatamente uma vez por minuto em um cluster de servidores sem um coordenador como o ZooKeeper? Entenda a mecânica por trás do Orkai Runiq."
 category: "Sistemas Distribuídos"
 date: "29 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "orkai-runiq-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-runiq"
 ---
-
-## O Problema dos Agendadores em Clusters
+## O problema dos agendadores em clusters
 
 Agendar uma tarefa para rodar no futuro (ex: `client.EnqueueIn(ctx, ..., 10*time.Minute)`) é relativamente simples. Basta salvar o carimbo de data/hora de execução (`run_at`) no banco de dados e ter um loop periódico buscando jobs onde `run_at <= CURRENT_TIMESTAMP`.
 
@@ -19,8 +18,7 @@ O verdadeiro desafio surge com **tarefas recorrentes (Cron Jobs)** rodando em um
 Para resolver isso de forma elegante sem adicionar um sistema de coordenação distribuída pesado (como Consul ou Apache ZooKeeper), o Runiq adota uma solução engenhosa e simplificada baseada no próprio banco de dados relacional (ou Redis).
 
 ---
-
-## O Motor do Cron e a Trava Distribuída de Minuto
+## O motor do cron e a trava distribuída de minuto
 
 No Runiq, a sincronização de execução do Cron baseia-se em um mecanismo de **trava por carimbo de minuto**. 
 
@@ -52,7 +50,7 @@ func (p *PostgresStorage) LockCronExecution(ctx context.Context, cronName string
 }
 ```
 
-### O Segredo do ON CONFLICT DO NOTHING
+### O segredo do on conflict do nothing
 A tabela `runiq_cron_locks` possui uma restrição de chave primária composta (ou índice único) composta por `(cron_name, execution_minute)`.
 
 1.  **A Corrida:** Se o Cron `"DailyReport"` for disparado à meia-noite, todas as 5 réplicas do worker pool chamarão `LockCronExecution` com o carimbo `2026-06-24 00:00:00` (truncado para o minuto).
@@ -62,8 +60,7 @@ A tabela `runiq_cron_locks` possui uma restrição de chave primária composta (
 Essa abordagem simples de design elimina o risco de duplicações sem adicionar latência perceptível e com garantia transacional estrita (ACID) do banco de dados.
 
 ---
-
-## Crons Estáticos vs. Crons Dinâmicos com Timezone
+## Crons estáticos vs. crons dinâmicos com timezone
 
 Para oferecer a máxima flexibilidade de operação, o Runiq implementa dois modos de suporte a Cron:
 
@@ -73,7 +70,7 @@ Para oferecer a máxima flexibilidade de operação, o Runiq implementa dois mod
     ```
 2.  **Crons Dinâmicos (Definidos no Painel/API):** Salvos na tabela `runiq_cron_jobs`. Eles podem ser pausados, editados, criados ou excluídos dinamicamente sem a necessidade de novos deploys de código.
 
-### Suporte Nativo a Fusos Horários (Timezones)
+### Suporte nativo a fusos horários (timezones)
 Um erro comum de agendamento em produção é assumir que o servidor sempre rodará no fuso horário UTC e que todos os clientes estão sob as mesmas regras. O Runiq permite configurar o fuso horário específico de execução da tarefa de forma dinâmica:
 
 ```go
@@ -84,8 +81,7 @@ pool.RegisterCron("0 9 * * 1-5", "default", "DailyReport", []byte(`{}`), queue.W
 Sob o capô, o Runiq avalia a correspondência do Cron carregando o horário local correspondente à timezone informada na tabela (`timezone`) antes de validar a correspondência da string de cronologia (ex: `*/15 * * * *`). Isso garante que tarefas corporativas rodem exatamente no horário comercial local, mesmo sob mudanças de horário de verão e independente da timezone nativa do host onde a aplicação Go está rodando.
 
 ---
-
-## Termos Técnicos Desmistificados
+## Termos técnicos desmistificados
 
 *   **Truncate (Truncar):** O ato de cortar frações de tempo menores de um objeto de data. Por exemplo, truncar `17:45:32` no nível de minuto transforma-o em `17:45:00`.
 *   **Timezone Location:** O identificador geográfico (como `America/Sao_Paulo` ou `Europe/London`) que mapeia as regras históricas de fuso horário e horário de verão de uma região, diferente de um simples offset estático como `UTC-3`.

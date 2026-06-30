@@ -1,5 +1,5 @@
 ---
-title: "HTTP Resilience: Designing a Panic Recovery Middleware to Capture Crashes"
+title: "HTTP resilience:Designing a panic recovery middleware to capture crashes"
 excerpt: "Unexpected runtime failures shouldn't take down your web server. Learn how to intercept panics and return structured JSON errors in Go."
 category: "Resilience"
 date: "Apr 26, 2026"
@@ -9,14 +9,13 @@ series: "orkai-observability-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Threat of Runtime Crashes in Production
+## The threat of runtime crashes in production
 
 In Go, if a goroutine attempts to access an out-of-bounds slice index, dereferences a nil pointer, or performs any invalid runtime operation, the runtime triggers a **Panic**. If this panic is not captured explicitly, the entire web server process will crash instantly, disconnecting all active users.
 
 To build high-availability APIs, we must intercept panics occurring inside individual HTTP request lifecycles, log the detailed stack trace for debugging, and return a clean `500 Internal Server Error` response without interrupting the global server process.
 
-## Implementing the Panic Recovery Middleware
+## Implementing the panic recovery middleware
 
 Go provides a built-in `recover()` function to capture active panics. We hook into this mechanism using a deferred function call inside a custom HTTP middleware:
 
@@ -51,12 +50,11 @@ func PanicRecoveryMiddleware(next http.Handler) http.Handler {
 }
 ```
 
-## The Value of Collecting Stack Traces
+## The value of collecting stack traces
 
 Logging only the panic message (e.g., `nil pointer`) makes troubleshooting difficult. Using `debug.Stack()` captures the exact function calls and file lines where the failure happened, allowing developers to identify and fix the underlying bug in seconds.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Panic:** A severe runtime error state in Go that halts the normal execution of the current goroutine.
 - **Recover:** A built-in Go function that regains control of a panicking goroutine, halting the shutdown sequence.
 - **Defer:** A keyword that schedules a function call to run exactly when the surrounding function returns.
----

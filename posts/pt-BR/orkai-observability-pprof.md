@@ -1,5 +1,5 @@
 ---
-title: "Automação de Diagnósticos: Profiling Sob Demanda com Auto-Triggered pprof em Go"
+title: "Automação de diagnósticos:Profiling sob demanda com auto-triggered pprof em Go"
 excerpt: "Investigar picos de CPU e memória em produção após o servidor cair é ineficaz. Aprenda a automatizar o profiling sob demanda usando pprof."
 category: "Alta Performance"
 date: "24 de Maio, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 16
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## O Desafio de Capturar Gargalos Efêmeros
+## O desafio de capturar gargalos efêmeros
 
 Picos repentinos no uso de CPU ou alocações de memória heap costumam acontecer em frações de segundo durante picos de acessos na produção. Tentar depurar esses incidentes de forma retroativa analisando apenas logs é um processo frustrante para engenheiros de confiabilidade de sistemas.
 
@@ -18,7 +17,7 @@ O Go disponibiliza a excelente ferramenta nativa `pprof` para realizar análises
 
 O **orkai-observability** resolve esse problema implementando um sistema **Auto-Triggered (Autodisparado)** que monitora recursos e captura perfis de diagnóstico automaticamente.
 
-## O Design do Auto-Triggered Profiler
+## O design do auto-triggered profiler
 
 Configuramos um coletor em segundo plano que inspeciona o uso de recursos periodicamente. Se o limite de segurança for excedido, o profiler captura e grava um arquivo de perfil local automaticamente, respeitando uma política de cooldown para evitar degradação adicional de performance:
 
@@ -77,12 +76,11 @@ func (ap *AutoProfiler) captureCPUProfile() {
 }
 ```
 
-## Importância do Cooldown
+## Importância do cooldown
 
 Profiling consome ciclos extras de processamento da CPU. Se o seu servidor estiver sofrendo um ataque DDoS e a contagem de goroutines disparar, capturar perfis consecutivamente sem intervalos de resguardo (Cooldown) iria esgotar rapidamente os recursos remanescentes da máquina. O gerenciamento de cooldown garante que o diagnóstico seja disparado de forma comedida e segura.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **pprof:** Ferramenta interna do runtime do Go usada para coletar, visualizar e analisar dados de profiling (tempo de CPU, uso de heap, bloqueios e concorrência).
 - **Profiling (Perfilamento):** Processo de análise de performance em tempo de execução que mede o consumo de recursos por partes individuais do código-fonte.
 - **Cooldown:** Intervalo de tempo mínimo obrigatório que o sistema deve respeitar antes de repetir uma ação automatizada de alto consumo computacional.
----

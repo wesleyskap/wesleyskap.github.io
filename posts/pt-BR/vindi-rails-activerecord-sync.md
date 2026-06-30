@@ -1,5 +1,5 @@
 ---
-title: "Sincronização de Estado Sem Costura: ActiveRecord Model Sync com vindi-rails-integrations"
+title: "Sincronização de estado sem costura:ActiveRecord model sync com vindi-rails-integrations"
 excerpt: "Descubra como sincronizar modelos do ActiveRecord de forma transparente com a Vindi, tratando deleção lógica, atualizações em lote e auditorias de conciliação."
 category: "Fintech & Integrações"
 date: "29 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "vindi-rails-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/vindi-rails-integrations"
 ---
-
-## Sincronizar ou não sincronizar: O dilema do ActiveRecord
+## Sincronizar ou não sincronizar:O dilema do ActiveRecord
 
 Quando integramos sistemas de faturamento recorrente, é comum precisarmos duplicar parte dos dados cadastrais dos nossos usuários. A Vindi precisa saber o nome, e-mail, CPF/CNPJ e um código de identificação do cliente para emitir notas fiscais e cobrar o cartão de crédito corretamente.
 
@@ -19,8 +18,7 @@ Manter essas duas bases de dados em sincronia de forma manual gera código repet
 A gem de extensões [`vindi-rails-integrations`](https://github.com/wesleyskap/vindi-rails-integrations) resolve esse problema acoplando um Concern inteligente e automatizado aos modelos do ActiveRecord através do módulo `Vindi::Synchronizable`.
 
 ---
-
-## Mapeamento Automático com Vindi::Synchronizable
+## Mapeamento automático com Vindi::Synchronizable
 
 Para habilitar a sincronização automática em um modelo existente (por exemplo, `User`), iniciamos executando o gerador fornecido pelo ecossistema:
 
@@ -47,7 +45,7 @@ class User < ApplicationRecord
 end
 ```
 
-### O Ciclo de Vida da Sincronização
+### O ciclo de vida da sincronização
 
 A partir do momento em que o concern é incluído, o ciclo de vida do ActiveRecord passa a gerenciar a sincronização de forma transparente utilizando *callbacks*:
 
@@ -55,14 +53,12 @@ A partir do momento em que o concern é incluído, o ciclo de vida do ActiveReco
 2.  **Ao Atualizar (`after_commit on: :update`)**: O concern monitora modificações nos campos mapeados (como nome ou e-mail). Se houver alterações locais, uma chamada `Vindi::Customer.update` é disparada dinamicamente para atualizar a base externa.
 
 ---
-
-## Segurança Transacional e a Sincronização em Lote
+## Segurança transacional e a sincronização em lote
 
 Para evitar requisições de rede lentas durante transações críticas no banco local, é recomendável acoplar o Transactional Outbox (como abordado no post anterior). Se configurado com `config.use_outbox = true`, em vez de disparar a API síncrona nos callbacks, o concern salva a pendência na tabela `vindi_pending_syncs` na mesma transação atômica. Um job de segundo plano processa as filas de forma resiliente.
 
 ---
-
-## Auditorias de Consistência com Rake Tasks
+## Auditorias de consistência com rake tasks
 
 Nenhuma integração distribuída é perfeita: redes falham temporariamente, transações sofrem rollback e intervenções manuais podem acontecer no painel administrativo da Vindi.
 
@@ -85,8 +81,7 @@ Reconciliation complete. 1 missing records synchronized.
 Se o validador encontrar algum usuário sem `vindi_customer_id` ou cuja informação esteja inconsistente, a tarefa cria ou reconstrói o vínculo com segurança em tempo real.
 
 ---
-
-## Termos Técnicos Desmistificados
+## Termos técnicos desmistificados
 
 *   **ActiveRecord Callbacks:** Pontos de gancho no ciclo de vida de um objeto do banco de dados (como validação, salvamento, persistência ou exclusão) onde códigos personalizados podem ser executados automaticamente.
 *   **Conciliação de Dados:** O processo de comparar dois conjuntos de dados em sistemas diferentes para garantir que as informações estejam completas, corretas e consistentes entre as duas pontas.

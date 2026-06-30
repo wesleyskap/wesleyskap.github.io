@@ -1,5 +1,5 @@
 ---
-title: "Runiq: Projetando um Motor de Background Jobs Standalone em Go"
+title: "Runiq:Projetando um motor de background jobs standalone em Go"
 excerpt: "Por que construir um processador de tarefas do zero quando temos RabbitMQ ou Kafka? Explore as decisões de design, a arquitetura de acoplamento zero e as abstrações fundamentais do Orkai Runiq."
 category: "Mensageria"
 date: "26 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "orkai-runiq-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/orkai-runiq"
 ---
-
-## O Dilema da Infraestrutura: Message Brokers vs. Job Processors
+## O dilema da infraestrutura:Message brokers vs. job processors
 
 Quando precisamos processar tarefas pesadas em segundo plano (como envio de e-mails, processamento de relatórios ou transições de estado assíncronas), a primeira reação comum da equipe de engenharia é adotar ferramentas conhecidas do mercado: **RabbitMQ**, **Apache Kafka** ou **AWS SQS**.
 
@@ -22,8 +21,7 @@ No entanto, há uma diferença sutil, mas fundamental, entre **Message Brokers**
 O **Orkai Runiq** nasceu para preencher essa lacuna no ecossistema Go de forma **standalone (autônoma)**. Ele permite que desenvolvedores tenham o poder de um orquestrador de tarefas resiliente sem o ônus operacional de manter clusters Erlang (RabbitMQ) ou JVMs pesadas com ZooKeeper (Kafka). O Runiq requer apenas um storage provider existente na sua stack (PostgreSQL, Redis ou até mesmo um SQLite embarcado).
 
 ---
-
-## Acoplamento Zero e Flexibilidade Orientada a Interfaces
+## Acoplamento zero e flexibilidade orientada a interfaces
 
 Um dos pilares do design do Runiq é o **acoplamento fraco**. Em vez de forçar a aplicação a usar um banco de dados específico, toda a persistência é baseada em interfaces de Go pequenas e coesas.
 
@@ -48,8 +46,7 @@ type JobQueue interface {
 Qualquer banco de dados ou motor de chave-valor que implemente essas assinaturas pode atuar como motor de armazenamento para o Runiq. Sob o capô, estendemos essas capacidades usando composição de interfaces, como `ScheduledJobQueue` (para jobs adiados), `BatchStorage` (para processamentos em lote) e `WorkflowStorage` (para grafos de dependência DAG).
 
 ---
-
-## O Envelope do Job e a Propagação Dinâmica de Contexto
+## O envelope do job e a propagação dinâmica de contexto
 
 Para que um job seja persistido e posteriormente executado por um worker distribuído, ele precisa ser envelopado. O `JobEnvelope` carrega não apenas os argumentos serializados da tarefa, mas também metadados operacionais e de telemetria.
 
@@ -77,8 +74,7 @@ type JobEnvelope struct {
 A presença de `TraceContext` é crucial. Ela permite que a rastreabilidade distribuída da gem `orkai-observability` (como `TraceID` e `SpanID`) seja injetada no momento em que o cliente enfileira o job e seja resgatada no momento em que um worker assíncrono em outra máquina inicia a execução, mantendo a árvore de chamadas de logs unificada de ponta a ponta.
 
 ---
-
-## Como Começar: Uma API Simples e Fluida
+## Como começar:Uma API simples e fluida
 
 Construir e rodar workers em Go com o Runiq é extremamente direto. A implementação padrão do cliente fornece helpers fluídos como `EnqueueIn` e `EnqueueUnique` que facilitam o dia a dia do desenvolvedor:
 
@@ -111,8 +107,7 @@ func main() {
 A simplicidade dessa API esconde a complexidade interna do Runiq, que lida nativamente com panic recovery, concorrência, retentativas e propagação automática de spans de tracing de forma completamente invisível para quem está escrevendo a regra de negócio.
 
 ---
-
-## Termos Técnicos Desmistificados
+## Termos técnicos desmistificados
 
 *   **Standalone:** Uma aplicação que funciona como um binário independente, que não requer outros serviços de apoio rodando externamente além do seu próprio armazenamento de dados.
 *   **Struct Padding:** O alinhamento de memória feito pelo compilador. Go alinha campos de estruturas em múltiplos de bytes baseado no tamanho da palavra do processador. Organizar os campos do maior para o menor ajuda a economizar memória ao evitar espaços em branco.

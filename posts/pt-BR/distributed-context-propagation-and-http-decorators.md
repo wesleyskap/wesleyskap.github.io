@@ -1,5 +1,5 @@
 ---
-title: "Propagação Distribuída e Resiliência de Transporte: W3C, B3 e HTTP Client Decorators"
+title: "Propagação distribuída e resiliência de transporte:W3C, B3 e HTTP client decorators"
 excerpt: "Como manter o rastreamento ativo em chamadas HTTP remotas? Aprenda a propagar contextos de telemetria utilizando cabeçalhos W3C e B3 decorando o net/http do Go de forma transparente."
 category: "Conectividade"
 date: "28 de Fevereiro, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## Cabeçalhos de Telemetria e Padrões Industriais
+## Cabeçalhos de telemetria e padrões industriais
 
 Um identificador de rastreamento isolado em um único servidor perde o valor em uma arquitetura de microsserviços. Quando uma requisição de usuário trafega por múltiplos sistemas através da rede, o identificador do fluxo precisa ser transmitido de ponta a ponta. Caso contrário, a rastreabilidade se perde, tornando a depuração de falhas distribuídas uma tarefa quase impossível.
 
@@ -33,7 +32,7 @@ func parseW3C(header string) (string, bool) {
 }
 ```
 
-## Decorando a Interface Nativa de Transporte (`http.RoundTripper`)
+## Decorando a interface nativa de transporte (`http.roundtripper`)
 
 Exigir que os desenvolvedores injetem manualmente os cabeçalhos de Trace ID em cada chamada externa de API HTTP é um anti-padrão de engenharia. Isso gera acoplamento e abre margem para esquecimentos graves que quebram o rastreamento da infraestrutura.
 
@@ -59,7 +58,7 @@ func (t *TracingRoundTripper) RoundTrip(req *http.Request) (*http.Response, erro
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Propagação de Contexto (Context Propagation):** O processo de empacotar, transmitir e desempacotar metadados de rastreamento através das fronteiras físicas de rede entre serviços distintos.
 - **RoundTripper:** Uma interface essencial da biblioteca padrão do Go que gerencia o ciclo completo de envio de uma requisição HTTP e recebimento de sua resposta.
 - **Padrão Decorator (Decorator Pattern):** Um padrão de arquitetura de software que permite adicionar novos comportamentos a um objeto existente sem alterar seu código-fonte ou sua assinatura original.

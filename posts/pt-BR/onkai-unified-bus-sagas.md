@@ -1,5 +1,5 @@
 ---
-title: "Transações Distribuídas com Sagas: Orquestrando Processos e Compensações com Sucesso"
+title: "Transações distribuídas com sagas:Orquestrando processos e compensações com sucesso"
 excerpt: "Sistemas distribuídos não possuem transações de banco de dados unificadas. Aprenda a usar o padrão Saga para coordenar transações complexas e ações de compensação."
 category: "Mensageria"
 date: "18 de Abril, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 11
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## Transações Distribuídas em Microsserviços
+## Transações distribuídas em microsserviços
 
 Em uma aplicação monolítica, manter a consistência dos dados é simples: basta iniciar uma transação de banco de dados, realizar todas as alterações necessárias nas tabelas e confirmar (`commit`) as alterações. Se qualquer etapa falhar, o banco desfaz tudo (`rollback`).
 
@@ -18,7 +17,7 @@ No entanto, em uma arquitetura de microsserviços, cada serviço possui seu pró
 
 Para manter a consistência de processos complexos que cruzam múltiplos limites de serviços sem depender de bloqueios de rede lentos (como transações de duas fases 2PC), implementamos o padrão **Saga Orquestrada**.
 
-## O Padrão Saga e Compensações
+## O padrão saga e compensações
 
 Uma Saga é uma sequência de transações locais executadas por microsserviços individuais. Se uma transação local falhar, o orquestrador assume a responsabilidade de executar transações de **Compensação** em ordem inversa para desfazer os efeitos colaterais anteriores:
 
@@ -71,7 +70,7 @@ func (o *SagaOrchestrator) Rollback(ctx context.Context, state *SagaState) {
 }
 ```
 
-## Executando Etapas de Forma Segura
+## Executando etapas de forma segura
 
 Durante o processamento das etapas de negócio, o orquestrador atualiza o estado persistentemente. Se a etapa de Faturamento falhar, o orquestrador dispara o fluxo de `Rollback` garantindo que os estoques reservados sejam liberados graciosamente:
 
@@ -107,7 +106,7 @@ func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState)
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Saga Pattern:** Padrão de design para coordenar transações locais distribuídas que utilizam compensações estruturadas para restaurar a consistência do sistema.
 - **Compensação:** Uma transação lógica que desfaz as alterações criadas por uma operação bem-sucedida executada anteriormente.
 - **Saga State Store:** Banco de dados estruturado ou em memória responsável por guardar as etapas atuais e variáveis contextuais de execuções de Sagas ativas.

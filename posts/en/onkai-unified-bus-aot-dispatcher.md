@@ -1,5 +1,5 @@
 ---
-title: "Reflection-Free Dispatcher: Optimizing Performance and Supporting Native AOT"
+title: "Reflection-free dispatcher:Optimizing performance and supporting native AOT"
 excerpt: "Dynamic reflection degrades Garbage Collector performance and breaks ahead-of-time compilation. Learn how we designed a reflection-free router in Go."
 category: "Messaging"
 date: "Apr 16, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 10
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## The Costs of Dynamic Dispatch and AOT Compilation
+## The costs of dynamic dispatch and AOT compilation
 
 In traditional messaging frameworks, when a new event arrives, the router must dynamically find which class or struct handles that message type. In most runtimes, this is done using **Reflection** to inspect types at runtime.
 
@@ -20,7 +19,7 @@ While simple and flexible, reflection introduces severe issues:
 
 The **onkai-unified-bus** solves this by replacing dynamic invocations with a statically-typed dispatcher using a concurrent cache of typed executors.
 
-## Statically-Typed Consumer Executors
+## Statically-typed consumer executors
 
 Instead of using reflection to find and invoke the consumer method on every message, the framework registers generic executor objects during startup. The dispatcher delegates execution through static interfaces:
 
@@ -57,7 +56,7 @@ func (e *TypedConsumerExecutor[T]) Execute(ctx context.Context, payload []byte) 
 }
 ```
 
-## The Reflection-Free Dispatch Engine
+## The reflection-free dispatch engine
 
 Upon receiving a message, the dispatcher loads the matching executor from a thread-safe map (`sync.Map`) indexed by the event name, executing the interface call directly in nanoseconds:
 
@@ -81,8 +80,7 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, eventName string, payloa
 }
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Native AOT (Ahead-of-Time):** A compilation technology that compiles source code directly to native machine code at build time, bypassing JIT compilers or runtime interpreters.
 - **Reflection-Free Dispatcher:** A routing pattern that uses static interfaces or pre-compiled delegates to invoke handlers without inspecting objects at runtime.
 - **Type Casting:** Explicitly converting a generic interface or variable to its concrete structural type.
----

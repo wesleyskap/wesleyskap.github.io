@@ -1,5 +1,5 @@
 ---
-title: "Resilience in Ruby Microservices: Exponential Backoff, DLQ, and Thread-Safe Circuit Breaker"
+title: "Resilience in Ruby microservices:Exponential backoff, DLQ, and thread-safe circuit breaker"
 excerpt: "Distributed systems fail. Learn how to design retry policies, Dead Letter Queue (DLQ) routing, and outbound circuit breakers in SharedBroker."
 category: "Resilience"
 date: "May 26, 2026"
@@ -9,14 +9,13 @@ series: "shared-broker-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Fault Tolerance in Distributed Systems
+## Fault tolerance in distributed systems
 
 In a distributed architecture, temporary failures of integrated microservices are a certainty: database spikes, network latency, and timeouts. If a consumer crashes immediately upon encountering a transient glitch, vital business transactions will be lost.
 
 To guarantee that no message is lost, the **SharedBroker** gem incorporates built-in resilience strategies: **Exponential Backoff Retries**, **DLQ (Dead-Letter Queue) routing** enriched with error metadata, and a thread-safe **Circuit Breaker** for outbound calls.
 
-## Exponential Backoff Retries and DLQ Routing
+## Exponential backoff retries and DLQ routing
 
 When message processing fails, the consumer retries execution. The duration of the intervals between retries increases exponentially (e.g., $2^n$ seconds) to give the downstream service time to recover.
 
@@ -56,7 +55,7 @@ module SharedBroker
 end
 ```
 
-## Thread-Safe Outbound Circuit Breaker
+## Thread-safe outbound circuit breaker
 
 The `CircuitBreaker` protects both the publisher and the broker. If the broker (e.g., RabbitMQ) is down and publications begin timing out, the circuit transitions to **OPEN**.
 
@@ -119,8 +118,7 @@ module SharedBroker
 end
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Dead-Letter Queue (DLQ):** A secondary queue dedicated to storing failed messages for human or system inspection.
 - **Fast-Fail:** A resilience practice that rejects operations bound to fail immediately, preserving system resources.
 - **Mutex (Mutual Exclusion):** A lock used in concurrent programming to prevent multiple threads from accessing shared variables simultaneously.
----

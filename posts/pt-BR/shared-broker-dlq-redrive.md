@@ -1,5 +1,5 @@
 ---
-title: "Recuperação de Desastres: Operando Mensagens Falhas com o DLQ Redriver Utility"
+title: "Recuperação de desastres:Operando mensagens falhas com o DLQ redriver utility"
 excerpt: "Filas de falhas (DLQ) guardam mensagens corrompidas, mas como as reprocessamos? Aprenda a desenhar e operar um Redriver automatizado na gem SharedBroker."
 category: "Operações & Resiliência"
 date: "26 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Quando a Fila Falha: O Papel e o Limite da DLQ
+## Quando a fila falha:O papel e o limite da DLQ
 
 Em posts anteriores da série, abordamos como tratar instabilidades temporárias em microsserviços por meio de retries e recuo exponencial. Mas o que acontece quando o erro é permanente? Um bug em um validador de campos ou uma mudança não documentada de schema fará com que todas as mensagens da fila falhem repetidamente.
 
@@ -21,12 +20,11 @@ A DLQ impede que mensagens problemáticas travem o consumo do canal de produçã
 Para automatizar essa tarefa sem intervenções manuais em bancos de dados ou scripts caseiros, a gem **SharedBroker** oferece o **DLQ Redrive Utility**.
 
 ---
-
-## O Design do DLQ Redriver
+## O design do DLQ redriver
 
 Mover mensagens de volta (Redrive) exige cuidado. Não queremos criar loops infinitos se as mensagens continuarem quebrando, nem sobrecarregar o broker. O Redriver da gem lê as mensagens da DLQ em lotes (batch), valida-as novamente e as republica no tópico de destino original, com controle de limite de mensagens (`limit`).
 
-### Implementando a Lógica do Redriver
+### Implementando a lógica do redriver
 
 ```ruby
 module SharedBroker
@@ -66,15 +64,14 @@ end
 ```
 
 ---
-
-## Operando o Redrive no Dia a Dia
+## Operando o redrive no dia a dia
 
 Uma das melhores práticas para expor essa capacidade de recuperação em produção de forma segura é encapsular a ação em uma tarefa administrativa do Rails (Rake Task). Isso permite que engenheiros e operadores de sistemas disparem o reprocessamento de forma segura pelo console ou via pipelines:
 
-### Criando a Rake Task de Redrive
+### Criando a rake task de redrive
 
 ```ruby
-# lib/tasks/shared_broker.rake
+# Lib/tasks/shared_broker.rake
 
 namespace :shared_broker do
   desc "Processa e envia mensagens da DLQ de volta para a fila original de consumo"
@@ -104,13 +101,11 @@ $ bundle exec rails "shared_broker:redrive[my_consumption_queue.dlq, user.create
 ```
 
 ---
-
 ## Conclusão
 
 Ter uma estratégia de Dead Letter Queue é apenas metade da solução de resiliência. A capacidade de reprocessar mensagens de forma auditada e limpa por meio de ferramentas como o `DLQ Redriver` é o que diferencia sistemas frágeis de arquiteturas prontas para produção e tolerantes a falhas reais.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Head-of-Line Blocking:** Bloqueio onde a primeira mensagem com falha na fila impede o processamento de todas as mensagens subsequentes saudáveis.
 - **Acknowledge (Ack):** Confirmação enviada ao broker de que a mensagem foi processada com sucesso, autorizando sua remoção definitiva da fila.
 - **Redrive:** O ato de mover mensagens falhas de uma DLQ de volta para a fila ou tópico de origem para nova tentativa de processamento.
----

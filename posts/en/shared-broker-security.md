@@ -1,5 +1,5 @@
 ---
-title: "Secure Boundaries: Payload Validation (dry-schema and HTTP Registry), AES-256-GCM Encryption, and Key Rotation"
+title: "Secure boundaries:Payload validation (dry-schema and HTTP registry), aes-256-gcm encryption, and key rotation"
 excerpt: "How do you guarantee contract integrity and security for sensitive data? Learn about payload validation and encryption with rotating keys."
 category: "Security"
 date: "June 02, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Ensuring Data Integrity and Security Across Network Boundaries
+## Ensuring data integrity and security across network boundaries
 
 In event-driven architectures, payload contracts are critical. If a service alters a field type without warning (such as changing a variable from `integer` to `string`), consuming microservices will crash.
 
@@ -18,7 +17,7 @@ Furthermore, messages passing through shared brokers (such as public Redis or Ka
 
 The **SharedBroker** gem addresses both problems by combining dynamic schema validations (local and remote) with an automated **AES-256-GCM** encryption layer featuring **Key Rotation**.
 
-## Validating Contracts Dynamically (dry-schema & JSON Schema)
+## Validating contracts dynamically (dry-schema & JSON schema)
 
 The gem validates structural integrity at the outbound (`publish`) and inbound (`subscribe`) boundaries. Locally, we leverage `dry-schema` for fast, lightweight checks:
 
@@ -42,7 +41,7 @@ end
 
 For large-scale distributed setups, the gem supports fetching JSON Schemas dynamically from a remote registry (`SchemaRegistry::Providers::Http`), utilizing local TTL caching to eliminate network validation latency.
 
-## AES-256-GCM Encryption and Key Rotation
+## Aes-256-gcm encryption and key rotation
 
 The gem automatically encrypts payloads using the **AES-256-GCM** cipher.
 
@@ -99,8 +98,7 @@ end
 
 Using key-versioned envelopes, secret migration in production happens smoothly without causing decoding failures for unprocessed legacy payloads.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **AES-256-GCM:** An authenticated symmetric encryption standard providing high-speed data confidentiality and authenticity verification.
 - **Key Rotation:** The operational security practice of changing cryptographic keys periodically to limit potential exposure.
 - **Envelope Encryption:** A security practice where payloads are encrypted with a data key, and details pointing to that key are bundled with the message.
----

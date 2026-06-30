@@ -1,5 +1,5 @@
 ---
-title: "Controle de Concorrência, Backpressure Adaptativo e Roteamento Híbrido Multi-Adapter"
+title: "Controle de concorrência, backpressure adaptativo e roteamento híbrido multi-adapter"
 excerpt: "Como evitar sobrecarga de bancos de dados locais e rotear eventos para múltiplos brokers de forma híbrida em microsserviços Ruby? Veja a solução."
 category: "Alta Performance"
 date: "03 de Junho, 2026"
@@ -9,14 +9,13 @@ series: "shared-broker-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Saturação de Recursos locais em Consumos Assíncronos
+## Saturação de recursos locais em consumos assíncronos
 
 Um consumidor de fila rápido pode se tornar um grande perigo para a saúde do seu microsserviço. Se o broker de mensageria possuir milhões de mensagens represadas e as entregar ao seu consumidor sem limites, as threads de background do Rails irão processar tudo concorrentemente. Em segundos, esse processamento paralelo gerará exaustão de conexões no banco de dados local (`ActiveRecord::ConnectionTimeoutError`), derrubando a API principal.
 
 Para evitar isso, precisamos de duas disciplinas de engenharia de software na camada de consumo: **Controle de Concorrência** e **Backpressure Adaptativo**. Além disso, sistemas corporativos integrados precisam de flexibilidade para direcionar tópicos para diferentes brokers por meio de **Roteamento Híbrido**.
 
-## Controlando Concorrência com Semáforos e Backpressure
+## Controlando concorrência com semáforos e backpressure
 
 A gem **SharedBroker** implementa um semáforo thread-safe puro em Ruby para limitar a contagem máxima de tarefas simultâneas sob execução. 
 
@@ -58,12 +57,12 @@ module SharedBroker
 end
 ```
 
-## Roteamento Híbrido de Tópicos (Multi-Adapter Routing)
+## Roteamento híbrido de tópicos (multi-adapter routing)
 
 Sistemas legados e modernos costumam conviver com diferentes brokers na infraestrutura. A gem permite que a aplicação direcione mensagens para destinos específicos definindo uma tabela de roteamento baseada em padrões de correspondência de strings (Wildcards / Globs):
 
 ```ruby
-# Tabela de roteamento de eventos da Gem
+# Tabela de roteamento de eventos da gem
 routing_table = {
   "payment.processed" => :rabbitmq,
   "telemetry.*"       => :kafka,
@@ -81,8 +80,7 @@ end
 
 Com essa arquitetura, a gem encapsula toda a complexidade de rede de múltiplos destinos, oferecendo uma experiência simples e unificada para o desenvolvedor de domínio.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Backpressure (Contrapressão):** Mecanismo de defesa onde um consumidor sinaliza ao produtor/broker para diminuir ou interromper o envio de cargas de trabalho para evitar sobrecargas.
 - **Semaphore (Semáforo):** Uma estrutura de controle de concorrência usada para limitar o acesso a um recurso compartilhado por múltiplos fluxos de execução.
 - **Glob Pattern:** Padrões de formatação simplificados para busca e correspondência de nomes usando curingas (como asteriscos `*` e pontos de interrogação `?`).
----

@@ -1,5 +1,5 @@
 ---
-title: "Evitando Processamento Duplicado: O Inbox Pattern e a Idempotência de Consumo"
+title: "Evitando processamento duplicado:O inbox pattern e a idempotência de consumo"
 excerpt: "Mensagens duplicadas são inevitáveis em sistemas distribuídos. Aprenda a implementar o Inbox Pattern para garantir a idempotência no consumo de eventos."
 category: "Mensageria"
 date: "15 de Abril, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 9
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## O Problema da Entrega Pelo Menos Uma Vez (At-Least-Once)
+## O problema da entrega pelo menos uma vez (at-least-once)
 
 Em sistemas distribuídos de alta escala, garantir que uma mensagem seja entregue exatamente uma vez (**Exactly-Once**) é um problema extremamente complexo e ineficiente de resolver em nível de rede. Por esse motivo, quase todos os brokers (como RabbitMQ e Kafka) garantem a entrega **Pelo Menos Uma Vez (At-Least-Once)**.
 
@@ -18,7 +17,7 @@ Isso significa que, sob instabilidade de rede ou reinicializações de servidore
 
 Para garantir que cada evento seja processado estritamente uma vez, implementamos o **Inbox Pattern**.
 
-## O Padrão Inbox
+## O padrão inbox
 
 O Inbox Pattern armazena os IDs de todas as mensagens processadas com sucesso em um repositório transacional persistente. Antes de iniciar qualquer processamento lógico do evento, o consumidor verifica se o ID da mensagem já existe nessa tabela de histórico (`inbox`):
 
@@ -56,7 +55,7 @@ func (store *SQLInboxStore) MarkAsProcessed(ctx context.Context, messageID strin
 }
 ```
 
-## Consumo Idempotente Transacional
+## Consumo idempotente transacional
 
 Acoplamos a lógica de validação do Inbox à mesma transação de banco de dados que executa a lógica de negócios da sua aplicação. Se a mensagem já existia, o fluxo é encerrado sem executar a lógica repetidamente:
 
@@ -91,7 +90,7 @@ func (c *OrderCompletedConsumer) Consume(ctx context.Context, msg Message) error
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Idempotência:** A propriedade de algumas operações em matemática e ciência da computação que podem ser aplicadas mais de uma vez sem alterar o resultado final.
 - **Inbox Pattern:** Padrão que recebe e registra mensagens em uma fila/tabela de recebimento antes do processamento final para filtrar duplicidades.
 - **Silent Ignore:** Ação de descartar requisições repetidas sem retornar mensagens de falha, evitando reprocessamentos ou loops de erro indesejados.

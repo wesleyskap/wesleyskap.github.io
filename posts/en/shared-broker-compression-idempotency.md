@@ -1,5 +1,5 @@
 ---
-title: "Optimization and Idempotency: Automatic Payload Compression and Deduplication Middleware"
+title: "Optimization and idempotency:Automatic payload compression and deduplication middleware"
 excerpt: "Large payloads and duplicate messages are common challenges in distributed systems. Learn how to compress payloads dynamically and guarantee idempotency in SharedBroker."
 category: "Performance & Concurrency"
 date: "22 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## The Challenges of Message Volume and Duplication
+## The challenges of message volume and duplication
 
 In high-throughput distributed systems, efficiency and consistency are crucial. As applications scale, they inevitably hit two silent but devastating bottlenecks:
 1. **Network Bandwidth and Storage Overhead:** Sending large JSON payloads (such as consolidated reports or structured listings) inflates network traffic and bloats queue storage.
@@ -19,12 +18,11 @@ In high-throughput distributed systems, efficiency and consistency are crucial. 
 To solve these challenges, the **SharedBroker** gem provides two built-in defenses: **Automatic Payload Compression** and an **Idempotency Middleware**.
 
 ---
-
-## 1. Dynamic and Transparent Payload Compression
+## 1. dynamic and transparent payload compression
 
 Instead of compressing data manually in your business code before publishing, `SharedBroker` handles compression transparently. We configure an algorithm (like `:gzip` or `:deflate`) and a size threshold in bytes. Payloads that don't reach the threshold pass through untouched, avoiding unnecessary computational overhead for small messages.
 
-### How Compression Works Under the Hood
+### How compression works under the hood
 
 The gem wraps the payload in a metadata envelope that signals whether compression took place. When the subscriber receives the event, it automatically detects the flag and decompresses the payload before handing the JSON back to your execution block.
 
@@ -57,7 +55,7 @@ module SharedBroker
 end
 ```
 
-### Configuring the Application
+### Configuring the application
 
 Enabling compression globally in your initializer is simple and requires zero changes to your publish or subscribe calls:
 
@@ -71,14 +69,13 @@ end
 ```
 
 ---
-
-## 2. Idempotency Middleware for Consumers
+## 2. idempotency middleware for consumers
 
 Ensuring idempotency means guaranteeing that no matter how many times the same event is received, the corresponding action is executed only once.
 
 `SharedBroker` implements a middleware pattern that intercepts incoming messages, extracts or generates a unique correlation identifier (`correlation_id`), and checks if it has already been processed using your configured cache store (such as `Rails.cache` or `Redis`).
 
-### Deduplication Middleware Logic
+### Deduplication middleware logic
 
 ```ruby
 module SharedBroker
@@ -116,7 +113,7 @@ module SharedBroker
 end
 ```
 
-### Registering the Middleware in the Client
+### Registering the middleware in the client
 
 In your microservice initialization file:
 
@@ -134,13 +131,11 @@ SPOT_BROKER = SharedBroker::Client.new(
 ```
 
 ---
-
 ## Conclusion
 
 Adopting payload compression and idempotency middlewares changes message transport from a simple data pipe into an intelligent, high-performance flow. With these native tools in `SharedBroker`, we eliminate the threat of duplicate database writes while optimizing network performance in a single clean architecture.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Deduplication:** The process of identifying and discarding duplicate instances of identical messages in a continuous stream.
 - **nx: true:** An option used in caching to write a key only if it does not already exist (an atomic check-and-set operation).
 - **Correlation ID:** A unique key attached to messages to trace related execution paths or guarantee processing uniqueness.
----

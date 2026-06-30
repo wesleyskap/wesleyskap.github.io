@@ -1,5 +1,5 @@
 ---
-title: "Criando um Logger JSON de Ultra-Performance e um Tracer LIFO do Zero em Go"
+title: "Criando um logger JSON de ultra-performance e um tracer LIFO do zero em Go"
 excerpt: "Como correlacionar logs estruturados com escopos complexos de execução sem poluir suas regras de negócios? Aprenda a desenhar um Logger livre de reflexão e um rastreador concorrente em Go."
 category: "Concorrência & Arquitetura"
 date: "22 de Fevereiro, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## A Anatomia da Reflexão e o Custo Oculto no Garbage Collector
+## A anatomia da reflexão e o custo oculto no garbage collector
 
 Em sistemas de altíssima vazão, a geração de logs estruturados não pode se tornar um gargalo de desempenho. A maioria das bibliotecas tradicionais de JSON em Go utiliza o pacote `reflect` para inspecionar dinamicamente o tipo e os campos de cada objeto em tempo de execução. Embora flexível, esse processo acarreta alocações temporárias frequentes na memória dinâmica *heap*. Como consequência, o Garbage Collector (GC) do Go é acionado constantemente, gerando pausas de processamento que degradam a latência da sua API.
 
@@ -39,7 +38,7 @@ func writeFields(buf *bytes.Buffer, fields []Field) {
 }
 ```
 
-## Rastreamento LIFO Transparente com Pilhas Concorrentes
+## Rastreamento LIFO transparente com pilhas concorrentes
 
 Para correlacionar logs distribuídos, precisamos rastrear o escopo de execução ativo. A abordagem tradicional força o desenvolvedor a passar um objeto `context.Context` em todas as assinaturas de funções da aplicação. Isso polui as regras de negócios e gera código repetitivo desnecessário (*boilerplate*).
 
@@ -72,7 +71,7 @@ func (t *LocalTracer) Pop() string {
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Reflexão (Reflection):** Habilidade de um programa de examinar sua própria estrutura em tempo de execução. É lenta porque impede otimizações que o compilador faria antes da execução.
 - **Pilha LIFO (Last-In, First-Out):** Conceito de pilha onde o último dado a entrar é obrigatoriamente o primeiro a sair.
 - **Operações Atômicas (Atomic Operations):** Instruções de CPU de baixo nível que são executadas de forma indivisível, eliminando a necessidade de travas pesadas (locks) para operações de leitura e escrita simples.

@@ -1,5 +1,5 @@
 ---
-title: "Segurança de Dados: Rotação de Chaves por Tópico e HTTP Schema Registry"
+title: "Segurança de dados:Rotação de chaves por tópico e HTTP schema registry"
 excerpt: "Gerencie contratos de eventos distribuídos e isole o acesso a chaves criptográficas de forma granular. Entenda a rotação de segredos e validação JSON Schema."
 category: "Segurança"
 date: "24 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Segurança e Governança de Contratos em Microsserviços
+## Segurança e governança de contratos em microsserviços
 
 Em sistemas distribuídos robustos, a governança de dados envolve dois fatores primordiais:
 1. **Governança de Contratos:** Como garantir que a estrutura de um payload de evento gerado pelo Time A seja perfeitamente compreendida e consumida pelo Time B, de forma automatizada e centralizada?
@@ -19,17 +18,16 @@ Em sistemas distribuídos robustos, a governança de dados envolve dois fatores 
 A gem **SharedBroker** estende suas fronteiras de validação e segurança com suporte a um **HTTP Schema Registry** remoto (usando JSON Schema padrão) e uma **Estratégia de Rotação de Chaves com Granularidade por Tópico**.
 
 ---
-
-## 1. HTTP Schema Registry: Validação Centralizada e Distribuída
+## 1. HTTP schema registry:Validação centralizada e distribuída
 
 Embora a validação local via `dry-schema` seja ideal para verificação rápida em desenvolvimento, sistemas complexos corporativos exigem um registro centralizado de contratos de eventos (Schema Registry).
 
 O `SharedBroker` suporta um provedor HTTP para JSON Schema. Na inicialização ou sob demanda, a gem busca os schemas a partir de uma API centralizada de registros e os valida contra os payloads de entrada e saída. Para evitar lentidão na rede nas validações em tempo de execução, a gem implementa cache em memória com tempo de expiração (TTL).
 
-### Configurando o Provedor HTTP
+### Configurando o provedor HTTP
 
 ```ruby
-# config/initializers/shared_broker.rb
+# Config/initializers/shared_broker.rb
 
 SharedBroker::SchemaRegistry.provider = SharedBroker::SchemaRegistry::Providers::Http.new(
   url: "https://schema-registry.empresa.internal",
@@ -41,8 +39,7 @@ SharedBroker::SchemaRegistry.provider = SharedBroker::SchemaRegistry::Providers:
 Sempre que a aplicação publicar ou consumir um evento (por exemplo, `usuario.criado`), o `SharedBroker` valida o payload buscando a definição JSON correspondente em `https://schema-registry.empresa.internal/schemas/usuario.criado.json`.
 
 ---
-
-## 2. Granularidade de Criptografia e Rotação de Chaves
+## 2. granularidade de criptografia e rotação de chaves
 
 A criptografia clássica de filas com uma única chave global é frágil: se o segredo vazar, todos os dados de todas as filas estarão expostos. Além disso, trocar a chave global (Key Rotation) torna-se um pesadelo técnico, pois mensagens antigas criptografadas com a chave anterior que ainda não foram consumidas se perderão.
 
@@ -51,7 +48,7 @@ Para solucionar isso, implementamos um **Key Provider Registry** no `SharedBroke
 * Um dicionário de chaves históricas (`keys`) identificadas por um ID (`_key_id`).
 * Inclusão do `_key_id` no envelope da mensagem no momento da publicação.
 
-### Lógica do Key Provider Registry
+### Lógica do key provider registry
 
 ```ruby
 module SharedBroker
@@ -79,7 +76,7 @@ module SharedBroker
 end
 ```
 
-### Configurando o Registro de Chaves
+### Configurando o registro de chaves
 
 ```ruby
 # Inicializa o registro mapeando as chaves ativas por padrões de tópicos
@@ -107,13 +104,11 @@ SPOT_BROKER = SharedBroker::Client.new(
 Com este fluxo, quando o produtor envia o evento `payment.processed`, o payload é criptografado com a chave `finance_key_1` e a marcação `_key_id: "finance_key_1"` é acoplada. Se na fila houver mensagens antigas com `_key_id: "v1"`, o consumidor buscará dinamicamente a chave correspondente no registro histórico e descriptografará a mensagem sem falhas.
 
 ---
-
 ## Conclusão
 
 Proteger a borda das nossas mensagens não precisa ser um processo pesado ou complexo de se manter. Utilizando validações centrais via Schema Registry e granularidade com rotação de chaves no `SharedBroker`, elevamos o patamar de segurança e integridade das nossas arquiteturas orientadas a eventos sem acoplar regras de segurança à lógica de negócios.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **JSON Schema:** Um vocabulário declarativo baseado em JSON para validar a estrutura, tipos e regras de dados estruturados.
 - **TTL (Time to Live):** Tempo limite durante o qual um dado de cache é considerado válido antes de expirar e ser descartado.
 - **Glob Pattern:** Padrões curingas simples de string como `*` (corresponde a qualquer caractere) e `?` para busca e filtros rápidos.
----

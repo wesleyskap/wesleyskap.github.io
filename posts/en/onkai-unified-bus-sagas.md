@@ -1,5 +1,5 @@
 ---
-title: "Distributed Transactions with Sagas: Orchestrating Steps and Compensations"
+title: "Distributed transactions with sagas:Orchestrating steps and compensations"
 excerpt: "Distributed microservices lack unified database transactions. Learn how to use the Saga pattern to coordinate complex operations and compensation steps."
 category: "Messaging"
 date: "Apr 18, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 11
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## Distributed Transactions in Microservices
+## Distributed transactions in microservices
 
 In a monolithic application, maintaining data consistency is straightforward: open a database transaction, modify the tables, and commit the changes. If any step fails, the database rolls back everything.
 
@@ -18,7 +17,7 @@ However, in a microservices architecture, each service owns its database. We can
 
 To maintain consistency across multiple microservice boundaries without slow distributed locks (like two-phase commits - 2PC), we implement the **Orchestrated Saga** pattern.
 
-## The Saga Pattern and Compensations
+## The saga pattern and compensations
 
 A Saga is a sequence of local transactions executed by individual microservices. If a local transaction fails, the orchestrator triggers **Compensation** transactions in reverse order to undo the side effects of previous steps:
 
@@ -70,7 +69,7 @@ func (o *SagaOrchestrator) Rollback(ctx context.Context, state *SagaState) {
 }
 ```
 
-## Running Saga Steps Safely
+## Running saga steps safely
 
 As business steps execute, the orchestrator updates the saga state persistently. If the Billing step fails, the orchestrator triggers the rollback flow, releasing reserved stock:
 
@@ -106,8 +105,7 @@ func (o *SagaOrchestrator) processPayment(ctx context.Context, state *SagaState)
 }
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Saga Pattern:** A design pattern to coordinate distributed local transactions using structured compensations to restore consistency.
 - **Compensation:** A logical transaction that rolls back or undoes the changes made by a previously successful operation.
 - **Saga State Store:** A persistent or in-memory database that tracks the active steps and context of ongoing sagas.
----

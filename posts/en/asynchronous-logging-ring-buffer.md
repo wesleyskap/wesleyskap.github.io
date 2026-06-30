@@ -1,5 +1,5 @@
 ---
-title: "Goodbye, I/O Bottlenecks: Building an Asynchronous Ring-Buffer Logger with Concurrent Channels in Go"
+title: "Goodbye, i/o bottlenecks:Building an asynchronous ring-buffer logger with concurrent channels in Go"
 excerpt: "Writing logs synchronously chokes your API latency. Discover how to create an asynchronous non-blocking log queue in Go with highly resilient saturation handling."
 category: "High Performance"
 date: "Feb 25, 2026"
@@ -9,14 +9,13 @@ series: "orkai-observability-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## Physical Threads vs. Goroutines (The Go Scheduler)
+## Physical threads vs. goroutines (the Go scheduler)
 
 Traditional programming languages delegate concurrency by directly mapping virtual threads to operating system threads (1:1 model). Each system thread consumes roughly 1 MB of physical memory and requires costly hardware-managed context switching.
 
 Go bypasses this bottleneck via the **GMP** cooperative scheduling model, running lightweight Goroutines managed entirely by the Go runtime. They start by consuming a mere 2 KB of *stack* memory and are dynamically multiplexed across physical threads by logical processors, maximizing hardware utilization.
 
-## Buffered Channels as Concurrent Boundaries
+## Buffered channels as concurrent boundaries
 
 Writing logs directly to the console or disk synchronously within the main request-handling thread of an API is a critical performance anti-pattern. Under heavy traffic, your application will spend more time waiting for the physical disk or stdout to respond than executing business rules.
 
@@ -40,7 +39,7 @@ func (l *JSONLogger) asyncWorker() {
 }
 ```
 
-## Zero-Loss Saturation Fallback
+## Zero-loss saturation fallback
 
 What happens if the application faces a massive spike in traffic and produces logs faster than the background worker can physically write them to disk? In standard buffered channels, trying to write to a full channel immediately blocks the sender's execution path.
 
@@ -64,7 +63,7 @@ func (l *JSONLogger) deliverLog(jsonStr string) {
 }
 ```
 
-### Technical Terms Explained
+### Technical terms explained
 - **Channels:** Native Go primitives that allow safe data sharing and communication between concurrent Goroutines without requiring manual mutex locks.
 - **Graceful Shutdown:** The process of ensuring an application processes and saves all active or queued transactions before shutting down, preventing file corruption.
 - **Non-Blocking Select:** Leveraging Go's `select` block alongside a `default` clause to execute alternate logic immediately if a channel send or receive would block.

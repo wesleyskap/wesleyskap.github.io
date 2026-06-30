@@ -1,5 +1,5 @@
 ---
-title: "Distributed Scheduling & Crons: Solving the Double-Execution Problem"
+title: "Distributed scheduling & crons:Solving the double-execution problem"
 excerpt: "How do you guarantee a Cron task runs exactly once per minute across a cluster of servers without a coordinator like ZooKeeper? Learn the mechanics behind Orkai Runiq."
 category: "Sistemas Distribuídos"
 date: "June 29, 2026"
@@ -9,8 +9,7 @@ series: "orkai-runiq-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-runiq"
 ---
-
-## The Scheduler Challenge in Clusters
+## The scheduler challenge in clusters
 
 Scheduling a task to execute at a specific future timestamp (e.g., `client.EnqueueIn(ctx, ..., 10*time.Minute)`) is relatively straightforward. You persist the execution timestamp (`run_at`) in your database and use a periodic polling loop to fetch and process jobs where `run_at <= CURRENT_TIMESTAMP`.
 
@@ -19,8 +18,7 @@ The real complexity arises with **recurring tasks (Cron Jobs)** running in a dis
 To solve this cleanly without adding heavy distributed consensus layers (such as Consul or Apache ZooKeeper), Runiq implements an elegant, database-driven distributed lock mechanism.
 
 ---
-
-## The Cron Engine and the Minute-Level Distributed Lock
+## The cron engine and the minute-level distributed lock
 
 In Runiq, cron synchronization relies on a **minute-level database lock**.
 
@@ -52,7 +50,7 @@ func (p *PostgresStorage) LockCronExecution(ctx context.Context, cronName string
 }
 ```
 
-### The Power of ON CONFLICT DO NOTHING
+### The power of on conflict do nothing
 The `runiq_cron_locks` table enforces a unique constraint on `(cron_name, execution_minute)`.
 
 1.  **The Race:** If the `"DailyReport"` cron triggers at midnight, all 5 worker replicas will call `LockCronExecution` with the timestamp `2026-06-24 00:00:00` (truncated to the minute).
@@ -62,8 +60,7 @@ The `runiq_cron_locks` table enforces a unique constraint on `(cron_name, execut
 This simple design pattern prevents duplicate enqueues with transactional guarantees, leveraging database indexing efficiency.
 
 ---
-
-## Static vs. Dynamic Crons with Timezone Support
+## Static vs. dynamic crons with timezone support
 
 To provide maximum operational flexibility, Runiq supports two modes of Cron jobs:
 
@@ -73,7 +70,7 @@ To provide maximum operational flexibility, Runiq supports two modes of Cron job
     ```
 2.  **Dynamic Crons (Dashboard/API Defined):** Persisted in the `runiq_cron_jobs` table. They can be paused, updated, created, or deleted dynamically via the UI or API endpoints without requiring application deployments.
 
-### Native Timezone Support
+### Native timezone support
 A common production pitfall is assuming the server will always run on UTC and that all clients live in the same time zone. Runiq allows you to configure specific target timezones for recurring tasks:
 
 ```go
@@ -84,8 +81,7 @@ pool.RegisterCron("0 9 * * 1-5", "default", "DailyReport", []byte(`{}`), queue.W
 Under the hood, Runiq converts the current time to the designated timezone (e.g., `America/New_York`) before checking if it matches the cron expression fields (minute, hour, day, month, weekday). This ensures that business tasks run precisely at local business hours, even during daylight saving time (DST) transitions, independent of the host machine's timezone.
 
 ---
-
-## Technical Terms Demystified
+## Technical terms demystified
 
 *   **Truncate:** The operation of discarding smaller time units from a timestamp. For example, truncating `17:45:32` to minute precision yields `17:45:00`.
 *   **Timezone Location:** A geographical zone identifier (like `America/New_York` or `Europe/London`) that maps daylight saving time shifts and historical timezone changes, as opposed to a fixed numeric offset like `UTC-5`.

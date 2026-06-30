@@ -1,5 +1,5 @@
 ---
-title: "Fronteiras Seguras: Validação de Payload (dry-schema e HTTP Registry), Criptografia AES-256-GCM e Rotação de Chaves"
+title: "Fronteiras seguras:Validação de payload (dry-schema e HTTP registry), criptografia aes-256-gcm e rotação de chaves"
 excerpt: "Como garantir a integridade dos contratos e a segurança de dados sensíveis na rede? Veja validação de payloads e criptografia com chaves rotativas."
 category: "Segurança"
 date: "02 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## A Necessidade de Validação e Segurança nas Fronteiras de Rede
+## A necessidade de validação e segurança nas fronteiras de rede
 
 Em arquiteturas orientadas a eventos, os contratos de payloads são vitais. Se um serviço parceiro alterar o tipo de um campo sem aviso (como mudar uma variável de `integer` para `string`), os consumidores subsequentes sofrerão de quebras lógicas inesperadas.
 
@@ -18,7 +17,7 @@ Além disso, mensagens que trafegam por brokers compartilhados (como servidores 
 
 A gem **SharedBroker** aborda esses dois pilares combinando validações estruturadas dinâmicas (locais e remotas) a uma camada de criptografia simétrica com **Rotação de Chaves (Key Rotation)**.
 
-## Validando Contratos Dinamicamente (dry-schema e JSON Schema)
+## Validando contratos dinamicamente (dry-schema e JSON schema)
 
 O mecanismo de validação da gem é pluggável. Ele valida a integridade estrutural das mensagens na saída (`publish`) e na entrada (`subscribe`).
 Utilizamos o `dry-schema` localmente para garantir rapidez na checagem inicial de tipagem:
@@ -43,7 +42,7 @@ end
 
 Para ambientes corporativos que padronizam schemas de forma distribuída, a gem suporta buscar e cachear schemas JSON a partir de um servidor HTTP de registros remoto (`SchemaRegistry::Providers::Http`), reduzindo a latência através de cache em memória com expiração controlada (TTL).
 
-## Criptografia Transparente AES-256-GCM e Rotação de Chaves
+## Criptografia transparente aes-256-gcm e rotação de chaves
 
 A gem protege a integridade dos dados aplicando de forma automatizada e invisível a criptografia simétrica usando a cifra segura **AES-256-GCM**.
 
@@ -100,8 +99,7 @@ end
 
 Com o envelope de metadados, a migração e rotação de segredos em produção acontece de forma suave, sem causar incidentes de quebras na decodificação de dados antigos.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **AES-256-GCM:** Padrão de criptografia simétrica avançado que fornece confidencialidade e autenticidade de dados de forma altamente eficiente.
 - **Key Rotation (Rotação de Chaves):** O processo de trocar as chaves criptográficas ativas periodicamente para reduzir os riscos de interceptações maliciosas.
 - **Envelope Encryption:** Padrão de segurança onde dados são criptografados com uma chave de dados específica, e os detalhes estruturais daquela chave são anexados ao pacote de dados.
----

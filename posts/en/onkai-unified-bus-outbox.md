@@ -1,5 +1,5 @@
 ---
-title: "Reliable Messaging: Guaranteeing At-Least-Once with Transactional Outbox Pattern"
+title: "Reliable messaging:Guaranteeing at-least-once with transactional outbox pattern"
 excerpt: "How do you guarantee that an event is sent to the message broker only if the database transaction succeeds? Learn about the Transactional Outbox pattern."
 category: "Messaging"
 date: "Apr 12, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## The Two-Phase Distributed Transaction Dilemma
+## The two-phase distributed transaction dilemma
 
 Consider this classic microservice scenario: your payment service completes a payment and saves the record in its local database. Next, it publishes a `PaymentApprovedEvent` to your message broker to notify the shipping service.
 
@@ -18,7 +17,7 @@ What happens if the database write fails but the message is already published? T
 
 The **Transactional Outbox** pattern resolves this data consistency dilemma, ensuring **At-Least-Once** message delivery.
 
-## Outbox Pattern Design
+## Outbox pattern design
 
 Instead of publishing the event directly to the broker, we save the message in a special table called `outbox` within the same database, using the **same database transaction** that writes the business data:
 
@@ -75,7 +74,7 @@ func (s *OrderService) CreateOrder(ctx context.Context, orderID string, amount f
 }
 ```
 
-## The Outbox Processor (Relay)
+## The outbox processor (relay)
 
 A background goroutine (Outbox Processor) periodically polls unprocessed messages from the `outbox` table, attempts to publish them to the broker, and marks them as processed upon receiving publisher confirmations (ACKs):
 
@@ -99,8 +98,7 @@ func (s *OutboxProcessor) ProcessPendingMessages(ctx context.Context) {
 }
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **At-Least-Once Delivery:** A guarantee that all messages will be delivered to their destination at least once, accepting the possibility of duplicates.
 - **Database Transaction:** A set of operations executed as a single, atomic logical unit of work (all or nothing).
 - **Outbox Relay:** The component responsible for reading the database outbox table and reliably publishing the records to the network.
----

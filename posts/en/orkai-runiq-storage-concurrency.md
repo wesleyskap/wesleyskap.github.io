@@ -1,5 +1,5 @@
 ---
-title: "Resilient Concurrency: FOR UPDATE SKIP LOCKED in Postgres and SQLite WAL in Runiq"
+title: "Resilient concurrency:For update skip locked in Postgres and SQLite wal in runiq"
 excerpt: "How do you ensure multiple distributed workers do not consume the same task without causing locking bottlenecks? Explore SKIP LOCKED and the secret of concurrent SQLite in Go."
 category: "Performance & Concorrência"
 date: "June 28, 2026"
@@ -9,8 +9,7 @@ series: "orkai-runiq-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/orkai-runiq"
 ---
-
-## The Concurrency Challenge: The Worker Goroutine Race
+## The concurrency challenge:The worker goroutine race
 
 In distributed systems, multiple workers running in parallel across different servers or goroutines try to fetch the next pending task from the queue at the same time. If two workers fetch the exact same job simultaneously, it triggers a catastrophic double-execution scenario.
 
@@ -19,8 +18,7 @@ To prevent this, traditional message brokers implement complex lock management o
 However, doing this naively using table-level locks (`LOCK TABLE`) completely destroys queue performance. The secret lies in locking only the specific row that is being fetched, in complete isolation.
 
 ---
-
-## PostgreSQL: FOR UPDATE SKIP LOCKED
+## Postgresql:For update skip locked
 
 In the PostgreSQL driver (`queue/postgres.go`), Runiq solves concurrency using the **`SKIP LOCKED`** feature. The dequeue operation is executed inside an atomic, database-level transaction:
 
@@ -63,8 +61,7 @@ RETURNING job_id, queue, name, args, trace_id, span_id, attempts, max_attempts, 
 This mechanism eliminates queue bottlenecks and **lock contention**. Workers never block waiting for another to finish; they simply skip already claimed jobs.
 
 ---
-
-## SQLite: Lock-Free Optimization with WAL Mode and Busy Timeouts
+## SQLite:Lock-free optimization with wal mode and busy timeouts
 
 SQLite is frequently dismissed for concurrent write workloads due to its classic `database is locked` error. However, with the right engineering configurations, SQLite can be used as an incredibly fast and lightweight background queue engine.
 
@@ -85,7 +82,7 @@ func NewSqliteStorage(db *sql.DB) (*SqliteStorage, error) {
 }
 ```
 
-### Why WAL Mode is a Game Changer
+### Why wal mode is a game changer
 In traditional journal modes (such as *Rollback Journal*), SQLite locks the entire database file for any read operations while a write transaction is executing.
 
 With **WAL (Write-Ahead Logging)** enabled:
@@ -120,8 +117,7 @@ func (s *SqliteStorage) dequeueTx(ctx context.Context, tx *sql.Tx, queueName str
 ```
 
 ---
-
-## Technical Terms Demystified
+## Technical terms demystified
 
 *   **Lock Contention:** A performance bottleneck that occurs when multiple threads or processes try to acquire the same lock simultaneously, causing other threads to block and wait.
 *   **Write-Ahead Logging (WAL):** A data writing technique where changes are appended to a separate, sequential log file before they are applied to the main database file. This allows reads and writes to happen concurrently.

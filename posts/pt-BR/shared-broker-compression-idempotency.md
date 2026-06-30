@@ -1,5 +1,5 @@
 ---
-title: "Otimização e Idempotência: Compressão Automática de Payloads e Middleware de Deduplicação"
+title: "Otimização e idempotência:Compressão automática de payloads e middleware de deduplicação"
 excerpt: "Grandes volumes de dados e duplicações de mensagens são desafios comuns em sistemas distribuídos. Aprenda a compactar payloads dinamicamente e garantir a idempotência no SharedBroker."
 category: "Performance & Concorrência"
 date: "22 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Os Desafios do Volume e da Duplicação de Mensagens
+## Os desafios do volume e da duplicação de mensagens
 
 Em sistemas distribuídos de alta vazão, a eficiência e a consistência são cruciais. Conforme nossas aplicações escalam, nos deparamos com dois problemas silenciosos, mas devastadores:
 1. **Desperdício de Banda e Armazenamento:** O envio de payloads JSON grandes (como relatórios consolidados ou listagens estruturadas) infla o tráfego de rede e sobrecarrega a memória dos brokers.
@@ -19,8 +18,7 @@ Em sistemas distribuídos de alta vazão, a eficiência e a consistência são c
 Para resolver esses desafios, a gem **SharedBroker** oferece duas defesas integradas: **Compressão Automática de Payloads** e um **Middleware de Idempotência**.
 
 ---
-
-## 1. Compressão Dinâmica e Transparente de Payloads
+## 1. compressão dinâmica e transparente de payloads
 
 Em vez de comprimir manualmente os dados no código de domínio antes de publicar, o `SharedBroker` faz isso de forma transparente. Definimos um algoritmo (como `:gzip` ou `:deflate`) e um limite de tamanho (threshold) em bytes. Payloads que não atingem o limite passam sem alteração, evitando overhead computacional desnecessário para mensagens curtas.
 
@@ -57,7 +55,7 @@ module SharedBroker
 end
 ```
 
-### Configurando na Aplicação
+### Configurando na aplicação
 
 A ativação global no inicializador é simples e não exige mudanças nas chamadas de publicação ou consumo:
 
@@ -71,14 +69,13 @@ end
 ```
 
 ---
-
-## 2. Middleware de Idempotência para Consumidores
+## 2. middleware de idempotência para consumidores
 
 Garantir idempotência significa assegurar que, não importa quantas vezes o mesmo evento seja recebido, a ação correspondente seja executada apenas uma vez.
 
 O `SharedBroker` implementa um padrão de middleware que intercepta as mensagens recebidas, calcula ou extrai um identificador único de correlação (`correlation_id`), e valida se ele já foi processado no armazenamento de cache configurado (como `Rails.cache` ou `Redis`).
 
-### A Lógica do Middleware de Deduplicação
+### A lógica do middleware de deduplicação
 
 ```ruby
 module SharedBroker
@@ -116,7 +113,7 @@ module SharedBroker
 end
 ```
 
-### Registrando o Middleware no Client
+### Registrando o middleware no client
 
 No arquivo de inicialização do seu microsserviço:
 
@@ -134,13 +131,11 @@ SPOT_BROKER = SharedBroker::Client.new(
 ```
 
 ---
-
 ## Conclusão
 
 Adotar compressão de payloads e middlewares de idempotência transforma o transporte de mensagens de uma simples "passagem de dados" para um fluxo inteligente, seguro e de alta performance. Com essas ferramentas nativas da gem `SharedBroker`, eliminamos os perigos de inconsistências de dados e otimizamos o consumo de rede em um único design limpo.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Deduplicação:** Processo de identificar e descartar duplicatas de mensagens idênticas em um fluxo contínuo.
 - **nx: true:** Opção usada no cache para registrar uma chave apenas se ela ainda não existir na base de dados (operação atômica).
 - **Correlation ID:** Um identificador exclusivo anexado a mensagens para rastrear fluxos de execução relacionados ou garantir a singularidade do processamento.
----

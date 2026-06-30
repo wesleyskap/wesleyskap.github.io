@@ -1,5 +1,5 @@
 ---
-title: "Creating a High-Performance JSON Logger and a LIFO Tracer From Scratch in Go"
+title: "Creating a high-performance JSON logger and a LIFO tracer from scratch in Go"
 excerpt: "How can we correlate structured logs with complex execution scopes without cluttering business logic? Learn how to design a reflection-free Logger and a thread-safe concurrent LIFO tracer in Go."
 category: "Concurrency & Architecture"
 date: "Feb 22, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Anatomy of Reflection and the Hidden Heap Allocation Cost
+## The anatomy of reflection and the hidden heap allocation cost
 
 In high-throughput systems, structured logging must never become a performance bottleneck. Most traditional Go JSON serialization libraries rely on the `reflect` package to dynamically inspect types and struct fields at runtime. While highly flexible, this process incurs frequent temporary memory allocations on the dynamic *heap*. As a result, the Go Garbage Collector (GC) runs constantly, inducing "stop-the-world" latency spikes that degrade API response times.
 
@@ -39,7 +38,7 @@ func writeFields(buf *bytes.Buffer, fields []Field) {
 }
 ```
 
-## Transparent LIFO Tracking via Thread-Safe Stack Collections
+## Transparent LIFO tracking via thread-safe stack collections
 
 To correlate distributed logs, we must track the active execution scope. The standard approach forces developers to pass a `context.Context` object through every single function signature in the codebase. This pollutes business logic and generates massive boilerplate.
 
@@ -72,7 +71,7 @@ func (t *LocalTracer) Pop() string {
 }
 ```
 
-### Technical Terms Explained
+### Technical terms explained
 - **Reflection:** The ability of a program to inspect its own structural metadata at runtime. It is slow because it bypasses compile-time optimizations.
 - **LIFO Stack:** A data structure where the last item added is the first one to be removed.
 - **Atomic Operations:** Low-level CPU instructions executed in a single step, eliminating the need for heavy mutual exclusion locks (Mutexes) for simple variable reads and writes.

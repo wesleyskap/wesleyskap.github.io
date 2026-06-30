@@ -1,5 +1,5 @@
 ---
-title: "Dispatcher Sem Reflexão: Otimizando Performance e Suportando Compilação Native AOT"
+title: "Dispatcher sem reflexão:Otimizando performance e suportando compilação native AOT"
 excerpt: "A reflexão dinâmica degrada a performance do Garbage Collector e quebra compilações nativas AOT. Veja como projetamos um roteador livre de reflexão em Go."
 category: "Mensageria"
 date: "16 de Abril, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 10
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## Os Desafios do Dispatch Dinâmico e da Compilação AOT
+## Os desafios do dispatch dinâmico e da compilação AOT
 
 Em sistemas de mensageria tradicionais, quando um novo evento chega, o roteador do barramento precisa descobrir dinamicamente qual classe ou estrutura consome aquele tipo de mensagem. Na maioria das linguagens de programação, isso é feito em tempo de execução inspecionando tipos por meio de **Reflexão (Reflection)**.
 
@@ -20,7 +19,7 @@ Apesar de ser uma abordagem simples e flexível, a reflexão traz sérios proble
 
 O **onkai-unified-bus** resolve isso substituindo invocações dinâmicas por um despachante tipado estaticamente via cache concorrente de executores tipados.
 
-## Roteamento de Eventos Baseado em Executors Tipados
+## Roteamento de eventos baseado em executors tipados
 
 Em vez de buscar o método de processamento do consumidor via reflexão a cada mensagem, o barramento registra objetos executores genéricos durante a inicialização da aplicação. O despachante delega o fluxo por meio de interfaces estáticas:
 
@@ -57,7 +56,7 @@ func (e *TypedConsumerExecutor[T]) Execute(ctx context.Context, payload []byte) 
 }
 ```
 
-## O Despachante Livre de Reflexão (Registry)
+## O despachante livre de reflexão (registry)
 
 No recebimento da mensagem, o despachante localiza o executor estático em um mapa de concorrência segura (`sync.Map`) indexado pelo nome do evento, realizando uma chamada direta de interface em poucos nanossegundos:
 
@@ -81,7 +80,7 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, eventName string, payloa
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Native AOT (Ahead-of-Time):** Tecnologia de compilação que converte código-fonte diretamente em código de máquina nativo da plataforma alvo no momento do build, dispensando interpretadores ou compiladores JIT.
 - **Reflection-free Dispatcher:** Padrão de design de roteadores que utiliza interfaces estáticas ou lambdas gerados no build para chamar funções sem inspecionar a estrutura de objetos em tempo de execução.
 - **Type Casting:** Conversão explícita de uma interface ou variável genérica para o seu tipo estrutural original ou específico em Go/C#.

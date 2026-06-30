@@ -1,5 +1,5 @@
 ---
-title: "Escrita Eficiente em Disco: Criando um Log File Rotation Writer Sem Bibliotecas Externas"
+title: "Escrita eficiente em disco:Criando um log file rotation writer sem bibliotecas externas"
 excerpt: "Gravar logs em arquivos de forma infinita satura o armazenamento em disco de servidores. Aprenda a projetar um rotacionador de arquivos de log concorrente e seguro em Go."
 category: "Alta Performance"
 date: "25 de Abril, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## O Risco Oculto de Arquivos de Log Infinitos
+## O risco oculto de arquivos de log infinitos
 
 Gravar os logs de execução da sua aplicação em arquivos locais é um padrão clássico na infraestrutura tradicional. No entanto, se sua API estiver processando milhares de requisições por minuto, o arquivo de logs crescerá rapidamente. Em poucas semanas, ele consumirá dezenas de gigabytes, esgotando o armazenamento em disco do seu servidor e causando falhas catastróficas na aplicação (como a incapacidade de salvar dados em disco).
 
@@ -18,7 +17,7 @@ Para evitar isso, as aplicações corporativas utilizam **File Rotation (Rotaç�
 
 O **orkai-observability** implementa um motor de escrita rotativa concorrente, seguro e leve em Go sem nenhuma dependência de bibliotecas de terceiros.
 
-## Projetando o RotatingFileWriter
+## Projetando o rotatingfilewriter
 
 O `RotatingFileWriter` gerencia o arquivo atual sob travas exclusivas (`sync.Mutex`) e calcula dinamicamente os tamanhos físicos dos arquivos a cada nova escrita para realizar o chaveamento do arquivo quando o limite de bytes configurado for ultrapassado:
 
@@ -66,7 +65,7 @@ func (w *RotatingFileWriter) openNew() error {
 }
 ```
 
-## A Lógica Concorrente de Rotação
+## A lógica concorrente de rotação
 
 Quando gravamos novos bytes e o tamanho de `currentSize` ultrapassa o `maxSize`, fechamos o arquivo ativo, renomeamos o arquivo antigo adicionando um carimbo de data/hora (Timestamp) ao seu nome e abrimos um novo arquivo de logs limpo:
 
@@ -100,7 +99,7 @@ func (w *RotatingFileWriter) rotate() error {
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Log Rotation:** A ação de renomear e arquivar arquivos de log antigos quando eles atingem determinados critérios de tempo ou tamanho físico em disco.
 - **Mutex (Mutual Exclusion):** Mecanismo de sincronização usado em concorrência para garantir que apenas uma goroutine possa ler ou escrever em um recurso por vez.
 - **Timestamp:** Representação numérica ou textual que registra a data e hora exatas de um evento ou arquivo.

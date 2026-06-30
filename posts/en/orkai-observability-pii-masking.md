@@ -1,5 +1,5 @@
 ---
-title: "Data Safety: Implementing Regex-Based PII Masking and Sanitization"
+title: "Data safety:Implementing regex-based pii masking and sanitization"
 excerpt: "Leaking PII into log files violates regulations like GDPR and LGPD. Learn how to mask PII dynamically using Regex in Go."
 category: "Performance"
 date: "May 07, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 12
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Threat of PII Exposure in Log Files
+## The threat of pii exposure in log files
 
 When debugging, developers often print raw request payloads directly to application logs. However, these objects can contain sensitive customer data—such as social security numbers, credit card details, emails, passwords, or JWTs.
 
@@ -18,7 +17,7 @@ Recording this information in plain text violates data protection laws like GDPR
 
 To prevent this, the **orkai-observability** package features a sanitization utility based on **Regular Expressions (Regex)** that detects and masks sensitive values at runtime.
 
-## Designing the Regex PII Sanitizer
+## Designing the regex pii sanitizer
 
 We build a sanitization engine that scans logs and replaces matching pattern values with a protective mask (`[MASKED_PATTERN]`):
 
@@ -67,12 +66,11 @@ func (s *PIISanitizer) Sanitize(input string) string {
 }
 ```
 
-## Thread-Safe Dynamic Sanitization
+## Thread-safe dynamic sanitization
 
 Because sanitization executes concurrently across request handlers, the sanitization engine utilizes a read-write lock (`sync.RWMutex`). This allows multiple goroutines to sanitize messages concurrently, blocking operations only when a new regex pattern is registered dynamically.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **PII (Personally Identifiable Information):** Any information that can be used to identify a specific individual.
 - **Regular Expression (Regex):** A special text syntax describing complex search and replace patterns.
 - **RWMutex (Read-Write Mutex):** A concurrency lock that permits multiple reader threads to access data concurrently, but demands exclusive access for writers.
----

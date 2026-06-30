@@ -1,5 +1,5 @@
 ---
-title: "Implementação Prática: Construindo um Servidor HTTP QUERY do Zero em Go e Ruby"
+title: "Implementação prática:Construindo um servidor HTTP query do zero em Go e Ruby"
 excerpt: "Coloque a teoria do RFC 10008 em prática. Aprenda a implementar o suporte ao método HTTP QUERY do zero no ecossistema Go (net/http) e em Ruby (Rack/Sinatra), tratando roteamento, status 422 e cache condicional."
 category: "Web"
 date: "21 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "http-query-series"
 seriesIndex: 4
 referenceLink: "https://www.rfc-editor.org/rfc/rfc10008.html"
 ---
-
-## Do Papel para o Código: Implementando o RFC 10008
+## Do papel para o código:Implementando o rfc 10008
 
 Nos posts anteriores da série, destrinchamos a semântica, o impacto arquitetural e as regras de negociação de conteúdo/cache do método **HTTP QUERY** (RFC 10008). Mas como de fato suportamos esse novo verbo nos servidores de produção que desenvolvemos no dia a dia?
 
@@ -19,12 +18,11 @@ Como a maioria dos frameworks de mercado (como Ruby on Rails, Sinatra, Express o
 Neste guia prático, vamos codificar um servidor completo capaz de lidar com a semântica do método `QUERY` em duas linguagens comumente utilizadas para sistemas distribuídos de alta escala: **Go** e **Ruby**.
 
 ---
-
-## 1. Implementação em Go (net/http)
+## 1. implementação em Go (net/http)
 
 O Go possui uma biblioteca padrão excelente para lidar com requisições HTTP. Vamos construir um servidor que implementa as boas práticas da linguagem, utilizando `http.MaxBytesReader` para evitar ataques de negação de serviço (DoS) por payloads gigantescos, `json.NewDecoder` para parsing eficiente em streaming e centralização da resposta com geração de `ETag`.
 
-### O Servidor em Go
+### O servidor em Go
 
 ```go
 package main
@@ -153,23 +151,22 @@ func respondJSON(w http.ResponseWriter, data interface{}, ifNoneMatch string) {
 ```
 
 ---
-
-## 2. Implementação em Ruby (Ruby on Rails)
+## 2. implementação em Ruby (Ruby on Rails)
 
 No ecossistema Ruby, embora middlewares Rack genéricos funcionem perfeitamente, o mais comum no dia a dia corporativo é a utilização do **Ruby on Rails**. 
 
 Para expor o suporte ao verbo `QUERY` de forma limpa e idiomática no Rails, configuramos o roteamento dinâmico e utilizamos recursos integrados do framework, como o método `stale?` para gerenciar ETags de forma nativa.
 
-### O Controller no Rails
+### O controller no Rails
 
 ```ruby
-# config/routes.rb
+# Config/routes.rb
 Rails.application.routes.draw do
   # Mapeia GET e QUERY para a mesma action no controller
   match '/contacts', to: 'contacts#index', via: [:get, :query]
 end
 
-# app/controllers/contacts_controller.rb
+# App/controllers/contacts_controller.rb
 class ContactsController < ApplicationController
   before_action :set_rfc_headers
   before_action :validate_query_request, only: [:index], if: -> { request.method == 'QUERY' }
@@ -238,8 +235,7 @@ end
 ```
 
 ---
-
-## 3. Principais Desafios de Produção ao Adotar HTTP QUERY
+## 3. principais desafios de produção ao adotar HTTP query
 
 Ao colocar essas implementações em produção, considere os seguintes pontos de infraestrutura:
 
@@ -250,7 +246,6 @@ Ao colocar essas implementações em produção, considere os seguintes pontos d
 | **Limpeza de Cache Falso-Positivo** | Se o banco mudar no mesmo milissegundo em que a ETag é gerada, clientes podem receber dados desatualizados. | Utilize mecanismos robustos de invalidação ou gere ETags contendo timestamps de última atualização da tabela (*last modified*). |
 
 ---
-
 ## Conclusão
 
 Implementar o método HTTP `QUERY` em Go e Ruby prova que o protocolo da Web é altamente adaptável e flexível. Com poucas linhas de código, podemos contornar as limitações tradicionais dos verbos clássicos, criando endpoints que são, ao mesmo tempo, seguros quanto à exposição de dados, robustos e compatíveis com a infraestrutura global de cache.

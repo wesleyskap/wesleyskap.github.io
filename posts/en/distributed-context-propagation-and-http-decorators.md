@@ -1,5 +1,5 @@
 ---
-title: "Distributed Context Propagation and Transport Resilience: W3C, B3, and HTTP Client Decorators"
+title: "Distributed context propagation and transport resilience:W3C, B3, and HTTP client decorators"
 excerpt: "How do you maintain telemetry tracking across remote HTTP boundaries? Learn how to propagate trace contexts using W3C and B3 headers by decorating Go's net/http standard library transparently."
 category: "Connectivity"
 date: "Feb 28, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## Telemetry Headers and Industry Standards
+## Telemetry headers and industry standards
 
 An isolated trace ID on a single server loses its value in a microservices architecture. When a user request travels across multiple services over the network, the trace correlation ID must be propagated from end to end. Without this, traceability is lost, making debugging distributed errors nearly impossible.
 
@@ -33,7 +32,7 @@ func parseW3C(header string) (string, bool) {
 }
 ```
 
-## Decorating the Native Transport Interface (`http.RoundTripper`)
+## Decorating the native transport interface (`http.roundtripper`)
 
 Forcing developers to manually inject Trace ID headers into every outbound HTTP request is a critical software engineering anti-pattern. It creates heavy coupling and introduces human error that can easily break telemetry correlation.
 
@@ -59,7 +58,7 @@ func (t *TracingRoundTripper) RoundTrip(req *http.Request) (*http.Response, erro
 }
 ```
 
-### Technical Terms Explained
+### Technical terms explained
 - **Context Propagation:** The protocol of converting, transmitting, and parsing telemetry context across microservice network boundaries.
 - **RoundTripper:** A standard Go interface representing the capability to execute a single HTTP transaction, receiving a request and returning a response.
 - **Decorator Pattern:** A structural design pattern that lets you dynamically attach new behaviors to objects by wrapping them in a compatible wrapper without altering their base code.

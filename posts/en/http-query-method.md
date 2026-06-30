@@ -1,5 +1,5 @@
 ---
-title: "The New HTTP QUERY Method: Overcoming GET and POST Limitations in Modern APIs"
+title: "The new HTTP query method:Overcoming get and post limitations in modern APIs"
 excerpt: "Discover RFC 10008, defining the HTTP QUERY method. Learn how it solves the dilemma of sending complex queries safely, idempotently, and with native caching support."
 category: "Web"
 date: "June 18, 2026"
@@ -7,8 +7,7 @@ readTime: "5 min read"
 author: "Wesley Lima"
 referenceLink: "https://www.rfc-editor.org/rfc/rfc10008.html"
 ---
-
-## The Historical Dilemma of HTTP Queries
+## The historical dilemma of HTTP queries
 
 When designing REST or RPC APIs, developers often face a frustrating trade-off when implementing complex resource queries:
 
@@ -18,12 +17,11 @@ When designing REST or RPC APIs, developers often face a frustrating trade-off w
 To fill this historical gap in Web architecture, the IETF published **RFC 10008** in June 2026, officializing the **`QUERY`** method.
 
 ---
-
-## What is the HTTP QUERY Method?
+## What is the HTTP query method?
 
 The `QUERY` method allows a client to submit a request body containing query parameters or search DSLs (e.g., JSONPath, SQL, or URL-encoded parameters) while keeping **safe** and **idempotent** semantics.
 
-### Side-by-Side Comparison
+### Side-by-side comparison
 
 | Property | GET | QUERY | POST |
 | :--- | :--- | :--- | :--- |
@@ -34,8 +32,7 @@ The `QUERY` method allows a client to submit a request body containing query par
 | **Log Leakage Risk** | High (Data in URI) | **Low** (Data in body) | Low |
 
 ---
-
-## Structure of a QUERY Request
+## Structure of a query request
 
 Consider a contacts search where we need to filter by multiple structured fields. Instead of packing the URI or using an uncacheable `POST`, we make a `QUERY` call:
 
@@ -60,7 +57,7 @@ Content-Location: /contacts/stored-results/8971
 ]
 ```
 
-### Optimizing Cache and Subsequent Requests with Headers
+### Optimizing cache and subsequent requests with headers
 
 RFC 10008 introduces smart response headers to optimize both client performance and intermediary caching:
 
@@ -68,8 +65,7 @@ RFC 10008 introduces smart response headers to optimize both client performance 
 - **`Location`:** Identifies an equivalent resource representing the query parameters themselves. The client can send a `GET` request to this URI to repeat the query operation without resending the query payload.
 
 ---
-
-## Support Discovery with `Accept-Query`
+## Support discovery with `accept-query`
 
 Servers advertise which query formats or media types they support for `QUERY` via the `Accept-Query` response header.
 
@@ -90,8 +86,7 @@ Accept-Query: application/jsonpath, application/sql
 If a client submits an unsupported format, the server returns `415 Unsupported Media Type` and points to supported media types using the `Accept` (or `Accept-Query`) header.
 
 ---
-
-## Security, Caching, and CORS Considerations
+## Security, caching, and cors considerations
 
 Adopting the `QUERY` method requires extra care in two areas:
 
@@ -100,7 +95,7 @@ Adopting the `QUERY` method requires extra care in two areas:
 
 The `QUERY` method brings clean, efficient, and secure querying semantics to HTTP, closing a long-standing protocol design loop for modern data APIs.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Idempotency:** A property of operations where making multiple identical requests has the same side effect on the server as making a single request.
 - **Preflight (CORS):** An automated browser check using `OPTIONS` to verify if the server accepts the requested method or custom headers from a cross-origin caller.
 - **Cache Key:** A unique identifier used by a cache system to locate and serve a previously stored response.

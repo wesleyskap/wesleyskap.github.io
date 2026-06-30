@@ -1,5 +1,5 @@
 ---
-title: "Mensagens Agendadas e Atrasadas: Roteamento com TTL e Dead-Letter Exchange no RabbitMQ"
+title: "Mensagens agendadas e atrasadas:Roteamento com TTL e dead-letter exchange no RabbitMQ"
 excerpt: "Precisa atrasar a entrega de uma mensagem em alguns minutos sem usar plugins adicionais no RabbitMQ? Aprenda como usar TTL e Dead-Letter Exchange."
 category: "Mensageria"
 date: "14 de Abril, 2026"
@@ -9,8 +9,7 @@ series: "onkai-unified-bus-series"
 seriesIndex: 8
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## O Desafio de Agendar Eventos sem Plugins
+## O desafio de agendar eventos sem plugins
 
 Muitas vezes, precisamos adiar a entrega de uma mensagem em nossa arquitetura de mensageria: por exemplo, enviar um e-mail de lembrete apenas 2 horas após a criação de uma conta, ou reprocessar uma transação temporariamente com falha após um atraso planejado de 10 minutos.
 
@@ -18,7 +17,7 @@ Embora o RabbitMQ possua um plugin oficial de mensagens atrasadas (`rabbitmq-del
 
 O **onkai-unified-bus** contorna essa limitação projetando uma topologia nativa baseada na expiração de tempo de vida (**TTL - Time-To-Live**) de mensagens direcionadas para uma **Dead-Letter Exchange (DLX)**.
 
-## O Fluxo de Roteamento de Mensagens Atrasadas
+## O fluxo de roteamento de mensagens atrasadas
 
 Para atrasar uma mensagem, criamos um fluxo indireto:
 1. Publicamos o evento em uma fila especial e temporária que **não possui consumidores**.
@@ -56,14 +55,14 @@ func SetupDelayedTopology(ch *amqp091_go.Channel, delayMs int) (string, error) {
 }
 ```
 
-## Benefícios da Abordagem Nativa
+## Benefícios da abordagem nativa
 
 Ao usar esse padrão de roteamento:
 - Evitamos dependências externas de plugins terceiros.
 - Aproveitamos as garantias de persistência e segurança nativas do motor do RabbitMQ.
 - Conseguimos configurar tempos de atraso variados declarando filas com TTLs sob demanda.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **TTL (Time-To-Live):** O tempo máximo que uma mensagem pode permanecer na fila antes de ser descartada ou movida.
 - **Dead-Letter Exchange (DLX):** Uma exchange para onde o RabbitMQ envia mensagens expiradas, rejeitadas ou que atingiram o limite de retentativas de uma fila.
 - **Delayed Topology:** Estrutura de canais e filas desenhada para simular a retenção temporária controlada de dados.

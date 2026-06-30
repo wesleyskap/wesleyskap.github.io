@@ -1,5 +1,5 @@
 ---
-title: "Desacoplamento e Alta Disponibilidade na Recorrência: Introduzindo o SDK vindi-rails"
+title: "Desacoplamento e alta disponibilidade na recorrência:Introduzindo o SDK vindi-rails"
 excerpt: "Conecte sua aplicação Rails à plataforma de cobrança recorrente da Vindi de forma thread-safe, com suporte a multi-tenancy dinâmico, cache embutido e retries inteligentes."
 category: "Fintech & Integrações"
 date: "27 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "vindi-rails-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/vindi-rails"
 ---
-
-## O Desafio da Integração de Pagamentos
+## O desafio da integração de pagamentos
 
 Em sistemas que operam sob o modelo de assinaturas e recorrência, a integração com o gateway de pagamento não é apenas uma funcionalidade secundária; é o coração financeiro da aplicação. Uma falha de comunicação ou um timeout durante a criação de uma cobrança pode gerar sérias inconsistências: clientes cobrados em duplicidade ou assinaturas ativas na plataforma de pagamento que não se refletem no banco de dados local.
 
@@ -19,8 +18,7 @@ Além disso, gateways de pagamento impõem limites de requisições (*rate limit
 O SDK `vindi-rails` foi projetado para mitigar esses problemas no ecossistema Ruby on Rails, oferecendo uma camada de abstração resiliente, *thread-safe* e com suporte nativo a cache.
 
 ---
-
-## Arquitetura Baseada em Recursos e Segurança de Threads
+## Arquitetura baseada em recursos e segurança de threads
 
 Ao contrário de abordagens tradicionais que usam variáveis globais inseguras para gerenciar o estado da API, o `vindi-rails` adota um padrão de configuração desacoplado e seguro contra concorrência (*thread-safe*). Isso é fundamental para servidores web modernos (como Puma) que operam em ambientes multi-thread.
 
@@ -33,7 +31,7 @@ Vindi.configure do |config|
 end
 ```
 
-### O Poder da Configuração Dinâmica (Multi-Tenancy)
+### O poder da configuração dinâmica (multi-tenancy)
 
 Para aplicações SaaS onde múltiplos parceiros ou clientes (merchants) utilizam suas próprias credenciais da Vindi, o SDK oferece o método `with_config`. Ele permite isolar credenciais temporárias no escopo da thread atual de execução:
 
@@ -50,8 +48,7 @@ end
 Sob o capô, `with_config` gerencia as variáveis no nível do `Thread.current` da thread atual, garantindo isolamento total em processos altamente concorrentes.
 
 ---
-
-## Redução de Latência por Caching Local
+## Redução de latência por caching local
 
 Chamar o gateway remoto a cada requisição web para listar os planos de assinatura disponíveis é uma má prática de engenharia. O `vindi-rails` permite delegar um provedor de cache (como o cache padrão do Rails) e especificar quais recursos dinâmicos devem ser armazenados temporariamente na memória:
 
@@ -66,8 +63,7 @@ end
 Quando o cache está habilitado, chamadas como `Vindi::Plan.list` ou `Vindi::PaymentMethod.list` interceptam a requisição de rede e leem o resultado diretamente do armazenamento local se a chave de cache for válida. Isso reduz o tempo de resposta da API de centenas de milissegundos para menos de 5ms.
 
 ---
-
-## Chamadas de API Inteligentes e Resilientes
+## Chamadas de API inteligentes e resilientes
 
 Falhas temporárias de rede acontecem. O SDK protege a integridade do seu fluxo de execução aplicando retentativas automáticas (*automatic retries*) com recuo exponencial e ruído aleatório (*jitter*) quando encontra falhas de transporte ou limites excedidos (status HTTP `429 Too Many Requests`):
 
@@ -82,8 +78,7 @@ end
 Isso garante que problemas rápidos de rede não estourem exceções indesejadas no fluxo do cliente, melhorando sensivelmente a percepção de estabilidade do sistema.
 
 ---
-
-## Termos Técnicos Desmistificados
+## Termos técnicos desmistificados
 
 *   **Thread-safe (Segurança de Threads):** Um bloco de código ou objeto que pode ser acessado de forma concorrente por múltiplos fluxos de execução (threads) simultaneamente sem causar corrupção de estado ou inconsistências de variáveis.
 *   **Multi-tenancy:** Uma arquitetura de software onde uma única instância de software atende a múltiplos clientes (tenants ou inquilinos). No caso de pagamentos, permite gerenciar transações para diferentes contas integradas na mesma base de código.

@@ -1,5 +1,5 @@
 ---
-title: "Real-Time Alerts: Detecting Slow Queries and Protecting Databases from Degradation"
+title: "Real-time alerts:Detecting slow queries and protecting databases from degradation"
 excerpt: "Slow database queries cause silent bottlenecks and exhaust connection pools. Learn how to design an automated slow query alert system."
 category: "Resilience"
 date: "May 05, 2026"
@@ -9,14 +9,13 @@ series: "orkai-observability-series"
 seriesIndex: 11
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Silent Threat of Slow Queries
+## The silent threat of slow queries
 
 In relational databases, poorly structured queries (such as full table scans on large tables due to missing indexes) can take seconds to return. As API traffic grows, these slow queries hold onto physical connections longer. Soon, the database connection pool reaches its limit, blocking new incoming requests and leading to complete service downtime.
 
 Detecting these issues late (typically after production database crashes) is costly. The ideal solution is to configure the application to alert us actively when a query exceeds a healthy limit (**Slow Query Threshold**).
 
-## Implementing Slow Query Alerts
+## Implementing slow query alerts
 
 The **orkai-observability** package extends the database wrapper to analyze query duration. If a query runs longer than the configured threshold, the wrapper automatically logs a `WARN` alert:
 
@@ -57,15 +56,14 @@ func (rdb *ResilientDB) ExecuteQuery(ctx context.Context, query string, args ...
 }
 ```
 
-## Benefits of Proactive Alerting
+## Benefits of proactive alerting
 
 Implementing this pattern:
 - Helps developers locate query bottlenecks before they degrade production servers.
 - Monitors database performance fluctuations caused by unexpected table growth.
 - Routes structured logs to automatic notification services (like Slack or PagerDuty).
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Slow Query:** A database query whose execution time exceeds a predefined acceptable limit.
 - **Threshold:** The configured limit used as a rule to trigger alerts or transition states.
 - **Connection Pool:** A collection of pre-established database connections reused for concurrent operations, avoiding the cost of opening connections repeatedly.
----

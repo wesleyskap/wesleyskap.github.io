@@ -1,5 +1,5 @@
 ---
-title: "Log de Payloads HTTP: Implementando Amostragem Inteligente Para Evitar Saturação"
+title: "Log de payloads HTTP:Implementando amostragem inteligente para evitar saturação"
 excerpt: "Logar requisições e respostas HTTP inteiras consome espaço massivo e degrada performance. Aprenda a aplicar amostragem de payloads em Go."
 category: "Alta Performance"
 date: "13 de Maio, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 13
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## O Equilíbrio de Visibilidade e Performance
+## O equilíbrio de visibilidade e performance
 
 Em ambientes de microsserviços, ter visibilidade total do que entra e sai nas requisições HTTP (Payloads de Request e Response) é crucial para investigar falhas de validação ou comportamentos anômalos de integrações. No entanto, gravar o JSON de todas as requisições em disco traz dois problemas graves:
 1. **Consumo Exacerbado de Armazenamento:** Se sua API trafega payloads grandes ou arquivos binários, sua ferramenta de agregação de logs (Elasticsearch/Loki) ficará saturada rapidamente, gerando custos financeiros altos.
@@ -18,7 +17,7 @@ Em ambientes de microsserviços, ter visibilidade total do que entra e sai nas r
 
 Para atingir o equilíbrio ideal, o **orkai-observability** implementa um motor de **Amostragem Inteligente (Payload Sampling)** de dados HTTP.
 
-## O Design do Middleware com Amostragem
+## O design do middleware com amostragem
 
 Configuramos o middleware HTTP para processar payloads baseando-se em uma taxa de amostragem configurada (ex: logar apenas 10% dos payloads das requisições bem-sucedidas), com uma exceção vital: se o status HTTP final indicar uma falha do servidor (`>= 500`), o payload é logado de forma obrigatória para garantir inspecionabilidade:
 
@@ -84,7 +83,7 @@ func (pl *PayloadLogger) writePayloadLog(path string, req, resp []byte, status i
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Payload:** Os dados úteis transmitidos em uma transação de rede (geralmente o corpo JSON enviado em uma requisição POST/PUT ou retornado na resposta).
 - **Sampling (Amostragem):** Técnica de coletar apenas um subconjunto representativo de dados para análise para economizar recursos computacionais e de rede.
 - **NopCloser:** Utilitário do Go que encapsula um leitor simples de bytes sem comportamento real de fechamento físico de conexão.

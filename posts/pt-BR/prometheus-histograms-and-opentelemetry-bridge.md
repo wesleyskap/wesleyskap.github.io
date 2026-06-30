@@ -1,5 +1,5 @@
 ---
-title: "Do Customizado ao Padrão de Mercado: Percentis Histogramas e a Ponte Semântica do OpenTelemetry"
+title: "Do customizado ao padrão de mercado:Percentis histogramas e a ponte semântica do opentelemetry"
 excerpt: "Por que as médias de latência mentem? Descubra a matemática por trás do cálculo de percentis de cauda longa e como criamos uma ponte semântica limpa para suportar o padrão OpenTelemetry com roteamento duplo concorrente."
 category: "Métricas & Tracing"
 date: "14 de Março, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## A Ilusão Estatística da Média e a Matemática dos Percentis
+## A ilusão estatística da média e a matemática dos percentis
 
 Métricas baseadas unicamente na média aritmética mentem de forma grave para engenheiros de confiabilidade. Um servidor web pode apresentar uma latência média excelente de 15ms, ocultando que 1% de seus usuários enfrenta esperas catastróficas de 5 segundos devido a travas do Garbage Collector. Para mapear com exatidão a qualidade de serviço da cauda longa, precisamos calcular percentis estatísticos precisos (p50, p90, p99).
 
@@ -42,7 +41,7 @@ func (r *latencyReservoir) extractPercentile(p float64) float64 {
 }
 ```
 
-## A Ponte Semântica do OpenTelemetry e Roteamento Duplo
+## A ponte semântica do opentelemetry e roteamento duplo
 
 A maioria das empresas modernas padronizou suas plataformas de monitoramento utilizando a especificação oficial do **OpenTelemetry (OTel)** da CNCF. Contudo, reescrever todas as APIs legadas para utilizar diretamente a API complexa do OTel é inviável financeiramente.
 
@@ -73,7 +72,7 @@ func (o *otelMetrics) RecordLatency(name string, val float64, labels map[string]
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Outliers (Pontos Discrepantes):** Valores coletados em métricas que fogem dramaticamente do comportamento normal do sistema (ex: uma única requisição que demorou 10s em um mar de chamadas de 5ms).
 - **Percentil (Percentile):** Divisão matemática que estabelece limites de desempenho. Dizer que o p95 é 200ms indica que 95% de todos os usuários experimentaram tempos de resposta mais rápidos que 200ms.
 - **Roteamento Duplo (Double Routing):** Técnica de envio simultâneo de dados de telemetria a múltiplos destinos independentes sem que uma chamada interfira ou atrase a outra.

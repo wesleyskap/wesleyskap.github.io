@@ -1,5 +1,5 @@
 ---
-title: "Desacoplamento de Mensageria em Ruby: Implementando o Adapter Pattern com InMemory, RabbitMQ, Kafka e Redis"
+title: "Desacoplamento de mensageria em Ruby:Implementando o adapter pattern com inmemory, RabbitMQ, Kafka e Redis"
 excerpt: "Como desacoplar o envio e consumo de mensagens do broker físico em aplicações Ruby? Aprenda a projetar e utilizar múltiplos adaptadores."
 category: "Mensageria"
 date: "25 de Maio, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## O Problema do Acoplamento de Rede nos Testes e na Produção
+## O problema do acoplamento de rede nos testes e na produção
 
 Ao desenvolver aplicações em trilhos (*Rails*) ou microsserviços em Ruby orientados a eventos, as equipes costumam instanciar conexões com filas usando clientes físicos (como o SDK do RabbitMQ `bunny` ou o cliente `kafka`) diretamente nos controladores de rotas ou serviços de domínio.
 
@@ -20,7 +19,7 @@ Isso cria dois gargalos estruturais imediatos:
 
 A Gem **SharedBroker** resolve este acoplamento implementando o **Adapter Pattern (Padrão de Adaptadores)**.
 
-## Definindo a Interface de Adaptadores em Ruby
+## Definindo a interface de adaptadores em Ruby
 
 A base do desacoplamento consiste em definir uma interface comum que todos os adaptadores concretos precisam respeitar. Em Ruby, embora não existam interfaces nativas em nível de linguagem, impomos contratos estruturando uma classe base abstrata que lança erros de implementação pendente:
 
@@ -48,7 +47,7 @@ module SharedBroker
 end
 ```
 
-## O Adaptador InMemory: Acelerando Testes (TDD)
+## O adaptador inmemory:Acelerando testes (tdd)
 
 O adaptador `InMemory` é a chave para a velocidade nos testes locais. Ele simula o ciclo de vida de publicação e escuta mantendo as chamadas na memória principal do processo de execução, descartando a necessidade de filas externas nos testes de unidade:
 
@@ -82,7 +81,7 @@ module SharedBroker
 end
 ```
 
-## Adaptadores Físicos de Produção (RabbitMQ e Redis)
+## Adaptadores físicos de produção (RabbitMQ e Redis)
 
 Para ambientes de produção, injetamos adaptadores reais que traduzem a chamada comum para APIs específicas de seus respectivos gems:
 - **`RabbitMQ` (Bunny):** Controla a conexão física à exchange e roteia mensagens.
@@ -90,7 +89,7 @@ Para ambientes de produção, injetamos adaptadores reais que traduzem a chamada
 
 Com esta infraestrutura montada, a aplicação simplesmente interage com o cliente central (`SharedBroker::Client.new(adapter: BROKER_ADAPTER)`), desacoplando a lógica de negócio do transporte físico.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Adapter Pattern:** Padrão estrutural que permite que objetos com interfaces incompatíveis colaborem por meio de uma classe adaptadora comum.
 - **TDD (Test-Driven Development):** Prática de desenvolvimento onde escrevemos os testes de comportamento antes do código de produção correspondente.
 - **Abstract Class:** Classe projetada para ser herdada por outras classes, mas que não deve ser instanciada diretamente.

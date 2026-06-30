@@ -1,5 +1,5 @@
 ---
-title: "Background Message Consumption: Designing a Resilient Hosted Service"
+title: "Background message consumption:Designing a resilient hosted service"
 excerpt: "How do you run continuous and asynchronous message consumption without blocking the application's main thread? Design a resilient background worker."
 category: "Messaging"
 date: "Apr 08, 2026"
@@ -9,14 +9,13 @@ series: "onkai-unified-bus-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/onkai-unified-bus"
 ---
-
-## The Importance of Isolated Asynchronous Processing
+## The importance of isolated asynchronous processing
 
 In modern microservices, web servers handle fast, short-lived HTTP requests. However, consuming messages from queues or topics (such as RabbitMQ, Kafka, or NATS) requires a different runtime model: continuous and asynchronous listening. This message consumption loop cannot run on the same thread as web requests, otherwise, it would freeze the main web server.
 
 To solve this, **onkai-unified-bus** implements a background execution engine (Worker/Background Service) that manages the message consumption lifecycle in an isolated and resilient manner.
 
-## Implementing a Background Consumption Worker
+## Implementing a background consumption worker
 
 The background worker encapsulates the infinite listening loop of the transport broker. It boots alongside the application container startup and ensures correct handling of termination signals using cancellation contexts (`context.Context`):
 
@@ -72,14 +71,14 @@ func (mc *MessageConsumer) Stop() {
 }
 ```
 
-## Failure Handling and Connection Lifecycle
+## Failure handling and connection lifecycle
 
 A production background worker must not crash the application if the network connection with the broker flickers. The consumption layer integrates with the driver to automatically re-establish the subscription after disconnections:
 - Continuous physical connection monitoring.
 - On-demand topology declaration (re-declaring queues if deleted).
 - Cooperative cancellation with `context.Context` during machine shutdowns.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Background Service:** A process executed in the background that performs continuous tasks (like reading a queue) without direct client interaction.
 - **Graceful Drain:** The process of stopping the intake of new events and waiting for active messages to complete before terminating the process.
 - **Cooperative Cancellation:** A pattern where parallel routines monitor a centralized signal (like a context or channel) to immediately stop execution.

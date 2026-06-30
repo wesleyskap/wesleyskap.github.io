@@ -1,5 +1,5 @@
 ---
-title: "Visibilidade de Banco de Dados: Criando um TraceSQL Context Wrapper para Medir Latência de Queries"
+title: "Visibilidade de banco de dados:Criando um tracesql context wrapper para medir latência de queries"
 excerpt: "As consultas de banco de dados costumam ser os maiores gargalos de latência de uma API. Aprenda como automatizar o tracing de SQL nativamente em Go."
 category: "Métricas & Tracing"
 date: "30 de Abril, 2026"
@@ -9,14 +9,13 @@ series: "orkai-observability-series"
 seriesIndex: 9
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## A Caixa Preta das Consultas de Banco de Dados
+## A caixa preta das consultas de banco de dados
 
 Quando a latência de uma API HTTP aumenta, a primeira ação comum de desenvolvedores é inspecionar o código lógico da rota. No entanto, na enorme maioria dos casos reais, o gargalo reside na camada de acesso a dados: índices de tabelas ausentes, consultas não otimizadas (problemas de N+1) ou bloqueios de transações longas.
 
 Sem instrumentação adequada nas funções de banco de dados, essas queries tornam-se caixas pretas difíceis de rastrear. O **orkai-observability** introduz o utilitário `TraceSQL` para instrumentar e expor de forma detalhada o tempo de execução físico de todas as interações com bancos relacionais.
 
-## Implementando o TraceSQL Wrapper
+## Implementando o tracesql wrapper
 
 O `TraceSQL` age como um wrapper contextual. Ele inicia um novo span de rastreamento associado à conexão, mede a latência da consulta usando carimbos de data/hora e anexa a string da query executada aos metadados do span:
 
@@ -52,14 +51,14 @@ func (idb *InstrumentedDB) TraceSQL(ctx context.Context, query string, args ...a
 }
 ```
 
-## A Extração das Métricas Chave
+## A extração das métricas chave
 
 Com o uso do wrapper:
 - Identificamos de forma instantânea quais tabelas ou consultas geram maiores latências.
 - Registramos erros específicos de SQL (como violações de chaves únicas ou falhas de timeout de rede).
 - Roteamos automaticamente os tempos de resposta para histogramas locais e para coletores externos compatíveis com OpenTelemetry.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Query Wrapper:** Padrão estrutural que envolve chamadas de banco de dados tradicionais para adicionar inteligência (como logs e telemetria) de forma transparente.
 - **N+1 Query Problem:** Um anti-padrão comum de ORMs onde uma consulta principal gera outras N consultas adicionais subsequentes ao banco, degradando a performance.
 - **Instrumentação:** Processo de adicionar código de telemetria e coleta de dados de execução em um sistema para monitorar seu comportamento.

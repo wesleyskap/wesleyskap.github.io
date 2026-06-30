@@ -1,5 +1,5 @@
 ---
-title: "Resiliência em Larga Escala: Construindo um Circuit Breaker Sem Dependências e Retries Exponenciais"
+title: "Resiliência em larga escala:Construindo um circuit breaker sem dependências e retries exponenciais"
 excerpt: "Sistemas distribuídos falham. Chamar APIs instáveis sem controle gera o efeito manada. Mostramos como projetar uma máquina de estados de Circuit Breaker pura e um motor de retry com recuo exponencial em Go."
 category: "Resiliência"
 date: "04 de Março, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## A Máquina de Estados do Circuit Breaker
+## A máquina de estados do circuit breaker
 
 Quando um serviço de terceiros ou microsserviço dependente falha, retentar chamadas HTTP de forma descontrolada é perigoso. Isso cria um fenômeno conhecido como "tempestade de retentativas" (*retry storms*), sobrecarregando o serviço instável e ampliando o problema.
 
@@ -66,7 +65,7 @@ func (cb *CircuitBreaker) Execute(operation func() error) error {
 }
 ```
 
-## Algoritmo de Recuo Exponencial com Espera progressiva
+## Algoritmo de recuo exponencial com espera progressiva
 
 Em cenários de falhas de rede de curta duração, tentar reexecutar a requisição imediatamente é ineficaz. O algoritmo de **Exponential Backoff** (Recuo Exponencial) resolve isso aumentando o intervalo de tempo entre as retentativas consecutivas de forma geométrica: $intervalo = base \times 2^{tentativa}$. 
 
@@ -88,7 +87,7 @@ func ExecuteWithRetry(maxRetries int, baseDelay time.Duration, op func() error) 
 }
 ```
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **Falha em Cascata (Cascading Failure):** Efeito dominó onde a lentidão ou erro de um único componente consome recursos (como threads ou conexões) de outros servidores, fazendo com que todo o sistema caia.
 - **Falha Rápida (Fast-Fail):** Mecanismo de defesa que rejeita requisições imediatamente se souber de antemão que o alvo está offline, evitando alocação desnecessária de conexões ou CPU.
 - **Exponential Backoff:** Técnica matemática usada para estender de forma progressiva o atraso antes de cada retentativa sucessiva de uma operação de rede com falha.

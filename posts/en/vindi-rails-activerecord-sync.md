@@ -1,5 +1,5 @@
 ---
-title: "Seamless State Sync: ActiveRecord Model Sync with vindi-rails-integrations"
+title: "Seamless state sync:ActiveRecord model sync with vindi-rails-integrations"
 excerpt: "Learn how to synchronize ActiveRecord models with Vindi transparently, handling soft deletes, bulk updates, and reconciliation audits."
 category: "Fintech & Integrations"
 date: "June 29, 2026"
@@ -9,8 +9,7 @@ series: "vindi-rails-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/vindi-rails-integrations"
 ---
-
-## To Sync or Not to Sync: The ActiveRecord Dilemma
+## To sync or not to sync:The ActiveRecord dilemma
 
 When integrating recurring billing platforms, duplicating user registry data across boundaries is a regular requirement. Vindi needs to know your customer's name, email, tax identification numbers, and a local code reference to process card charges and issue invoices properly.
 
@@ -19,8 +18,7 @@ Maintaining these two distinct databases manually leads to boilerplate code insi
 The extension gem [`vindi-rails-integrations`](https://github.com/wesleyskap/vindi-rails-integrations) solves this synchronization challenge by injecting automated behavior into ActiveRecord models via the `Vindi::Synchronizable` concern.
 
 ---
-
-## Automatic Mapping with Vindi::Synchronizable
+## Automatic mapping with Vindi::Synchronizable
 
 To enable automatic syncing on an existing model (for example, `User`), start by executing the generator:
 
@@ -47,7 +45,7 @@ class User < ApplicationRecord
 end
 ```
 
-### The Synchronization Lifecycle
+### The synchronization lifecycle
 
 Once the concern is integrated, ActiveRecord lifecycle *callbacks* handle remote synchronizations transparently:
 
@@ -55,14 +53,12 @@ Once the concern is integrated, ActiveRecord lifecycle *callbacks* handle remote
 2.  **On Update (`after_commit on: :update`)**: The concern monitors changes to mapped fields (like email or name). If local edits occur, an asynchronous or synchronous `Vindi::Customer.update` call is triggered to update the remote database.
 
 ---
-
-## Transactional Safety and Bulk Operations
+## Transactional safety and bulk operations
 
 To avoid long-lived network calls blocking local database transactions, you can configure the Transactional Outbox pattern. With `config.use_outbox = true`, callbacks persist synchronization requests to the local `vindi_pending_syncs` table atomically. A background job subsequently processes the outbox queue.
 
 ---
-
-## Data Consistency Audits with Rake Tasks
+## Data consistency audits with rake tasks
 
 No distributed integration is flawless: network timeouts happen, transactions fail, and manual interventions occur on the Vindi dashboard.
 
@@ -85,8 +81,7 @@ Reconciliation complete. 1 missing records synchronized.
 If it discovers local records lacking a `vindi_customer_id` or carrying mismatched configurations, it resolves the drift dynamically in real time.
 
 ---
-
-## Technical Terms Demystified
+## Technical terms demystified
 
 *   **ActiveRecord Callbacks:** Hooks into the lifecycle of database objects (such as validation, saving, or deletion) allowing custom code execution.
 *   **Data Reconciliation:** The process of comparing two sets of records to ensure consistency, correctness, and completeness across distributed nodes.

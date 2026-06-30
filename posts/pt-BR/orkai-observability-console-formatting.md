@@ -1,5 +1,5 @@
 ---
-title: "Visualização Local vs. Produção: Formatadores ANSI Coloridos e Auto-Monitoramento de Logs"
+title: "Visualização local vs. produção:Formatadores ANSI coloridos e auto-monitoramento de logs"
 excerpt: "Logs JSON são excelentes para máquinas, mas horríveis de ler no terminal em desenvolvimento. Veja como implementar formatação ANSI colorida em Go."
 category: "Alta Performance"
 date: "15 de Maio, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 14
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## A Diferença de Ambientes e Necessidades de Logs
+## A diferença de ambientes e necessidades de logs
 
 Em ambientes de produção Kubernetes, os logs da aplicação devem ser estruturados em objetos JSON puros de linha única. Isso permite que indexadores e coletores automatizados de log filtrem e parseiem as métricas com máxima velocidade e baixo uso de CPU.
 
@@ -18,7 +17,7 @@ Contudo, durante o desenvolvimento local (`localhost`), monitorar logs JSON brut
 
 Para resolver isso, o **orkai-observability** introduz um formatador de console colorido baseado em **Códigos de Escape ANSI** para desenvolvimento local, pareado com métricas internas de monitoramento da própria saúde do motor de logs.
 
-## O Design do Formatter ANSI
+## O design do formatter ANSI
 
 Quando a aplicação detecta o ambiente local (`Environment == "dev"`), o logger contorna a serialização JSON crua e passa a estruturar as strings aplicando cores ANSI dinâmicas correspondentes a cada nível de severidade:
 
@@ -65,13 +64,13 @@ func FormatColorConsole(level, msg string, fields map[string]string) string {
 }
 ```
 
-## Auto-Monitoramento (Self-Monitoring)
+## Auto-monitoramento (self-monitoring)
 
 Além de estilizar a saída visual, o motor de logs monitora sua própria integridade computacional. Ele expõe contadores internos de telemetria cruciais para monitorar saturações na produção:
 - **`observability_dropped_logs_total`:** Rastreia quantos logs foram descartados sob políticas rígidas de throttling.
 - **`observability_async_buffer_saturation_ratio`:** Mede a taxa média de ocupação do canal de gravação em background.
 
-### Termos Técnicos Desmistificados
+### Termos técnicos desmistificados
 - **ANSI Escape Codes:** Padrão de sinalização em computação que utiliza sequências especiais de caracteres em terminais de texto para controlar cores, posições de cursor e formatação de fonte.
 - **Self-Monitoring:** Padrão de design de sistemas onde uma biblioteca expõe telemetria interna sobre seu próprio consumo de memória, falhas e performance.
 - **Throttling:** Controle preventivo de vazão aplicado para limitar a taxa de execução de um processo para proteger o sistema contra sobrecargas.

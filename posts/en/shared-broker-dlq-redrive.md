@@ -1,5 +1,5 @@
 ---
-title: "Disaster Recovery: Reprocessing Failed Messages with the DLQ Redriver Utility"
+title: "Disaster recovery:Reprocessing failed messages with the DLQ redriver utility"
 excerpt: "Failed queues (DLQs) isolate bad messages, but how do we reprocess them? Learn how to design and operate an automated Redriver in the SharedBroker gem."
 category: "Operations & Resilience"
 date: "26 de Junho, 2026"
@@ -9,8 +9,7 @@ series: "shared-broker-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## When Queues Fail: The Role and Limits of DLQs
+## When queues fail:The role and limits of dlqs
 
 In previous posts, we analyzed how to handle temporary instabilities in microservices using retries and exponential backoff. But what happens when the error is permanent? A bug in a field validation or an undocumented schema change will cause all messages in a queue to fail repeatedly.
 
@@ -21,12 +20,11 @@ The DLQ prevents corrupt messages from blocking the main production channel (avo
 To automate this task without manual database updates or custom scripts, the **SharedBroker** gem offers the **DLQ Redrive Utility**.
 
 ---
-
-## The Design of the DLQ Redriver
+## The design of the DLQ redriver
 
 Moving messages back (Redrive) requires caution. We don't want to create infinite loops if messages keep failing, nor do we want to overload the broker. The gem's Redriver reads messages from the DLQ in batches, validates them, and republishes them to the original destination topic, controlling throughput via a `limit` parameter.
 
-### Implementing the Redriver Logic
+### Implementing the redriver logic
 
 ```ruby
 module SharedBroker
@@ -66,15 +64,14 @@ end
 ```
 
 ---
-
-## Operating Redrives in Production
+## Operating redrives in production
 
 A best practice for exposing this recovery capability safely in production is wrapping it in a Rails administrative task (Rake Task). This allows systems operators and engineers to trigger reprocessing via command line or automated pipelines:
 
-### Creating the Redrive Rake Task
+### Creating the redrive rake task
 
 ```ruby
-# lib/tasks/shared_broker.rake
+# Lib/tasks/shared_broker.rake
 
 namespace :shared_broker do
   desc "Process and send messages from DLQ back to the original queue"
@@ -104,13 +101,11 @@ $ bundle exec rails "shared_broker:redrive[my_consumption_queue.dlq, user.create
 ```
 
 ---
-
 ## Conclusion
 
 Having a Dead Letter Queue strategy is only half of the resilience equation. The ability to reprocess messages cleanly via tools like the `DLQ Redriver` is what differentiates fragile queue architectures from production-ready, fault-tolerant systems.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Head-of-Line Blocking:** A line delay where the first failed message in a queue prevents all subsequent healthy messages from being processed.
 - **Acknowledge (Ack):** A confirmation sent to the broker indicating the message was processed successfully, authorizing its removal from the queue.
 - **Redrive:** The action of sending failed messages from a DLQ back to the origin queue or topic for reprocessing.
----

@@ -1,5 +1,5 @@
 ---
-title: "HTTP Payload Logging: Implementing Smart Sampling to Prevent Storage Saturation"
+title: "HTTP payload logging:Implementing smart sampling to prevent storage saturation"
 excerpt: "Logging entire HTTP request and response payloads consumes massive storage and hurts performance. Learn how to apply payload sampling in Go."
 category: "Performance"
 date: "May 13, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 13
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## Balancing Visibility and Performance
+## Balancing visibility and performance
 
 In microservice architectures, logging raw HTTP request and response payloads is valuable for debugging invalid inputs or downstream integration bugs. However, writing every single JSON payload to disk introduces two major issues:
 1. **High Storage Cost:** Large payloads or binary files quickly saturate log aggregators (like Elasticsearch or Loki), escalating server infrastructure costs.
@@ -18,7 +17,7 @@ In microservice architectures, logging raw HTTP request and response payloads is
 
 To strike the right balance, the **orkai-observability** package implements **Smart Payload Sampling**.
 
-## Designing the Sampling Middleware
+## Designing the sampling middleware
 
 The middleware processes HTTP payloads based on a configurable sampling rate (e.g., logging only 10% of payloads for successful requests). However, to guarantee debugging visibility, any failed server response (`status >= 500`) is forced to log its payload:
 
@@ -83,8 +82,7 @@ func (pl *PayloadLogger) writePayloadLog(path string, req, resp []byte, status i
 }
 ```
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Payload:** The core data transmitted in a network transaction, such as the JSON body in a request or response.
 - **Sampling:** The technique of collecting a representative subset of events to save storage and processing resources.
 - **NopCloser:** A Go utility wrapping a basic reader to satisfy the `io.ReadCloser` interface without adding custom Close behavior.
----

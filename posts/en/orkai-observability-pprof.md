@@ -1,5 +1,5 @@
 ---
-title: "Automated Diagnostics: On-Demand Profiling with Auto-Triggered pprof"
+title: "Automated diagnostics:On-demand profiling with auto-triggered pprof"
 excerpt: "Investigating CPU and memory spikes after a server crash is ineffective. Learn how to automate profiling on-demand using pprof in Go."
 category: "Performance"
 date: "May 24, 2026"
@@ -9,8 +9,7 @@ series: "orkai-observability-series"
 seriesIndex: 16
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
-
-## The Challenge of Capturing Ephemeral Spikes
+## The challenge of capturing ephemeral spikes
 
 Sudden spikes in CPU utilization or memory allocations typically happen in fractions of a second during high traffic events. Trying to debug these issues retroactively by analyzing logs is often frustrating.
 
@@ -18,7 +17,7 @@ Go includes the built-in `pprof` tool for performing deep CPU and memory executi
 
 The **orkai-observability** package solves this by implementing an **Auto-Triggered** system that monitors resources and captures profiling diagnostics automatically.
 
-## Designing the Auto-Triggered Profiler
+## Designing the auto-triggered profiler
 
 We configure a background goroutine to monitor system metrics at intervals. If resource consumption crosses a configured threshold, the profiler automatically writes a `.pprof` file, managing a cooldown state to prevent system overload:
 
@@ -77,12 +76,11 @@ func (ap *AutoProfiler) captureCPUProfile() {
 }
 ```
 
-## The Role of Cooldown Management
+## The role of cooldown management
 
 Profiling introduces CPU and memory overhead. If your server is under load and goroutine counts spike, capturing profiles continuously without a cooldown period could exhaust the remaining resources of the machine. A cooldown ensures diagnostics are gathered safely and conservatively.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **pprof:** A native Go runtime tool for collecting, visualizing, and inspecting performance data (CPU time, heap memory, and lock contention).
 - **Profiling:** The process of analyzing a program's runtime execution behavior to measure CPU or memory utilization at the function level.
 - **Cooldown:** A configured time buffer that must elapse before a high-cost automated action can be executed again.
----

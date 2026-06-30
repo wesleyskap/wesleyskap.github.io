@@ -1,5 +1,5 @@
 ---
-title: "Concurrency Control, Adaptive Backpressure, and Hybrid Multi-Adapter Routing"
+title: "Concurrency control, adaptive backpressure, and hybrid multi-adapter routing"
 excerpt: "How do you avoid overloading local databases and route events to multiple brokers in Ruby microservices? Learn about concurrency and routing."
 category: "Performance"
 date: "June 03, 2026"
@@ -9,14 +9,13 @@ series: "shared-broker-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/shared_broker"
 ---
-
-## Resource Saturation in Asynchronous Ingestion Loops
+## Resource saturation in asynchronous ingestion loops
 
 A fast message consumer can easily overwhelm a microservice. If a message broker delivers thousands of backlogged events without bounds, background threads in Rails will attempt to process them concurrently. Within seconds, this parallel activity exhausts the local database pool (`ActiveRecord::ConnectionTimeoutError`), taking down the main API.
 
 To prevent resource exhaustion, consumers require two architectural controls: **Concurrency Limits** and **Adaptive Backpressure**. Furthermore, complex enterprise setups need the flexibility of **Hybrid Multi-Adapter Routing** to direct topics to different brokers.
 
-## Controlling Concurrency and Backpressure
+## Controlling concurrency and backpressure
 
 The **SharedBroker** gem implements a pure-Ruby thread-safe semaphore to limit concurrent task executions. 
 
@@ -58,7 +57,7 @@ module SharedBroker
 end
 ```
 
-## Hybrid Topic Routing (Multi-Adapter Routing)
+## Hybrid topic routing (multi-adapter routing)
 
 Legacy and modern services often co-exist with different message brokers. The gem allows routing events to specific physical adapters using wildcard string matching (Globs):
 
@@ -81,8 +80,7 @@ end
 
 With this architecture, the gem handles the network complexity of multiple brokers behind a unified, simple client interface.
 
-### Technical Terms Demystified
+### Technical terms demystified
 - **Backpressure:** A resource preservation technique where a consumer signals the broker to slow down or pause message delivery to prevent overload.
 - **Semaphore:** A concurrent synchronization primitive limiting access to shared resources to a set maximum number of threads.
 - **Glob Pattern:** A simplified text matching syntax using wildcards (like asterisks `*`) to match string paths.
----
