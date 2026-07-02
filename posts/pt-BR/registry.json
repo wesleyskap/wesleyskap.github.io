@@ -1,5 +1,16 @@
 [
   {
+    "id": "orkai-runiq-priority-affinity",
+    "title": "Prioridade de jobs, afinidade de workers e hardware tags:Orquestrando execução inteligente no runiq",
+    "excerpt": "Como garantir que jobs críticos sejam processados primeiro e que tarefas que exigem GPU ou memória dedicada caiam exatamente no worker certo? Entenda o sistema de prioridade e afinidade do Orkai Runiq.",
+    "category": "Sistemas Distribuídos",
+    "date": "01 de Julho, 2026",
+    "readTime": "6 min de leitura",
+    "author": "Wesley Lima",
+    "series": "orkai-runiq-series",
+    "seriesIndex": 6
+  },
+  {
     "id": "vindi-rails-activerecord-sync",
     "title": "Sincronização de estado sem costura:ActiveRecord model sync com vindi-rails-integrations",
     "excerpt": "Descubra como sincronizar modelos do ActiveRecord de forma transparente com a Vindi, tratando deleção lógica, atualizações em lote e auditorias de conciliação.",
