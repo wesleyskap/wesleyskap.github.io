@@ -1,5 +1,16 @@
 [
   {
+    "id": "orkai-runiq-encryption-namespaces-leader",
+    "title": "Criptografia, isolamento multi-tenant e liderança distribuída:Segurança e alta disponibilidade no runiq",
+    "excerpt": "Como proteger dados sensíveis em repouso, isolar centenas de clientes no mesmo cluster e garantir que apenas um worker lidere tarefas críticas — tudo sem infraestrutura externa.",
+    "category": "Segurança",
+    "date": "05 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "orkai-runiq-series",
+    "seriesIndex": 7
+  },
+  {
     "id": "orkai-runiq-priority-affinity",
     "title": "Prioridade de jobs, afinidade de workers e hardware tags:Orquestrando execução inteligente no runiq",
     "excerpt": "Como garantir que jobs críticos sejam processados primeiro e que tarefas que exigem GPU ou memória dedicada caiam exatamente no worker certo? Entenda o sistema de prioridade e afinidade do Orkai Runiq.",

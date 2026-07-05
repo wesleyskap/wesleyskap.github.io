@@ -1,5 +1,16 @@
 [
   {
+    "id": "orkai-runiq-encryption-namespaces-leader",
+    "title": "Encryption, multi-tenant isolation, and leader election:Security and HA in runiq",
+    "excerpt": "How to protect sensitive data at rest, isolate hundreds of tenants in the same cluster, and ensure only one worker leads critical tasks — all without external infrastructure.",
+    "category": "Security",
+    "date": "July 5, 2026",
+    "readTime": "7 min read",
+    "author": "Wesley Lima",
+    "series": "orkai-runiq-series",
+    "seriesIndex": 7
+  },
+  {
     "id": "orkai-runiq-priority-affinity",
     "title": "Job priority, worker affinity, and hardware tags:Orchestrating intelligent execution in runiq",
     "excerpt": "How do you ensure critical jobs are processed first and that GPU-intensive or memory-heavy tasks land on the right worker? Learn about Runiq's priority and affinity system.",
