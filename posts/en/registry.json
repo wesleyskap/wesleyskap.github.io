@@ -1,5 +1,16 @@
 [
   {
+    "id": "orkai-runiq-autoscaling-circuitbreaker-archival",
+    "title": "Autoscaling, circuit breaker, and cold storage:Automated operational resilience in runiq",
+    "excerpt": "Traffic spikes, database failures, and old job accumulation are inevitable. See how Runiq auto-scales workers, protects itself from degradation, and archives what's no longer needed.",
+    "category": "Operations & Resilience",
+    "date": "July 7, 2026",
+    "readTime": "7 min read",
+    "author": "Wesley Lima",
+    "series": "orkai-runiq-series",
+    "seriesIndex": 8
+  },
+  {
     "id": "orkai-runiq-encryption-namespaces-leader",
     "title": "Encryption, multi-tenant isolation, and leader election:Security and HA in runiq",
     "excerpt": "How to protect sensitive data at rest, isolate hundreds of tenants in the same cluster, and ensure only one worker leads critical tasks — all without external infrastructure.",
