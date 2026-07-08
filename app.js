@@ -844,6 +844,10 @@ class ViewRenderer {
                     seriesTitle = "HTTP Query";
                 } else if (post.series === "vindi-rails-series") {
                     seriesTitle = "Vindi Rails";
+                } else if (post.series === "orkai-runiq-series") {
+                    seriesTitle = "Orkai Runiq";
+                } else if (post.series === "rails-ai-agents-series") {
+                    seriesTitle = "Rails AI Agents";
                 }
                 seriesMetaHTML = `
                     <span>&bull;</span>
@@ -1004,6 +1008,10 @@ class ViewRenderer {
             seriesText = "HTTP Query";
         } else if (post.series === "vindi-rails-series") {
             seriesText = "Vindi Rails";
+        } else if (post.series === "orkai-runiq-series") {
+            seriesText = "Orkai Runiq";
+        } else if (post.series === "rails-ai-agents-series") {
+            seriesText = "Rails AI Agents";
         }
 
         const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";

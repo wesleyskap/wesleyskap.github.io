@@ -1,5 +1,16 @@
 [
   {
+    "id": "rails-ai-function-calling",
+    "title": "Function Calling limpo no Rails: Mapeando métodos com segurança e tipagem",
+    "excerpt": "Integrar LLMs com a lógica de negócio do Rails exige segurança e estrutura. Veja como usar Plain Old Ruby Objects (POROs) para declarar schemas e executar funções de forma idiomática.",
+    "category": "IA & Agentes",
+    "date": "08 de Julho, 2026",
+    "readTime": "5 min de leitura",
+    "author": "Wesley Lima",
+    "series": "rails-ai-agents-series",
+    "seriesIndex": 1
+  },
+  {
     "id": "orkai-runiq-autoscaling-circuitbreaker-archival",
     "title": "Autoscaling, circuit breaker e arquivo morto:Resiliência operacional automatizada no runiq",
     "excerpt": "Picos de tráfego, falhas de banco e acúmulo de jobs antigos são inevitáveis. Veja como o Runiq escala workers automaticamente, se protege de degradação e arquiva o que não é mais necessário.",
