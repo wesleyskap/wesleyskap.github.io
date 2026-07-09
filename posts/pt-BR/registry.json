@@ -1,5 +1,27 @@
 [
   {
+    "id": "rails-ai-agentic-loops",
+    "title": "Loops de múltiplas etapas: Orquestrando agentes autônomos com ActiveJob e ActiveRecord",
+    "excerpt": "Agentes não respondem de primeira. Eles entram em ciclos de pensamento e ação. Aprenda a projetar loops de múltiplas etapas de forma assíncrona, resiliente e totalmente integrada ao ecossistema do Rails.",
+    "category": "IA & Agentes",
+    "date": "10 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "rails-ai-agents-series",
+    "seriesIndex": 3
+  },
+  {
+    "id": "rails-ai-tool-registry",
+    "title": "Projetando um Tool Registry dinâmico e flexível no Rails",
+    "excerpt": "À medida que seus agentes de IA ganham mais habilidades, gerenciar dezenas de ferramentas vira um caos. Aprenda a implementar um Registry extensível e testável sem recorrer a Singletons ou estado global.",
+    "category": "IA & Agentes",
+    "date": "09 de Julho, 2026",
+    "readTime": "5 min de leitura",
+    "author": "Wesley Lima",
+    "series": "rails-ai-agents-series",
+    "seriesIndex": 2
+  },
+  {
     "id": "rails-ai-function-calling",
     "title": "Function Calling limpo no Rails: Mapeando métodos com segurança e tipagem",
     "excerpt": "Integrar LLMs com a lógica de negócio do Rails exige segurança e estrutura. Veja como usar Plain Old Ruby Objects (POROs) para declarar schemas e executar funções de forma idiomática.",
