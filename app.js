@@ -1141,7 +1141,7 @@ class Router {
                 this.currentRoute = "post-detail";
                 this.activePostId = hash.replace("#post/", "");
                 this.loadPostDetail(this.activePostId);
-                pageTitle = ""; // Será definido dentro de loadPostDetail assincronamente
+                pageTitle = "";
             } else {
                 window.location.hash = "#about";
             }
