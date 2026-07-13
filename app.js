@@ -848,6 +848,8 @@ class ViewRenderer {
                     seriesTitle = "Orkai Runiq";
                 } else if (post.series === "rails-ai-agents-series") {
                     seriesTitle = "Rails AI Agents";
+                } else if (post.series === "ruby-rails-internals-series") {
+                    seriesTitle = "Ruby & Rails Internals";
                 }
                 seriesMetaHTML = `
                     <span>&bull;</span>
@@ -1012,6 +1014,8 @@ class ViewRenderer {
             seriesText = "Orkai Runiq";
         } else if (post.series === "rails-ai-agents-series") {
             seriesText = "Rails AI Agents";
+        } else if (post.series === "ruby-rails-internals-series") {
+            seriesText = "Ruby & Rails Internals";
         }
 
         const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";

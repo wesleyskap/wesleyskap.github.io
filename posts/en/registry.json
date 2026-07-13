@@ -1,5 +1,16 @@
 [
   {
+    "id": "ruby-gvl-internals",
+    "title": "Demystifying Ruby's GVL (Global VM Lock): Myths, Truths, and Concurrency",
+    "excerpt": "What is the GVL (Global VM Lock) and how does it actually affect concurrency and parallelism in your Ruby and Rails applications? Learn what happens under the hood of MRI.",
+    "category": "Ruby & Rails",
+    "date": "July 13, 2026",
+    "readTime": "6 min read",
+    "author": "Wesley Lima",
+    "series": "ruby-rails-internals-series",
+    "seriesIndex": 1
+  },
+  {
     "id": "rails-ai-agentic-loops",
     "title": "Multi-Step Loops: Orchestrating Autonomous Agents with ActiveJob and ActiveRecord",
     "excerpt": "Agents don't reply immediately. They enter cycles of thinking and acting. Learn how to design multi-step loops asynchronously, resiliently, and fully integrated with the Rails ecosystem.",
