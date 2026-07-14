@@ -1,5 +1,16 @@
 [
   {
+    "id": "ruby-gvl-gil-evolution",
+    "title": "A Evolução do GVL e GIL: Do Ruby 1.8 aos Ractors e o Fim das Travas Globais",
+    "excerpt": "Entenda a história por trás do GIL e do GVL, a transição de Green Threads para OS Threads no Ruby e como Ractors e o ecossistema moderno buscam a verdadeira execução paralela.",
+    "category": "Ruby & Rails",
+    "date": "14 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "ruby-rails-internals-series",
+    "seriesIndex": 2
+  },
+  {
     "id": "ruby-gvl-internals",
     "title": "Desmistificando o GVL (Global VM Lock) do Ruby: Mitos, Verdades e Concorrência",
     "excerpt": "O que é o GVL (Global VM Lock) e como ele realmente afeta o paralelismo e a concorrência na sua aplicação Ruby e Rails? Conheça os bastidores do runtime do MRI.",
