@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-rules-intro",
+    "title": "As 4 Regras de Design da Sandi Metz: Praticidade sem Compromisso no Rails",
+    "excerpt": "Seu model ou controller está gordo demais? Conheça as 4 regras de tamanho e escopo propostas por Sandi Metz para garantir um design de software sustentável e legível no Rails.",
+    "category": "Design Patterns",
+    "date": "15 de Julho, 2026",
+    "readTime": "5 min de leitura",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 1
+  },
+  {
     "id": "ruby-gvl-gil-evolution",
     "title": "A Evolução do GVL e GIL: Do Ruby 1.8 aos Ractors e o Fim das Travas Globais",
     "excerpt": "Entenda a história por trás do GIL e do GVL, a transição de Green Threads para OS Threads no Ruby e como Ractors e o ecossistema moderno buscam a verdadeira execução paralela.",

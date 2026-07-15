@@ -850,6 +850,8 @@ class ViewRenderer {
                     seriesTitle = "Rails AI Agents";
                 } else if (post.series === "ruby-rails-internals-series") {
                     seriesTitle = "Ruby & Rails Internals";
+                } else if (post.series === "sandi-metz-design-series") {
+                    seriesTitle = "Sandi Metz Design Rules";
                 }
                 seriesMetaHTML = `
                     <span>&bull;</span>
@@ -1016,6 +1018,8 @@ class ViewRenderer {
             seriesText = "Rails AI Agents";
         } else if (post.series === "ruby-rails-internals-series") {
             seriesText = "Ruby & Rails Internals";
+        } else if (post.series === "sandi-metz-design-series") {
+            seriesText = "Sandi Metz Design Rules";
         }
 
         const seriesBadgeHTML = post.series && seriesText ? `<span class="post-series-badge">${blogTexts.seriesLabel}: ${seriesText}</span>` : "";
