@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-poodr-srp",
+    "title": "POODR in Practice: Single Responsibility and Healthy Coupling",
+    "excerpt": "How do you build classes that are easy to change? Discover Sandi Metz's practical teachings from POODR on single responsibility and dependency injection in Ruby.",
+    "category": "Design Patterns",
+    "date": "July 16, 2026",
+    "readTime": "6 min read",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 2
+  },
+  {
     "id": "sandi-rules-intro",
     "title": "Sandi Metz's 4 Rules of Design: Practicality Without Compromise in Rails",
     "excerpt": "Is your model or controller getting too fat? Discover the 4 rules of size and scope proposed by Sandi Metz to ensure sustainable and readable software design in Rails.",
