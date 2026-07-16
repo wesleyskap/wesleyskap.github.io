@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-99bottles-refactoring",
+    "title": "99 Bottles of OOP: O Segredo da Refatoração Sem Medo",
+    "excerpt": "Como refatorar sem quebrar o sistema? Aprenda as técnicas fundamentais de Sandi Metz do livro 99 Bottles of OOP baseadas em pequenos passos e testes verdes.",
+    "category": "Design Patterns",
+    "date": "16 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 3
+  },
+  {
     "id": "sandi-poodr-srp",
     "title": "POODR na Prática: Single Responsibility e Acoplamento Saudável",
     "excerpt": "Como criar classes fáceis de mudar? Descubra os ensinamentos práticos de POODR de Sandi Metz sobre responsabilidade única e injeção de dependências no ecossistema Ruby.",

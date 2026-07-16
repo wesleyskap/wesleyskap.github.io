@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-99bottles-refactoring",
+    "title": "99 Bottles of OOP: The Secret to Fearless Refactoring",
+    "excerpt": "How do you refactor without breaking the system? Learn Sandi Metz's fundamental techniques from 99 Bottles of OOP based on small steps and green tests.",
+    "category": "Design Patterns",
+    "date": "July 16, 2026",
+    "readTime": "7 min read",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 3
+  },
+  {
     "id": "sandi-poodr-srp",
     "title": "POODR in Practice: Single Responsibility and Healthy Coupling",
     "excerpt": "How do you build classes that are easy to change? Discover Sandi Metz's practical teachings from POODR on single responsibility and dependency injection in Ruby.",
