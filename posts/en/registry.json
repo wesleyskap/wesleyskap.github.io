@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-null-object-pattern",
+    "title": "Nothing is Something: Eliminating Conditionals with the Null Object Pattern",
+    "excerpt": "Tired of cluttering your code with nil checks? Learn how Sandi Metz uses the Null Object Pattern to replace the absence of data with active behavior.",
+    "category": "Design Patterns",
+    "date": "July 17, 2026",
+    "readTime": "5 min read",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 4
+  },
+  {
     "id": "sandi-99bottles-refactoring",
     "title": "99 Bottles of OOP: The Secret to Fearless Refactoring",
     "excerpt": "How do you refactor without breaking the system? Learn Sandi Metz's fundamental techniques from 99 Bottles of OOP based on small steps and green tests.",
