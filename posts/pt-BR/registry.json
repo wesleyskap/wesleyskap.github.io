@@ -1,5 +1,16 @@
 [
   {
+    "id": "sandi-inheritance-composition",
+    "title": "Herança vs. Composição: Quando Duplicar é Melhor que Abstrair Errado",
+    "excerpt": "Abstrações precoces criam acoplamentos rígidos e heranças confusas. Descubra os conselhos de Sandi Metz sobre composição e o verdadeiro valor do reaproveitamento de código.",
+    "category": "Design Patterns",
+    "date": "18 de Julho, 2026",
+    "readTime": "6 min de leitura",
+    "author": "Wesley Lima",
+    "series": "sandi-metz-design-series",
+    "seriesIndex": 5
+  },
+  {
     "id": "sandi-null-object-pattern",
     "title": "Nothing is Something: Eliminando Condicionais com o Null Object Pattern",
     "excerpt": "Cansado de encher seu código com verificações de nil? Aprenda como Sandi Metz usa o Null Object Pattern para substituir a ausência de dados por comportamento ativo.",
