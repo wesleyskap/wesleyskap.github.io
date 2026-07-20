@@ -11,6 +11,17 @@
     "seriesIndex": 1
   },
   {
+    "id": "kafka-2-setup",
+    "title": "Biomedical Signal Ingestion: KRaft Infrastructure and Partition Topology",
+    "excerpt": "How to plan partition distribution and keying to guarantee strict ordering per patient? Configure a Kafka KRaft cluster and initialize the Node.js client.",
+    "category": "Distributed Systems",
+    "date": "July 20, 2026",
+    "readTime": "6 min read",
+    "author": "Wesley Lima",
+    "series": "kafka-biomedical-signals-series",
+    "seriesIndex": 2
+  },
+  {
     "id": "sandi-inheritance-composition",
     "title": "Inheritance vs. Composition: When Duplicating is Better Than Abstracting Incorrectly",
     "excerpt": "Early abstractions create tight coupling and confusing inheritance. Discover Sandi Metz's advice on composition and the true value of code reuse.",
