@@ -33,6 +33,17 @@
     "seriesIndex": 3
   },
   {
+    "id": "kafka-4-consumer",
+    "title": "O Consumidor de Telemetria: Processamento Contínuo e Janelas de Tempo",
+    "excerpt": "Implemente um consumidor Node.js robusto com controle de backpressure, commits manuais de offset e gerenciamento de rebalanceamentos durante a ingestão de telemetria médica.",
+    "category": "Mensageria",
+    "date": "22 de Julho, 2026",
+    "readTime": "6 min de leitura",
+    "author": "Wesley Lima",
+    "series": "kafka-biomedical-signals-series",
+    "seriesIndex": 4
+  },
+  {
     "id": "sandi-inheritance-composition",
     "title": "Herança vs. Composição: Quando Duplicar é Melhor que Abstrair Errado",
     "excerpt": "Abstrações precoces criam acoplamentos rígidos e heranças confusas. Descubra os conselhos de Sandi Metz sobre composição e o verdadeiro valor do reaproveitamento de código.",
