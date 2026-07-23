@@ -44,6 +44,17 @@
     "seriesIndex": 4
   },
   {
+    "id": "kafka-5-resilience",
+    "title": "Resiliência em Telemetria: Isolando Ruídos com Retry Topics e DLQ",
+    "excerpt": "Aprenda a tratar falhas de sensores e payloads ruidosos sem causar Head-of-Line Blocking. Desenhe um fluxo resiliente de retries com recuo e DLQ em Node.js.",
+    "category": "Resiliência",
+    "date": "23 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "kafka-biomedical-signals-series",
+    "seriesIndex": 5
+  },
+  {
     "id": "sandi-inheritance-composition",
     "title": "Herança vs. Composição: Quando Duplicar é Melhor que Abstrair Errado",
     "excerpt": "Abstrações precoces criam acoplamentos rígidos e heranças confusas. Descubra os conselhos de Sandi Metz sobre composição e o verdadeiro valor do reaproveitamento de código.",
