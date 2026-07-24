@@ -55,6 +55,17 @@
     "seriesIndex": 5
   },
   {
+    "id": "kafka-6-transactions",
+    "title": "Detecção Transacional de Anomalias: Garantias Exactly-Once (EOS) no Kafka",
+    "excerpt": "Garanta que cada sinal de arritmia gere exatamente um alerta clínico. Veja como orquestrar transações atômicas de leitura e escrita com KafkaJS no Node.js.",
+    "category": "Mensageria",
+    "date": "24 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "kafka-biomedical-signals-series",
+    "seriesIndex": 6
+  },
+  {
     "id": "sandi-inheritance-composition",
     "title": "Herança vs. Composição: Quando Duplicar é Melhor que Abstrair Errado",
     "excerpt": "Abstrações precoces criam acoplamentos rígidos e heranças confusas. Descubra os conselhos de Sandi Metz sobre composição e o verdadeiro valor do reaproveitamento de código.",
