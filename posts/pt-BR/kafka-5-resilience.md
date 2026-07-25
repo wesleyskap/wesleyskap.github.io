@@ -5,7 +5,7 @@ category: "Resiliência"
 date: "23 de Julho, 2026"
 readTime: "7 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -24,19 +24,19 @@ Em sistemas críticos, o processamento de sinais ruidosos ou falhas temporárias
 
 Em vez de travar a fila, implementaremos o seguinte fluxo assíncrono:
 
-1. O consumidor lê do tópico principal `biomedical.ecg.raw`.
-2. Se o sinal falhar devido a um erro de validação (ruído crítico), ele publica a mensagem no tópico `biomedical.ecg.dlq` e realiza o commit da mensagem original para continuar lendo os dados saudáveis.
-3. Se a falha for temporária (ex: timeout de rede com a API de análise), o consumidor publica o sinal no tópico `biomedical.ecg.retry-5s` com um cabeçalho incrementado (`x-retry-count`).
+1. O consumidor lê do tópico principal `teste.ecg.raw`.
+2. Se o sinal falhar devido a um erro de validação (ruído crítico), ele publica a mensagem no tópico `teste.ecg.dlq` e realiza o commit da mensagem original para continuar lendo os dados saudáveis.
+3. Se a falha for temporária (ex: timeout de rede com a API de análise), o consumidor publica o sinal no tópico `teste.ecg.retry-5s` com um cabeçalho incrementado (`x-retry-count`).
 4. Um consumidor específico do tópico de retry lerá a mensagem, esperará o tempo de backoff (5 segundos) e tentará novamente. Se esgotar as tentativas (ex: 3 vezes), o sinal vai para a DLQ.
 
 ```
-[Gateway de Sensores] -> biomedical.ecg.raw
+[Gateway de Sensores] -> teste.ecg.raw
                              | (Falha temporária)
                              v
-                       biomedical.ecg.retry-5s (aguarda 5s)
+                       teste.ecg.retry-5s (aguarda 5s)
                              | (Esgotou tentativas ou ruído grave)
                              v
-                       biomedical.ecg.dlq
+                       teste.ecg.dlq
 ```
 
 ---
@@ -56,9 +56,9 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 const consumer = kafka.consumer({ groupId: 'medical-resilient-group' });
 
-const TOPIC_RAW = 'biomedical.ecg.raw';
-const TOPIC_RETRY = 'biomedical.ecg.retry-5s';
-const TOPIC_DLQ = 'biomedical.ecg.dlq';
+const TOPIC_RAW = 'teste.ecg.raw';
+const TOPIC_RETRY = 'teste.ecg.retry-5s';
+const TOPIC_DLQ = 'teste.ecg.dlq';
 
 const MAX_RETRIES = 3;
 

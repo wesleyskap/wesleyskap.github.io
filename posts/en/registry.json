@@ -7,29 +7,29 @@
     "date": "July 25, 2026",
     "readTime": "7 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 7
   },
   {
     "id": "kafka-1-introduction",
     "title": "Demystifying Apache Kafka: Why Use It for Medical Telemetry?",
-    "excerpt": "Understand the concept of a distributed commit log and discover why Kafka is the ideal choice for managing high-frequency biomedical signal streams like EEG and ECG.",
+    "excerpt": "Understand the concept of a distributed commit log and discover why Kafka is the ideal choice for managing high-frequency teste signal streams like EEG and ECG.",
     "category": "Distributed Systems",
     "date": "July 19, 2026",
     "readTime": "5 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 1
   },
   {
     "id": "kafka-2-setup",
-    "title": "Biomedical Signal Ingestion: KRaft Infrastructure and Partition Topology",
+    "title": "teste Signal Ingestion: KRaft Infrastructure and Partition Topology",
     "excerpt": "How to plan partition distribution and keying to guarantee strict ordering per patient? Configure a Kafka KRaft cluster and initialize the Node.js client.",
     "category": "Distributed Systems",
     "date": "July 20, 2026",
     "readTime": "6 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 2
   },
   {
@@ -40,7 +40,7 @@
     "date": "July 21, 2026",
     "readTime": "6 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 3
   },
   {
@@ -51,7 +51,7 @@
     "date": "July 22, 2026",
     "readTime": "6 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 4
   },
   {
@@ -62,7 +62,7 @@
     "date": "July 23, 2026",
     "readTime": "7 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 5
   },
   {
@@ -73,7 +73,7 @@
     "date": "July 24, 2026",
     "readTime": "7 min read",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 6
   },
   {

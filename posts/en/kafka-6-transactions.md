@@ -5,7 +5,7 @@ category: "Messaging"
 date: "July 24, 2026"
 readTime: "7 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -13,9 +13,9 @@ referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ## The Risk of Inconsistency in Critical Alerts
 
 In medical telemetry processing, we often have pipelines that perform sequential reads and writes across topics. For example:
-1. **Read** a block of raw ECG coordinates from the `biomedical.ecg.raw` topic.
+1. **Read** a block of raw ECG coordinates from the `teste.ecg.raw` topic.
 2. **Process** the signal using an analytical algorithm. If it detects an atrial fibrillation (arrhythmia) pattern, the application generates an alert.
-3. **Write** the alert to the `biomedical.alerts.critical` topic.
+3. **Write** the alert to the `teste.alerts.critical` topic.
 4. **Update (Commit)** the read offset in the original topic.
 
 If the Node.js server crashes right after step 3 but before step 4 (commit), a new instance will restart and reprocess the same ECG reading. This will result in a **second identical emergency alert** being sent to the clinical staff. In high-stress clinical environments, duplicate alarms generate "alarm fatigue" and decrease overall system trust.
@@ -47,8 +47,8 @@ const kafka = new Kafka({
 });
 
 const GROUP_ID = 'anomaly-detector-group';
-const TOPIC_RAW = 'biomedical.ecg.raw';
-const TOPIC_ALERTS = 'biomedical.alerts.critical';
+const TOPIC_RAW = 'teste.ecg.raw';
+const TOPIC_ALERTS = 'teste.alerts.critical';
 
 // We create the transactional producer by setting the transactionalId
 const producer = kafka.producer({

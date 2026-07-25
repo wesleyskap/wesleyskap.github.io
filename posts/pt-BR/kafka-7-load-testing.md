@@ -5,14 +5,14 @@ category: "Alta Performance"
 date: "25 de Julho, 2026"
 readTime: "7 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
 
 ## O Desafio da Carga em Escala Real
 
-Até agora, testamos nosso produtor e consumidor de telemetria médica rodando scripts em segundo plano com poucos emuladores de pacientes. Mas como nossa arquitetura de microsserviços em Node.js e Apache Kafka se comportará sob estresse real?
+Até agora, testamos nosso produtor e consumidor de telemetria  rodando scripts em segundo plano com poucos emuladores de pacientes. Mas como nossa arquitetura de microsserviços em Node.js e Apache Kafka se comportará sob estresse real?
 
 Imagine a hora de pico em um hospital conectado: milhares de aparelhos de ECG e EEG enviando pulsos continuamente. Um atraso de processamento de poucos milissegundos na API de ingestão de sinais HTTP/HTTPS pode resultar em buffers cheios, timeouts de rede e perda de dados de monitoramento.
 
@@ -56,7 +56,7 @@ fastify.post('/api/v1/telemetry', async (request, reply) => {
   try {
     // Produção rápida utilizando o paciente como chave para garantir ordenação
     await producer.send({
-      topic: 'biomedical.ecg.raw',
+      topic: 'teste.ecg.raw',
       compression: CompressionTypes.GZIP,
       messages: [{
         key: patient_id,
@@ -162,7 +162,7 @@ k6 run k6-load-test.js
 
 Ao final do teste, o k6 exibirá um relatório consolidado no terminal. Atente-se às seguintes métricas críticas:
 
-* **`http_req_duration`**: A latência de ponta a ponta da API. Em pipelines de telemetria médica, latências p(99) acima de 150ms indicam gargalo na escrita do produtor do Kafka ou falta de threads de processamento no Node.js.
+* **`http_req_duration`**: A latência de ponta a ponta da API. Em pipelines de telemetria , latências p(99) acima de 150ms indicam gargalo na escrita do produtor do Kafka ou falta de threads de processamento no Node.js.
 * **`http_req_failed`**: Se essa taxa subir acima de 0%, verifique se o Kafka não atingiu os limites de memória ou se o pool de conexões TCP da API Fastify esgotou.
 * **Consumer Lag (Atraso do Consumidor)**: Enquanto o teste de carga envia milhares de mensagens, rode no terminal:
   ```bash

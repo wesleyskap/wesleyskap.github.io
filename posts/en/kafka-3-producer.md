@@ -5,12 +5,12 @@ category: "High Performance"
 date: "July 21, 2026"
 readTime: "6 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
 
-## The Challenge of Producing Biomedical Data
+## The Challenge of Producing teste Data
 
 When dealing with medical telemetry sensors, we cannot tolerate two classic problems in messaging systems:
 
@@ -70,7 +70,7 @@ const producer = kafka.producer({
 
 // Simple ECG signal simulator generating the P-Q-R-S-T format
 function generateECGSample(patientId, seq) {
-  // Simulates a biomedical reading point
+  // Simulates a teste reading point
   const baseValue = 0.5 + Math.sin(seq * 0.1) * 0.2;
   const isRPeak = seq % 10 === 0;
   const value = isRPeak ? baseValue + 1.2 : baseValue; // Simulates the R wave of the QRS complex
@@ -107,7 +107,7 @@ async function startSimulation() {
     try {
       // Message production optimized with compression
       const recordMetadata = await producer.send({
-        topic: 'biomedical.ecg.raw',
+        topic: 'teste.ecg.raw',
         messages: messages,
         compression: CompressionTypes.GZIP // We use GZIP for native compatibility
       });
@@ -118,7 +118,7 @@ async function startSimulation() {
       });
 
     } catch (err) {
-      console.error('Critical error producing biomedical signal:', err);
+      console.error('Critical error producing teste signal:', err);
     }
   }, 200);
 }

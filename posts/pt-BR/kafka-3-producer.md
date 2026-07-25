@@ -5,14 +5,14 @@ category: "Alta Performance"
 date: "21 de Julho, 2026"
 readTime: "6 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 3
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
 
 ## O Desafio de Produzir Dados Biomédicos
 
-Quando lidamos com sensores de telemetria médica, não podemos aceitar dois problemas clássicos em sistemas de mensagens:
+Quando lidamos com sensores de telemetria , não podemos aceitar dois problemas clássicos em sistemas de mensagens:
 
 1. **Perda de Pacotes (Under-delivery)**: A queda de um broker ou flutuação de rede não pode fazer com que um batimento cardíaco anômalo desapareça do log sem deixar rastros.
 2. **Duplicação de Eventos (Over-delivery)**: Retransmissões brutas de rede podem fazer com que um único batimento cardíaco seja registrado duas vezes. Para um algoritmo de IA rodando na ponta, isso pode gerar falsos positivos de arritmia ou taquicardia.
@@ -70,7 +70,7 @@ const producer = kafka.producer({
 
 // Simulador simples de sinal de ECG gerando o formato P-Q-R-S-T
 function generateECGSample(patientId, seq) {
-  // Simula um ponto de leitura biomédica
+  // Simula um ponto de leitura bio
   const baseValue = 0.5 + Math.sin(seq * 0.1) * 0.2;
   const isRPeak = seq % 10 === 0;
   const value = isRPeak ? baseValue + 1.2 : baseValue; // Simula a onda R do complexo QRS
@@ -107,7 +107,7 @@ async function startSimulation() {
     try {
       // Produção de mensagens otimizada com compressão
       const recordMetadata = await producer.send({
-        topic: 'biomedical.ecg.raw',
+        topic: 'teste.ecg.raw',
         messages: messages,
         compression: CompressionTypes.GZIP // Usamos GZIP por compatibilidade nativa
       });

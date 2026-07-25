@@ -5,7 +5,7 @@ category: "Messaging"
 date: "July 22, 2026"
 readTime: "6 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -43,7 +43,7 @@ If the rebalance takes too long, the application might be kicked out of the grou
 
 ## 3. The Resilient Consumer Script (`consumer-telemetry.js`)
 
-Here is the Node.js consumer code that subscribes to the `biomedical.ecg.raw` topic, processes medical signals simulating database persistence latency, and performs manual commits in batches:
+Here is the Node.js consumer code that subscribes to the `teste.ecg.raw` topic, processes medical signals simulating database persistence latency, and performs manual commits in batches:
 
 ```javascript
 const { Kafka } = require('kafkajs');
@@ -71,7 +71,7 @@ async function run() {
   console.log('Consumer connected to cluster.');
 
   // Subscribe to the topic starting from the most recent offset by default
-  await consumer.subscribe({ topic: 'biomedical.ecg.raw', fromBeginning: false });
+  await consumer.subscribe({ topic: 'teste.ecg.raw', fromBeginning: false });
 
   // Listening to lifecycle events for infrastructure auditing
   consumer.on(consumer.events.GROUP_JOIN, (e) => {

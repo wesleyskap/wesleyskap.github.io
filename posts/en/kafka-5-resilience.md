@@ -5,7 +5,7 @@ category: "Resilience"
 date: "July 23, 2026"
 readTime: "7 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 5
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -24,19 +24,19 @@ In critical systems, processing noisy signals or handling temporary failures of 
 
 Instead of locking up the queue, we will implement the following asynchronous flow:
 
-1. The consumer reads from the main topic `biomedical.ecg.raw`.
-2. If processing fails due to a validation error (critical noise), it publishes the message to the topic `biomedical.ecg.dlq` and commits the original message to continue reading healthy data.
-3. If the failure is temporary (e.g., a network timeout with the analysis API), the consumer publishes the signal to the topic `biomedical.ecg.retry-5s` with an incremented header (`x-retry-count`).
+1. The consumer reads from the main topic `teste.ecg.raw`.
+2. If processing fails due to a validation error (critical noise), it publishes the message to the topic `teste.ecg.dlq` and commits the original message to continue reading healthy data.
+3. If the failure is temporary (e.g., a network timeout with the analysis API), the consumer publishes the signal to the topic `teste.ecg.retry-5s` with an incremented header (`x-retry-count`).
 4. A specific consumer for the retry topic will read the message, wait for the backoff time (5 seconds), and try again. If it runs out of attempts (e.g., 3 times), the signal goes to the DLQ.
 
 ```
-[Sensor Gateway] -> biomedical.ecg.raw
+[Sensor Gateway] -> teste.ecg.raw
                           | (Temporary failure)
                           v
-                    biomedical.ecg.retry-5s (waits 5s)
+                    teste.ecg.retry-5s (waits 5s)
                           | (Attempts exhausted or severe noise)
                           v
-                    biomedical.ecg.dlq
+                    teste.ecg.dlq
 ```
 
 ---
@@ -56,9 +56,9 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 const consumer = kafka.consumer({ groupId: 'medical-resilient-group' });
 
-const TOPIC_RAW = 'biomedical.ecg.raw';
-const TOPIC_RETRY = 'biomedical.ecg.retry-5s';
-const TOPIC_DLQ = 'biomedical.ecg.dlq';
+const TOPIC_RAW = 'teste.ecg.raw';
+const TOPIC_RETRY = 'teste.ecg.retry-5s';
+const TOPIC_DLQ = 'teste.ecg.dlq';
 
 const MAX_RETRIES = 3;
 
@@ -100,7 +100,7 @@ async function run() {
         // 1. Signal integrity validation (Critical Noise)
         if (isSignalCorrupted(payload)) {
           console.warn(`[NOISE DETECTED] Signal of patient ${payload.patient_id} corrupted. Sending to DLQ...`);
-          await sendToDLQ(payload, 'Electrode noise above biomedical threshold');
+          await sendToDLQ(payload, 'Electrode noise above teste threshold');
           await consumer.commitOffsets([{ topic, partition, offset: (parseInt(message.offset) + 1).toString() }]);
           return;
         }

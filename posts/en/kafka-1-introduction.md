@@ -1,11 +1,11 @@
 ---
 title: "Demystifying Apache Kafka: Why Use It for Medical Telemetry?"
-excerpt: "Understand the concept of a distributed commit log and discover why Kafka is the ideal choice for managing high-frequency biomedical signal streams like EEG and ECG."
+excerpt: "Understand the concept of a distributed commit log and discover why Kafka is the ideal choice for managing high-frequency teste signal streams like EEG and ECG."
 category: "Distributed Systems"
 date: "July 19, 2026"
 readTime: "5 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -32,7 +32,7 @@ Unlike traditional message brokers that act as temporary mailbox intermediaries,
 
 ## Traditional Queues vs. Kafka
 
-The table below contrasts the most relevant architectural differences in the biomedical context:
+The table below contrasts the most relevant architectural differences in the teste context:
 
 | Feature | Traditional Queues (RabbitMQ, SQS) | Apache Kafka (Commit Log) |
 | :--- | :--- | :--- |
@@ -43,11 +43,11 @@ The table below contrasts the most relevant architectural differences in the bio
 
 ---
 
-## Anatomy Applied to Biomedical Signals
+## Anatomy Applied to teste Signals
 
 To understand how we will implement our infrastructure and APIs starting from Part 2, we need to align the fundamental concepts:
 
-* **Topics**: The logical channel. We will have a topic named `biomedical.ecg.raw` to receive raw heartbeat data.
+* **Topics**: The logical channel. We will have a topic named `teste.ecg.raw` to receive raw heartbeat data.
 * **Partitions**: Physical divisions of a topic. A topic with 12 partitions distributes write traffic in parallel.
 * **Partition Key**: Kafka guarantees that all messages with the same key always end up in the same partition. We will use `patient_id` as the key. Thus, the temporal order of a specific patient's heartbeats is 100% preserved in the assigned partition.
 * **Consumer Groups**: Multiple Node.js processes join under the same group ID. Kafka balances partitions among them. If we have 4 consumers in the group, each reads 3 partitions in isolation.

@@ -1,11 +1,11 @@
 ---
-title: "Ingestão de Sinais Biomédicos: Infraestrutura KRaft e Topologia de Partições"
+title: "Teste - Ingestão de Sinais: Infraestrutura KRaft e Topologia de Partições"
 excerpt: "Como planejar a distribuição e chaveamento de partições para garantir ordenação estrita por paciente? Configure um cluster Kafka KRaft e inicialize o cliente Node.js."
 category: "Sistemas Distribuídos"
 date: "20 de Julho, 2026"
 readTime: "6 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -107,7 +107,7 @@ async function bootstrap() {
   await admin.connect();
   console.log('Conectado com sucesso!');
 
-  const topicName = 'biomedical.ecg.raw';
+  const topicName = 'teste.ecg.raw';
 
   // Lista os tópicos existentes
   const existingTopics = await admin.listTopics();
@@ -147,6 +147,6 @@ node setup-infrastructure.js
 
 ## Conclusão
 
-Agora que temos nossa infraestrutura configurada e o tópico `biomedical.ecg.raw` criado com a topologia correta, estamos prontos para produzir dados biológicos reais. 
+Agora que temos nossa infraestrutura configurada e o tópico `teste.ecg.raw` criado com a topologia correta, estamos prontos para produzir dados biológicos reais. 
 
 No próximo artigo, implementaremos um **Producer de Sinais Biomédicos em Tempo Real**, focando em configurações fundamentais como **idempotência de produtor** para evitar duplicações de batimentos cardíacos e **compressão ZSTD** para compactar os pacotes de dados biológicos.

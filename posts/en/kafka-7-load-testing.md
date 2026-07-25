@@ -5,7 +5,7 @@ category: "High Performance"
 date: "July 25, 2026"
 readTime: "7 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 7
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -45,7 +45,7 @@ const producer = kafka.producer({
   maxInFlightRequests: 5
 });
 
-// Endpoint that receives the biomedical signal stream from the electrode
+// Endpoint that receives the teste signal stream from the electrode
 fastify.post('/api/v1/telemetry', async (request, reply) => {
   const { patient_id, signal_millivolts, sequence } = request.body;
 
@@ -56,7 +56,7 @@ fastify.post('/api/v1/telemetry', async (request, reply) => {
   try {
     // Fast production using the patient as a key to guarantee ordering
     await producer.send({
-      topic: 'biomedical.ecg.raw',
+      topic: 'teste.ecg.raw',
       compression: CompressionTypes.GZIP,
       messages: [{
         key: patient_id,

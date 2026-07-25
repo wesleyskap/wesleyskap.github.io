@@ -7,18 +7,18 @@
     "date": "25 de Julho, 2026",
     "readTime": "7 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 7
   },
   {
     "id": "kafka-1-introduction",
-    "title": "Desmistificando o Apache Kafka: Por que Usar em Telemetria Médica?",
+    "title": "Desmistificando o Apache Kafka: Por que Usar em Telemetria ?",
     "excerpt": "Entenda o conceito de Commit Log distribuído e descubra por que o Kafka é a escolha ideal para gerenciar streams de sinais biomédicos como EEG e ECG de alta frequência.",
     "category": "Sistemas Distribuídos",
     "date": "19 de Julho, 2026",
     "readTime": "5 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 1
   },
   {
@@ -29,7 +29,7 @@
     "date": "20 de Julho, 2026",
     "readTime": "6 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 2
   },
   {
@@ -40,18 +40,18 @@
     "date": "21 de Julho, 2026",
     "readTime": "6 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 3
   },
   {
     "id": "kafka-4-consumer",
     "title": "O Consumidor de Telemetria: Processamento Contínuo e Janelas de Tempo",
-    "excerpt": "Implemente um consumidor Node.js robusto com controle de backpressure, commits manuais de offset e gerenciamento de rebalanceamentos durante a ingestão de telemetria médica.",
+    "excerpt": "Implemente um consumidor Node.js robusto com controle de backpressure, commits manuais de offset e gerenciamento de rebalanceamentos durante a ingestão de telemetria .",
     "category": "Mensageria",
     "date": "22 de Julho, 2026",
     "readTime": "6 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 4
   },
   {
@@ -62,7 +62,7 @@
     "date": "23 de Julho, 2026",
     "readTime": "7 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 5
   },
   {
@@ -73,7 +73,7 @@
     "date": "24 de Julho, 2026",
     "readTime": "7 min de leitura",
     "author": "Wesley Lima",
-    "series": "kafka-biomedical-signals-series",
+    "series": "kafka-teste-signals-series",
     "seriesIndex": 6
   },
   {

@@ -1,16 +1,16 @@
 ---
-title: "Desmistificando o Apache Kafka: Por que Usar em Telemetria Médica?"
+title: "Desmistificando o Apache Kafka: Por que Usar em Telemetria?"
 excerpt: "Entenda o conceito de Commit Log distribuído e descubra por que o Kafka é a escolha ideal para gerenciar streams de sinais biomédicos como EEG e ECG de alta frequência."
 category: "Sistemas Distribuídos"
 date: "19 de Julho, 2026"
 readTime: "5 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 1
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
 
-## A Natureza da Telemetria Médica
+## A Natureza da Telemetria 
 
 Imagine gerenciar o fluxo de dados de centenas de leitos hospitalares, onde cada paciente possui sensores de Eletrocardiograma (ECG) gerando 250 amostras por segundo, e sensores de Eletroencefalograma (EEG) gerando até 1000 amostras por segundo. 
 
@@ -47,7 +47,7 @@ A tabela abaixo contrasta as diferenças arquiteturais mais relevantes no contex
 
 Para entender como implementaremos nossa infraestrutura e APIs a partir da Parte 2, precisamos alinhar os conceitos fundamentais:
 
-* **Tópicos**: É o canal lógico. Teremos um tópico chamado `biomedical.ecg.raw` para receber os batimentos brutos.
+* **Tópicos**: É o canal lógico. Teremos um tópico chamado `teste.ecg.raw` para receber os batimentos brutos.
 * **Partições**: Divisões físicas de um tópico. Um tópico com 12 partições distribui o tráfego de gravação em paralelo.
 * **Chave de Partição (Partition Key)**: O Kafka garante que todas as mensagens com a mesma chave caiam sempre na mesma partição. Usaremos o `patient_id` como chave. Assim, a ordem temporal dos batimentos de um paciente específico é 100% preservada na partição atribuída.
 * **Grupos de Consumidores**: Vários processos de Node.js se juntam sob um mesmo ID de grupo. O Kafka balanceia as partições entre eles. Se tivermos 4 consumidores no grupo, cada um lê 3 partições de forma isolada.

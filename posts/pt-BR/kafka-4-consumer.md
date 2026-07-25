@@ -1,11 +1,11 @@
 ---
 title: "O Consumidor de Telemetria: Processamento Contínuo e Janelas de Tempo"
-excerpt: "Implemente um consumidor Node.js robusto com controle de backpressure, commits manuais de offset e gerenciamento de rebalanceamentos durante a ingestão de telemetria médica."
+excerpt: "Implemente um consumidor Node.js robusto com controle de backpressure, commits manuais de offset e gerenciamento de rebalanceamentos durante a ingestão de telemetria ."
 category: "Mensageria"
 date: "22 de Julho, 2026"
 readTime: "6 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 4
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -43,7 +43,7 @@ Se o rebalanceamento demorar demais, a aplicação pode ser expulsa do grupo. Po
 
 ## 3. O Script do Consumidor Resiliente (`consumer-telemetry.js`)
 
-Aqui está o código do consumidor Node.js que assina o tópico `biomedical.ecg.raw`, processa os sinais médicos simulando latência de persistência em banco e realiza commits manuais em blocos:
+Aqui está o código do consumidor Node.js que assina o tópico `teste.ecg.raw`, processa os sinais médicos simulando latência de persistência em banco e realiza commits manuais em blocos:
 
 ```javascript
 const { Kafka } = require('kafkajs');
@@ -71,7 +71,7 @@ async function run() {
   console.log('Consumidor conectado ao cluster.');
 
   // Nos inscrevemos no tópico a partir do offset mais recente por padrão
-  await consumer.subscribe({ topic: 'biomedical.ecg.raw', fromBeginning: false });
+  await consumer.subscribe({ topic: 'teste.ecg.raw', fromBeginning: false });
 
   // Escutando eventos do ciclo de vida para auditoria de infraestrutura
   consumer.on(consumer.events.GROUP_JOIN, (e) => {

@@ -5,20 +5,20 @@ category: "Mensageria"
 date: "24 de Julho, 2026"
 readTime: "7 min de leitura"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 6
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
 
 ## O Risco da Inconsistência em Alertas Críticos
 
-No processamento de telemetria médica, frequentemente temos fluxos que realizam leituras e escritas sequenciais em tópicos. Por exemplo:
-1. **Lê** um bloco de coordenadas brutas de ECG do tópico `biomedical.ecg.raw`.
+No processamento de telemetria , frequentemente temos fluxos que realizam leituras e escritas sequenciais em tópicos. Por exemplo:
+1. **Lê** um bloco de coordenadas brutas de ECG do tópico `teste.ecg.raw`.
 2. **Processa** o sinal usando um algoritmo analítico. Se detectar um padrão de fibrilação atrial (arritmia), a aplicação gera um alerta.
-3. **Escreve** o alerta no tópico `biomedical.alerts.critical`.
+3. **Escreve** o alerta no tópico `teste.alerts.critical`.
 4. **Atualiza (Commit)** o offset de leitura no tópico original.
 
-Se o servidor Node.js cair exatamente após o passo 3, mas antes do passo 4 (commit), a nova instância reiniciará e reprocessará a mesma leitura de ECG. Isso resultará em um **segundo alerta de emergência idêntico** sendo enviado para a equipe médica. Em ambientes clínicos sob estresse, alarmes duplicados geram "fadiga de alarmes" e diminuem a confiabilidade do sistema.
+Se o servidor Node.js cair exatamente após o passo 3, mas antes do passo 4 (commit), a nova instância reiniciará e reprocessará a mesma leitura de ECG. Isso resultará em um **segundo alerta de emergência idêntico** sendo enviado para a equipe . Em ambientes clínicos sob estresse, alarmes duplicados geram "fadiga de alarmes" e diminuem a confiabilidade do sistema.
 
 Para evitar isso, usamos as transações do Kafka, conhecidas como **Exactly-Once Semantics (EOS)**.
 
@@ -47,8 +47,8 @@ const kafka = new Kafka({
 });
 
 const GROUP_ID = 'anomaly-detector-group';
-const TOPIC_RAW = 'biomedical.ecg.raw';
-const TOPIC_ALERTS = 'biomedical.alerts.critical';
+const TOPIC_RAW = 'teste.ecg.raw';
+const TOPIC_ALERTS = 'teste.alerts.critical';
 
 // Criamos o produtor transacional definindo o transactionalId
 const producer = kafka.producer({
@@ -146,7 +146,7 @@ run().catch(console.error);
 
 ## Conclusão da Série
 
-Parabéns! Ao longo desta série, estruturamos uma API de telemetria médica de ponta a ponta:
+Parabéns! Ao longo desta série, estruturamos uma API de telemetria  de ponta a ponta:
 
 1. **Parte 1**: Conceituamos o funcionamento do log sequencial do Kafka.
 2. **Parte 2**: Configuramos um cluster local KRaft e provisionamos o tópico de sinais biológicos de forma programática.

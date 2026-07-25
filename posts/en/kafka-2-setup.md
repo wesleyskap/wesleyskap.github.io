@@ -1,11 +1,11 @@
 ---
-title: "Biomedical Signal Ingestion: KRaft Infrastructure and Partition Topology"
+title: "Test - Signal Ingestion: KRaft Infrastructure and Partition Topology"
 excerpt: "How to plan partition distribution and keying to guarantee strict ordering per patient? Configure a Kafka KRaft cluster and initialize the Node.js client."
 category: "Distributed Systems"
 date: "July 20, 2026"
 readTime: "6 min read"
 author: "Wesley Lima"
-series: "kafka-biomedical-signals-series"
+series: "kafka-teste-signals-series"
 seriesIndex: 2
 referenceLink: "https://github.com/wesleyskap/orkai-observability"
 ---
@@ -14,7 +14,7 @@ referenceLink: "https://github.com/wesleyskap/orkai-observability"
 
 In the previous article, we saw that Kafka stores data streams in an ordered and immutable way. Now, let's spin up our local infrastructure using the modern **KRaft** (Kafka Raft Metadata Mode) architecture, which completely eliminates the need for Apache ZooKeeper, simplifying deployment topology and reducing resource footprint.
 
-In addition, we will program the initialization of the `kafkajs` client in Node.js and learn how to plan and create our custom biomedical signal topics.
+In addition, we will program the initialization of the `kafkajs` client in Node.js and learn how to plan and create our custom teste signal topics.
 
 ---
 
@@ -83,7 +83,7 @@ To receive massive amounts of biological telemetry, we should not create topics 
 
 ## 4. Infrastructure Bootstrap Script (`setup-infrastructure.js`)
 
-Here is the Node.js code that connects to the cluster and provisions our biomedical topics using the KafkaJS admin client:
+Here is the Node.js code that connects to the cluster and provisions our teste topics using the KafkaJS admin client:
 
 ```javascript
 const { Kafka } = require('kafkajs');
@@ -107,7 +107,7 @@ async function bootstrap() {
   await admin.connect();
   console.log('Connected successfully!');
 
-  const topicName = 'biomedical.ecg.raw';
+  const topicName = 'teste.ecg.raw';
 
   // Lists existing topics
   const existingTopics = await admin.listTopics();
@@ -147,6 +147,6 @@ node setup-infrastructure.js
 
 ## Conclusion
 
-Now that we have our infrastructure set up and the `biomedical.ecg.raw` topic created with the correct topology, we are ready to produce real biological data.
+Now that we have our infrastructure set up and the `teste.ecg.raw` topic created with the correct topology, we are ready to produce real biological data.
 
-In the next article, we will implement a **Real-Time Biomedical Signal Producer**, focusing on crucial settings like **producer idempotency** to prevent heartbeat duplication and **ZSTD compression** to compress biological data packets.
+In the next article, we will implement a **Real-Time teste Signal Producer**, focusing on crucial settings like **producer idempotency** to prevent heartbeat duplication and **ZSTD compression** to compress biological data packets.
