@@ -1,5 +1,16 @@
 [
   {
+    "id": "kafka-7-load-testing",
+    "title": "Simulando Carga Massiva: Testes de Carga na Ingestão com k6 e Kafka",
+    "excerpt": "Como estressar o pipeline de sinais médicos simulando milhares de conexões de sensores concorrentes? Escreva um script de k6 para testar os limites do Node.js e Kafka.",
+    "category": "Alta Performance",
+    "date": "25 de Julho, 2026",
+    "readTime": "7 min de leitura",
+    "author": "Wesley Lima",
+    "series": "kafka-biomedical-signals-series",
+    "seriesIndex": 7
+  },
+  {
     "id": "kafka-1-introduction",
     "title": "Desmistificando o Apache Kafka: Por que Usar em Telemetria Médica?",
     "excerpt": "Entenda o conceito de Commit Log distribuído e descubra por que o Kafka é a escolha ideal para gerenciar streams de sinais biomédicos como EEG e ECG de alta frequência.",
